@@ -33,7 +33,7 @@ class Redirect
     protected $destination;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", name="status_code")
      */
     protected $statusCode;
 
@@ -43,7 +43,7 @@ class Redirect
     protected $count;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="last_accessed")
      *
      * @var \DateTime $lastAccessed
      */
