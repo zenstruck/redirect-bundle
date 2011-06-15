@@ -112,6 +112,10 @@ class Redirect
      */
     public function setStatusCode($statusCode)
     {
+        if (!in_array($statusCode, array_keys(Response::$statusTexts))) {
+            throw new \InvalidArgumentException("Invalid status code");
+        }
+
         $this->statusCode = $statusCode;
     }
 
@@ -143,6 +147,16 @@ class Redirect
     public function getCount()
     {
         return $this->count;
+    }
+
+    /**
+     * Adds to count
+     *
+     * @param integer $amount
+     */
+    public function increaseCount($amount = 1)
+    {
+        $this->count += $amount;
     }
 
     /**
