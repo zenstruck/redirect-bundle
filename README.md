@@ -16,7 +16,7 @@ In addition, 404 errors can be optionally logged as well.  Their count and last 
 
 By default the bundle simply intercepts your application's 404 errors and trys to find a matching entry in the database.
 
-**Default configuration**
+**Default configuration:**
 
     # app/config/config.yml
     ...
