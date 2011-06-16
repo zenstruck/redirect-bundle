@@ -11,6 +11,10 @@
     <services>
         <service id="zenstruck.redirect_listener" class="%zenstruck.redirect_listener.class%">
           <tag name="kernel.listener" event="core.exception" method="onCoreException" />
+
+          <argument type="service" id="doctrine.orm.entity_manager" />
+          <argument /> <!-- log statitics -->
+          <argument /> <!-- log 404 errors -->
         </service>
     </services>
 </container>

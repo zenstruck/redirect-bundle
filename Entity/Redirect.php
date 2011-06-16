@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Kevin Bond <kevinbond@gmail.com>
  *
  * @ORM\Entity(repositoryClass="Zenstruck\Bundle\RedirectBundle\Repository\RedirectRepository")
- * @ORM\Table(name="redirect")
+ * @ORM\Table(name="zenstruck_redirect")
  * @ORM\HasLifeCycleCallbacks
  */
 class Redirect
@@ -28,7 +28,7 @@ class Redirect
     protected $source;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $destination;
 
@@ -51,8 +51,8 @@ class Redirect
 
     public function __construct()
     {
-        $this->statusCode = 301;
-        $this->count = 0;
+        $this->setStatusCode(301);
+        $this->setCount(0);
     }
 
     /**
@@ -72,6 +72,8 @@ class Redirect
      */
     public function setSource($source)
     {
+        $source = $this->addSlashToURL($source);
+
         $this->source = $source;
     }
 
@@ -93,6 +95,13 @@ class Redirect
     public function setDestination($destination)
     {
         $this->destination = $destination;
+
+        // see if absolute
+        if ($this->isDestinationAbsolute()) {
+            return;
+        }
+
+        $this->destination = $this->addSlashToURL($this->destination);
     }
 
     /**
@@ -103,6 +112,29 @@ class Redirect
     public function getDestination()
     {
         return $this->destination;
+    }
+
+    /**
+     * Checks if destination is absolute (http://...) or not
+     *
+     * @return boolean
+     */
+    public function isDestinationAbsolute()
+    {
+        if (!$this->destination) {
+            return false;
+        }
+
+        if (preg_match('#^\w+://#', $this->destination)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function is404Error()
+    {
+        return !((boolean) $this->destination);
     }
 
     /**
@@ -177,5 +209,24 @@ class Redirect
     public function getLastAccessed()
     {
         return $this->lastAccessed;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if (!$this->destination) {
+            $this->setStatusCode(404);
+        }
+    }
+
+    private function addSlashToURL($url)
+    {
+        if (!preg_match('#^/#', $url)) {
+            $url = '/' . $url;
+        }
+
+        return $url;
     }
 }
