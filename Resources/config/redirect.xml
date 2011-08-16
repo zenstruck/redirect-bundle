@@ -5,14 +5,20 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="zenstruck.redirect_listener.class">Zenstruck\Bundle\RedirectBundle\EventListener\ExceptionListener</parameter>
+        <parameter key="zenstruck_redirect.listener.class">Zenstruck\Bundle\RedirectBundle\EventListener\ExceptionListener</parameter>
+        <parameter key="zenstruck_redirect.manager.class">Zenstruck\Bundle\RedirectBundle\Entity\RedirectManager</parameter>
     </parameters>
 
     <services>
-        <service id="zenstruck.redirect_listener" class="%zenstruck.redirect_listener.class%">
+        <service id="zenstruck_redirect.manager" class="%zenstruck_redirect.manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument /> <!-- redirect class -->
+        </service>
+
+        <service id="zenstruck_redirect.listener" class="%zenstruck_redirect.listener.class%">
           <tag name="kernel.event_listener" event="kernel.exception" method="onCoreException" />
 
-          <argument type="service" id="doctrine.orm.entity_manager" />
+          <argument type="service" id="zenstruck_redirect.manager" />
           <argument /> <!-- log statitics -->
           <argument /> <!-- log 404 errors -->
         </service>

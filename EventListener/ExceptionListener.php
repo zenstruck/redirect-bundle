@@ -5,21 +5,20 @@ namespace Zenstruck\Bundle\RedirectBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Doctrine\ORM\EntityManager;
-use Zenstruck\Bundle\RedirectBundle\Entity\Redirect;
+use Zenstruck\Bundle\RedirectBundle\Entity\RedirectManager;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
 class ExceptionListener
 {
-    protected $em;
+    protected $redirectManager;
     protected $logStatistics;
     protected $log404Errors;
 
-    public function __construct(EntityManager $em, $logStatistics = false, $log404Errors = false)
+    public function __construct(RedirectManager $redirectManager, $logStatistics = false, $log404Errors = false)
     {
-        $this->em = $em;
+        $this->redirectManager = $redirectManager;
         $this->logStatistics = $logStatistics;
         $this->log404Errors = $log404Errors;
     }
@@ -39,10 +38,11 @@ class ExceptionListener
         // if using dev env this will be set (ie /app_dev.php)
         $baseUrl = $request->getBaseUrl();
 
-        $redirect = $this->em->getRepository('ZenstruckRedirectBundle:Redirect')->findOneBySource($source);
+        $redirect = $this->redirectManager->getRepository()->findOneBySource($source);
 
         if (!$redirect) {
-            $redirect = new Redirect();
+            $class = $this->redirectManager->getClass();
+            $redirect = new $class;
             $redirect->setSource($source);
         }
 
@@ -62,8 +62,7 @@ class ExceptionListener
         $redirect->setLastAccessed(new \DateTime());
 
         if (($this->logStatistics && !$redirect->is404Error()) || ($redirect->is404Error() && $this->log404Errors)) {
-            $this->em->persist($redirect);
-            $this->em->flush();
+            $this->redirectManager->persistRedirect($redirect);
         }
     }
 

@@ -2,49 +2,22 @@
 
 namespace Zenstruck\Bundle\RedirectBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
- *
- * @ORM\Entity(repositoryClass="Zenstruck\Bundle\RedirectBundle\Repository\RedirectRepository")
- * @ORM\Table(name="zenstruck_redirect")
- * @ORM\HasLifeCycleCallbacks
  */
 class Redirect
 {
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    protected $id;
-
-    /**
-     * @ORM\Column(type="string", unique=true)
-     */
     protected $source;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
     protected $destination;
 
-    /**
-     * @ORM\Column(type="smallint", name="status_code")
-     */
     protected $statusCode;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
     protected $count;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, name="last_accessed")
-     *
      * @var \DateTime $lastAccessed
      */
     protected $lastAccessed;
@@ -211,10 +184,7 @@ class Redirect
         return $this->lastAccessed;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function prePersist()
+    public function fixCodeForEmptyDestination()
     {
         if (!$this->destination) {
             $this->setStatusCode(404);

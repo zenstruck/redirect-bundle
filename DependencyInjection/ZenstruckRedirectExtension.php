@@ -20,7 +20,10 @@ class ZenstruckRedirectExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('redirect.xml');
 
-        $container->getDefinition('zenstruck.redirect_listener')
+        $container->getDefinition('zenstruck_redirect.manager')
+                ->replaceArgument(1, $config['redirect_class']);
+
+        $container->getDefinition('zenstruck_redirect.listener')
                 ->replaceArgument(1, $config['log_statistics'])
                 ->replaceArgument(2, $config['log_404_errors']);
     }

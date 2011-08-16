@@ -18,6 +18,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('redirect_class')->isRequired()->end()
                 ->booleanNode('log_statistics')->defaultFalse()->end()
                 ->booleanNode('log_404_errors')->defaultFalse()->end()
             ->end()
