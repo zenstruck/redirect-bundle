@@ -10,7 +10,34 @@ In addition, 404 errors can be optionally logged as well.  Their count and last 
 2. Add the ``Zenstruck`` namespace to your ``app/autoloader.php``
 3. Register the bundle (``new Zenstruck/Bundle/RedirectBundle/ZenstruckRedirectBundle()``)
 4. (optional) add ``ZenstruckRedirectBundle`` to your doctrine mappings (not necessary if ``auto_mapping`` is true)
-5. Update your schema (``doctrine:schema:update --force``)
+5. Create your redirect class inheriting the MappedSuperClass this bundle provides:
+
+        namespace Acme\DemoBundle\Entity;
+
+        use Zenstruck\Bundle\RedirectBundle\Entity\Redirect as BaseRedirect;
+        use Doctrine\ORM\Mapping as ORM;
+
+        /**
+         * @ORM\Entity
+         * @ORM\Table(name="redirect")
+         */
+        class Redirect extends BaseRedirect
+        {
+            /**
+             * @ORM\Id
+             * @ORM\Column(type="integer")
+             * @ORM\GeneratedValue(strategy="AUTO")
+             */
+            protected $id;
+
+        }
+        
+6. Set this class in your ``config.yml``:
+
+        zenstruck_redirect:
+            redirect_class: Acme\DemoBundle\Entity\Redirect
+
+7. Update your schema (``doctrine:schema:update --force``)
 
 # Configuration
 
@@ -21,7 +48,8 @@ By default the bundle simply intercepts your application's 404 errors and trys t
     # app/config/config.yml
     ...
 
-    zenstruck_redirect:
+    zenstruck_redirect:    
+        redirect_class: ~ # Required
         log_statistics: false
         log_404_errors: false
 
