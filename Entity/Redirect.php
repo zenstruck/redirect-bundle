@@ -45,6 +45,8 @@ class Redirect
      */
     public function setSource($source)
     {
+        $source = parse_url($source, PHP_URL_PATH);
+
         $source = $this->addSlashToURL($source);
 
         $this->source = $source;
@@ -98,7 +100,7 @@ class Redirect
             return false;
         }
 
-        if (preg_match('#^\w+://#', $this->destination)) {
+        if ($this->isAbsolute($this->destination)) {
             return true;
         }
 
@@ -191,7 +193,16 @@ class Redirect
         }
     }
 
-    private function addSlashToURL($url)
+    protected function isAbsolute($path)
+    {
+        if (preg_match('#^\w+://#', $this->destination)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function addSlashToURL($url)
     {
         if (!preg_match('#^/#', $url)) {
             $url = '/' . $url;

@@ -49,6 +49,14 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('/foo/bar', $redirect->getSource());
 
+        $redirect->setSource('/foo/bar#test');
+
+        $this->assertEquals('/foo/bar', $redirect->getSource());
+
+        $redirect->setSource('http://www.google.com/foo/bar#test');
+
+        $this->assertEquals('/foo/bar', $redirect->getSource());
+
         $this->assertTrue($redirect->is404Error() === true);
     }
 
@@ -75,7 +83,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     {
         $redirect = new Redirect();
 
-        $redirect->prePersist();
+        $redirect->fixCodeForEmptyDestination();
 
         $this->assertEquals(404, $redirect->getStatusCode());
     }
