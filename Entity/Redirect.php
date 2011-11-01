@@ -45,7 +45,12 @@ class Redirect
      */
     public function setSource($source)
     {
-        $source = parse_url($source, PHP_URL_PATH);
+        if ($this->isAbsolute($source)) {
+            // remove host from url
+            $source = explode(parse_url($source, PHP_URL_HOST), $source);
+
+            $source = $source[1];
+        }
 
         $source = $this->addSlashToURL($source);
 
@@ -195,7 +200,7 @@ class Redirect
 
     protected function isAbsolute($path)
     {
-        if (preg_match('#^\w+://#', $this->destination)) {
+        if (preg_match('#^\w+://#', $path)) {
             return true;
         }
 

@@ -42,22 +42,20 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
         $redirect = new Redirect();
 
         $redirect->setSource('/foo/bar');
-
         $this->assertEquals('/foo/bar', $redirect->getSource());
 
         $redirect->setSource('foo/bar');
-
-        $this->assertEquals('/foo/bar', $redirect->getSource());
-
-        $redirect->setSource('/foo/bar#test');
-
         $this->assertEquals('/foo/bar', $redirect->getSource());
 
         $redirect->setSource('http://www.google.com/foo/bar#test');
-
-        $this->assertEquals('/foo/bar', $redirect->getSource());
-
+        $this->assertEquals('/foo/bar#test', $redirect->getSource());
         $this->assertTrue($redirect->is404Error() === true);
+
+        $redirect->setSource('foo/bar#baz');
+        $this->assertEquals('/foo/bar#baz', $redirect->getSource());
+
+        $redirect->setSource('foo/bar?foo=bar');
+        $this->assertEquals('/foo/bar?foo=bar', $redirect->getSource());
     }
 
     public function testSetDestination()
@@ -65,18 +63,23 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
         $redirect = new Redirect();
 
         $redirect->setDestination('/foo/bar');
-
         $this->assertEquals('/foo/bar', $redirect->getDestination());
 
         $redirect->setDestination('foo/bar');
-
         $this->assertEquals('/foo/bar', $redirect->getDestination());
 
         $redirect->setDestination('http://www.google.com/');
-
         $this->assertEquals('http://www.google.com/', $redirect->getDestination());
-
         $this->assertTrue($redirect->is404Error() === false);
+
+        $redirect->setDestination('foo/bar#baz');
+        $this->assertEquals('/foo/bar#baz', $redirect->getDestination());
+
+        $redirect->setDestination('foo/bar?foo=bar');
+        $this->assertEquals('/foo/bar?foo=bar', $redirect->getDestination());
+
+        $redirect->setDestination('foo/bar?foo=bar#baz');
+        $this->assertEquals('/foo/bar?foo=bar#baz', $redirect->getDestination());
     }
 
     public function testPrePersist()
