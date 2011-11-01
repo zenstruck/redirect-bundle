@@ -1,28 +1,3 @@
 <h1>Redirecting...</h1>
 
-{{baseUrl}}
-
-<script type="text/javascript">
-
-    var sources = {{sources|raw}};
-    var baseUrl = "{{baseUrl|raw}}";
-    var path = window.location.href;
-
-    // clean up
-    path = path.replace(window.location.origin, "").replace(baseUrl, "");
-
-    // find path in array and redirect
-    if (sources[path] != undefined) {
-        window.location = window.location.origin + baseUrl + sources[path];
-    } else {
-        // try again without the hash
-        path = path.replace(window.location.hash, "")
-
-        if (sources[path] != undefined) {
-            window.location = window.location.origin + baseUrl + sources[path];
-        } else {
-            // not found
-            window.location = window.location.origin + baseUrl + '/not_found?url=' + encodeURIComponent(window.location.href);
-        }
-    }
-</script>
+{% include 'ZenstruckRedirectBundle:Redirect:_script.html.twig' with {'baseUrl': baseUrl} %}

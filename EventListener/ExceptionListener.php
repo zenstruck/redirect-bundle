@@ -28,7 +28,12 @@ class ExceptionListener
             return;
         }
 
-        $response = $this->redirectManager->getResponse($request);
+        $source = $request->getPathInfo();
+
+        // if using dev env this will be set (ie /app_dev.php)
+        $baseUrl = $request->getBaseUrl();
+
+        $response = $this->redirectManager->getResponse($source, $baseUrl);
 
         if ($response) {
             $event->setResponse($response);

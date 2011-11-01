@@ -56,14 +56,17 @@ class RedirectManager
      *
      * @param string $path
      */
-    public function findBySource($path)
+    public function findBySource($path, $multiple = true)
     {
         $qb = $this->getRepository()->createQueryBuilder('redirect');
 
         $qb->where('redirect.source = :path')
-           ->orWhere('redirect.source LIKE :likestring')
-           ->setParameter('path', $path)
-           ->setParameter('likestring', $path.'#%');
+           ->setParameter('path', $path);
+
+        if ($multiple) {
+            $qb->orWhere('redirect.source LIKE :likestring')
+               ->setParameter('likestring', $path.'#%');
+        }
 
         return $qb->getQuery()->execute();
     }
@@ -79,32 +82,19 @@ class RedirectManager
     /**
      * Determines correct redirect response
      *
-     * @param Request $request
+     * @param string $source
+     * @param string $baseUrl
      * @return Response|null
      */
-    public function getResponse(Request $request)
+    public function getResponse($source, $baseUrl = '', $multiple = true)
     {
-        $source = $request->getPathInfo();
-
-        // if using dev env this will be set (ie /app_dev.php)
-        $baseUrl = $request->getBaseUrl();
-
-        $redirects = $this->findBySource($source);
+        $redirects = $this->findBySource($source, $multiple);
 
         // more than 1 redirect found - render template to use javascript redirect
         if (count($redirects) > 1) {
-            // json encode available sources
-            $destinations = array();
-
-            foreach ($redirects as $redirect) {
-                $destinations[$redirect->getSource()] = $redirect->getDestination();
-            }
-
             return $this->templating->renderResponse($this->options['redirect_template'],
                     array(
-                        'redirects' => $redirects,
-                        'baseUrl'   => $baseUrl,
-                        'sources'   => json_encode($destinations)
+                        'baseUrl'   => $baseUrl
                     )
                 );
         }
