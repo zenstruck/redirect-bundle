@@ -19,6 +19,8 @@
           <tag name="kernel.event_listener" event="kernel.exception" method="onCoreException" />
 
           <argument type="service" id="zenstruck_redirect.manager" />
+          <argument type="service" id="templating" />
+          <argument /> <!-- template -->
           <argument /> <!-- log statitics -->
           <argument /> <!-- log 404 errors -->
         </service>

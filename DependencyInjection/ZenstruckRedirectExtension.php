@@ -24,8 +24,9 @@ class ZenstruckRedirectExtension extends Extension
                 ->replaceArgument(1, $config['redirect_class']);
 
         $container->getDefinition('zenstruck_redirect.listener')
-                ->replaceArgument(1, $config['log_statistics'])
-                ->replaceArgument(2, $config['log_404_errors']);
+                ->replaceArgument(2, $config['template'])
+                ->replaceArgument(3, $config['log_statistics'])
+                ->replaceArgument(4, $config['log_404_errors']);
     }
 
 }

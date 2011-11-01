@@ -19,6 +19,8 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('redirect_class')->isRequired()->end()
+                ->scalarNode('template')->defaultValue('ZenstruckRedirectBundle:Redirect:redirect.html.twig')->end()
+                ->scalarNode('not_found_url')->defaultValue('/not_found')->end()
                 ->booleanNode('log_statistics')->defaultFalse()->end()
                 ->booleanNode('log_404_errors')->defaultFalse()->end()
             ->end()

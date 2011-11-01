@@ -31,13 +31,26 @@ In addition, 404 errors can be optionally logged as well.  Their count and last 
             protected $id;
 
         }
-        
+
 6. Set this class in your ``config.yml``:
 
         zenstruck_redirect:
             redirect_class: Acme\DemoBundle\Entity\Redirect
 
 7. Update your schema (``doctrine:schema:update --force``)
+
+# Hash tag redirects
+
+You can have hash tags in your source urls.  This allows mutiple source paths with different
+hash tags in the database.  Example:
+
+* foo/bar
+* foo/bar#baz
+* foo/bar#jaf
+
+Since the server cannot tell what the hashtag is, a template with some javascript is rendered.
+The javascript then determines where to redirect.  Try to always have a non-hashed source available
+as a fallback.
 
 # Configuration
 
@@ -48,8 +61,9 @@ By default the bundle simply intercepts your application's 404 errors and trys t
     # app/config/config.yml
     ...
 
-    zenstruck_redirect:    
+    zenstruck_redirect:
         redirect_class: ~ # Required
+        template:       ZenstruckRedirectBundle:Redirect:redirect.html.twig
         log_statistics: false
         log_404_errors: false
 

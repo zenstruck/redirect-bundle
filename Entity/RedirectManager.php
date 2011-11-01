@@ -37,6 +37,23 @@ class RedirectManager
     }
 
     /**
+     * Returns array of results
+     *
+     * @param string $path
+     */
+    public function findBySource($path)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('redirect');
+
+        $qb->where('redirect.source = :path')
+           ->orWhere('redirect.source LIKE :likestring')
+           ->setParameter('path', $path)
+           ->setParameter('likestring', $path.'#%');
+   
+        return $qb->getQuery()->execute();
+    }
+
+    /**
      * @return string
      */
     public function getClass()
