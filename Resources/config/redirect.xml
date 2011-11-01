@@ -12,7 +12,8 @@
     <services>
         <service id="zenstruck_redirect.manager" class="%zenstruck_redirect.manager.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument /> <!-- redirect class -->
+            <argument type="service" id="templating" />
+            <argument /> <!-- config options -->
         </service>
 
         <service id="zenstruck_redirect.listener" class="%zenstruck_redirect.listener.class%">

@@ -21,10 +21,10 @@ class ZenstruckRedirectExtension extends Extension
         $loader->load('redirect.xml');
 
         $container->getDefinition('zenstruck_redirect.manager')
-                ->replaceArgument(1, $config['redirect_class']);
+                ->replaceArgument(2, $config);
 
         $container->getDefinition('zenstruck_redirect.listener')
-                ->replaceArgument(2, $config['template'])
+                ->replaceArgument(2, $config['redirect_template'])
                 ->replaceArgument(3, $config['log_statistics'])
                 ->replaceArgument(4, $config['log_404_errors']);
     }

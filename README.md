@@ -62,10 +62,10 @@ By default the bundle simply intercepts your application's 404 errors and trys t
     ...
 
     zenstruck_redirect:
-        redirect_class: ~ # Required
-        template:       ZenstruckRedirectBundle:Redirect:redirect.html.twig
-        log_statistics: false
-        log_404_errors: false
+        redirect_class:     ~ # Required
+        redirect_template:  ZenstruckRedirectBundle:Redirect:redirect.html.twig
+        log_statistics:     false
+        log_404_errors:     false
 
     ...
 
