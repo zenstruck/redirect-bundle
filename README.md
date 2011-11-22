@@ -1,5 +1,7 @@
 # Introduction
 
+[![Build Status](https://secure.travis-ci.org/kbond/ZenstruckRedirectBundle.png)](http://travis-ci.org/kbond/ZenstruckRedirectBundle)
+
 This bundle adds a database table that stores redirects for your site.  404 exceptions are intercepted and the requested uri is looked up.  If a match is found it redirects to the found redirects destination.  The count and last accessed date can be optionally stored as well.
 
 In addition, 404 errors can be optionally logged as well.  Their count and last accessed date will also be stored.  This can be useful for determining a bad link.
