@@ -24,7 +24,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
         $redirect = new Redirect();
 
         $this->assertEquals(0, $redirect->getCount());
-        $this->assertEquals(301, $redirect->getStatusCode());
+        $this->assertEquals(404, $redirect->getStatusCode());
     }
 
     /**

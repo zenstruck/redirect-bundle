@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Redirect
 {
+    const STATUS_CODE_NOTFOUND = 404;
+    const STATUS_CODE_REDIRECT = 301;
+
     protected $source;
 
     protected $destination;
@@ -33,7 +36,7 @@ class Redirect
 
     public function __construct()
     {
-        $this->setStatusCode(301);
+        $this->setStatusCode(self::STATUS_CODE_NOTFOUND);
         $this->setCount(0);
     }
 
@@ -54,14 +57,16 @@ class Redirect
      */
     public function setSource($source)
     {
-        if ($this->isAbsolute($source)) {
-            // remove host from url
-            $source = explode(parse_url($source, PHP_URL_HOST), $source);
+        if ($source) {
+            if ($this->isAbsolute($source)) {
+                // remove host from url
+                $source = explode(parse_url($source, PHP_URL_HOST), $source);
 
-            $source = $source[1];
-        }
+                $source = $source[1];
+            }
 
-        $source = $this->addSlashToURL($source);
+            $source = $this->addSlashToURL($source);
+         }
 
         $this->source = $source;
     }
@@ -90,7 +95,9 @@ class Redirect
             return;
         }
 
-        $this->destination = $this->addSlashToURL($this->destination);
+        if ($this->destination) {
+            $this->destination = $this->addSlashToURL($this->destination);
+        }
     }
 
     /**
@@ -203,7 +210,11 @@ class Redirect
     public function fixCodeForEmptyDestination()
     {
         if (!$this->destination) {
-            $this->setStatusCode(404);
+            $this->setStatusCode(self::STATUS_CODE_NOTFOUND);
+        } else {
+            if ($this->statusCode === self::STATUS_CODE_NOTFOUND) {
+                $this->setStatusCode(self::STATUS_CODE_REDIRECT);
+            }
         }
     }
 
