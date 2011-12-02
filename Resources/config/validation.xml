@@ -12,5 +12,11 @@
             <option name="message">This source is already used. Please choose another.</option>
         </constraint>
 
+        <property name="source">
+            <constraint name="NotBlank">
+                <option name="message">The source may not be blank.</option>
+            </constraint>
+        </property>
+
     </class>
 </constraint-mapping>
