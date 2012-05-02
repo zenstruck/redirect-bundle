@@ -17,7 +17,7 @@
         </service>
 
         <service id="zenstruck_redirect.listener" class="%zenstruck_redirect.listener.class%">
-          <tag name="kernel.event_listener" event="kernel.exception" method="onCoreException" />
+          <tag name="kernel.event_listener" event="kernel.exception" method="onCoreException" priority="128" />
 
           <argument type="service" id="zenstruck_redirect.manager" />
         </service>
