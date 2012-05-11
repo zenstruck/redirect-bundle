@@ -5,7 +5,4 @@ php:
   - 5.4
 
 before_script:
-    - git checkout sandbox
-    - php bin/vendors install
-
-script: phpunit -c app/
+    - curl --silent http://getcomposer.org/installer | php > /dev/null && php composer.phar install --dev --quiet

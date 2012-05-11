@@ -1,0 +1,34 @@
+zenstruck_redirect:
+    redirect_class: Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle\Entity\Redirect
+    log_statistics:     true
+    log_404_errors:     true
+
+monolog:
+    handlers:
+        test:
+            type: test
+
+
+framework:
+    secret: test
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+    form:            true
+    csrf_protection: false
+    validation:
+        enabled: true
+        enable_annotations: true
+    router:
+        resource: %kernel.root_dir%/config/routing.yml
+    templating:
+        engines: [twig]
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        path:     %kernel.cache_dir%/db.sqlite
+        charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: true
+        auto_mapping: true
