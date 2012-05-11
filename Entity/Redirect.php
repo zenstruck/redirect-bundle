@@ -68,6 +68,9 @@ class Redirect
             $source = $this->addSlashToURL($source);
          }
 
+        // remove encoded spaces
+        $source = str_replace('%20', ' ', $source);
+
         $this->source = $source;
     }
 

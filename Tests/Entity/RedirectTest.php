@@ -65,6 +65,12 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
 
         $redirect->setSource('foo/bar?foo=bar');
         $this->assertEquals('/foo/bar?foo=bar', $redirect->getSource());
+
+        $redirect->setSource('foo/bar baz');
+        $this->assertEquals('/foo/bar baz', $redirect->getSource());
+
+        $redirect->setSource('foo/bar%20baz');
+        $this->assertEquals('/foo/bar baz', $redirect->getSource());
     }
 
     public function testSetDestination()
