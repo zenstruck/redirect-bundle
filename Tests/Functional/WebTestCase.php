@@ -93,6 +93,18 @@ class WebTestCase extends BaseWebTestCase
         $redirects[0]->setSource('/foo/bar');
         $redirects[0]->setDestination('/');
 
+        $redirects[1] = new Redirect();
+        $redirects[1]->setSource('/foo#google');
+        $redirects[1]->setDestination('http://www.google.com');
+
+        $redirects[2] = new Redirect();
+        $redirects[2]->setSource('/foo#microsoft');
+        $redirects[2]->setDestination('http://www.microsoft.com');
+
+        $redirects[3] = new Redirect();
+        $redirects[3]->setSource('/foo');
+        $redirects[3]->setDestination('http://www.foo.com');
+
         foreach ($redirects as $redirect) {
             $this->em->persist($redirect);
         }
