@@ -11,7 +11,7 @@ use Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle\Entity\Redirect;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class WebTestCase extends BaseWebTestCase
+abstract class WebTestCase extends BaseWebTestCase
 {
     protected $em;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Zenstruck\Bundle\RedirectBundle\Tests\Functional;
+namespace Zenstruck\Bundle\RedirectBundle\Tests\EventListener;
 
 use Zenstruck\Bundle\RedirectBundle\Tests\Functional\WebTestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class RedirectTest extends WebTestCase
+class ExceptionListenerTest extends WebTestCase
 {
     public function testRedirects()
     {
