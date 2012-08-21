@@ -32,6 +32,7 @@ class RedirectManager
     /** @var EngineInterface **/
     protected $templating;
 
+    /** @var string */
     protected $class;
     protected $options;
 
@@ -78,6 +79,24 @@ class RedirectManager
         }
 
         return $qb->getQuery()->execute();
+    }
+
+    public function updateOrCreate($source, $destination)
+    {
+        /** @var $temp Redirect */
+        $temp = new $this->class;
+        $temp->setSource($source);
+
+        $redirect = $this->repository->findOneBySource($temp->getSource());
+
+        if (!$redirect) {
+            $redirect = $temp;
+            $this->em->persist($redirect);
+        }
+
+        $redirect->setDestination($destination);
+
+        $this->em->flush();
     }
 
     /**
