@@ -1,16 +1,21 @@
+**NOTE**: This bundle went under a major refactor 15-Oct-2012.  Use the `legacy` branch for the old version.
+
 # Introduction
 
 [![Build Status](https://secure.travis-ci.org/kbond/ZenstruckRedirectBundle.png)](http://travis-ci.org/kbond/ZenstruckRedirectBundle)
 
-This bundle adds a database table that stores redirects for your site.  404 exceptions are intercepted and the requested uri is looked up.  If a match is found it redirects to the found redirects destination.  The count and last accessed date can be optionally stored as well.
+This bundle adds a database table that stores redirects for your site.  404 exceptions are intercepted and the requested
+uri is looked up.  If a match is found it redirects to the found redirects destination.  The count and last accessed
+date can be optionally stored as well.
 
-In addition, 404 errors can be optionally logged as well.  Their count and last accessed date will also be stored.  This can be useful for determining a bad link.
+In addition, 404 errors can be optionally logged as well.  Their count and last accessed date will also be stored.
+This can be useful for determining bad links.
 
 # Installation
 
-1. Install the bundle as normal (ie ``vendor/bundles/Zenstruck/Bundle/RedirectBundle``)
-2. Add the ``Zenstruck`` namespace to your ``app/autoloader.php``
-3. Register the bundle (``new Zenstruck/Bundle/RedirectBundle/ZenstruckRedirectBundle()``)
+1. Add `zenstruck/redirect-bundle` to your `composer.json` or this repository to your `deps`
+2. Add the ``Zenstruck`` namespace to your ``app/autoloader.php`` (if not using composer)
+3. Register the bundle (``new Zenstruck\Bundle\RedirectBundle\ZenstruckRedirectBundle()``)
 4. (optional) add ``ZenstruckRedirectBundle`` to your doctrine mappings (not necessary if ``auto_mapping`` is true)
 5. Create your redirect class inheriting the MappedSuperClass this bundle provides:
 
@@ -41,19 +46,6 @@ In addition, 404 errors can be optionally logged as well.  Their count and last 
 
 7. Update your schema (``doctrine:schema:update --force``)
 
-# Hash tag redirects
-
-You can have hash tags in your source urls.  This allows mutiple source paths with different
-hash tags in the database.  Example:
-
-* foo/bar
-* foo/bar#baz
-* foo/bar#jaf
-
-Since the server cannot tell what the hashtag is, a template with some javascript is rendered.
-The javascript then determines where to redirect.  Try to always have a non-hashed source available
-as a fallback.
-
 # Configuration
 
 By default the bundle simply intercepts your application's 404 errors and trys to find a matching entry in the database.
@@ -64,17 +56,12 @@ By default the bundle simply intercepts your application's 404 errors and trys t
     ...
 
     zenstruck_redirect:
-        redirect_class:     ~ # Required
-        redirect_template:  ZenstruckRedirectBundle:Redirect:redirect.html.twig
-        log_statistics:     false
-        log_404_errors:     false
-
+        redirect_class:         ~ # Required
+        log_statistics:         false
+        allow_404_query_params: false
     ...
 
 * **``log_statistics``**: when enabled, the *count* and *last accessed* date for redirects are stored in the database.
-* **``log_404_errors``**: when enabled, 404 errors are added to the database as redirects without destinations.  Their *count* and *last accessed* date are also stored.
-
-# TODO
-
-1. Create useful data accessor functions for the database
-2. Create a GUI for reviewing/creating/editing redirects
+Also, 404 errors will be logged
+* **``allow_404_query_params``**: when enabled, 404 errors will be logged with a query string (`/foo/bar?baz=1` will be
+logged as `/foo/bar?baz=1`).  By default, just the path is used (`/foo/bar?baz=1` is logged as `/foo/bar`)

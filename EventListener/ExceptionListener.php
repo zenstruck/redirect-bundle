@@ -20,7 +20,7 @@ use Zenstruck\Bundle\RedirectBundle\Entity\RedirectManager;
  */
 class ExceptionListener
 {
-    /** @var RedirectManager **/
+    protected $redirectManager;
 
     public function __construct(RedirectManager $redirectManager)
     {
@@ -37,16 +37,10 @@ class ExceptionListener
             return;
         }
 
-        $source = $request->getPathInfo();
-
-        // if using dev env this will be set (ie /app_dev.php)
-        $baseUrl = $request->getBaseUrl();
-
-        $response = $this->redirectManager->getResponse($source, $baseUrl);
+        $response = $this->redirectManager->getResponseForRequest($request);
 
         if ($response) {
             $event->setResponse($response);
         }
     }
-
 }

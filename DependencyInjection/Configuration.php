@@ -19,7 +19,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
@@ -28,13 +27,11 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('redirect_class')->isRequired()->end()
-                ->scalarNode('redirect_template')->defaultValue('ZenstruckRedirectBundle:Redirect:redirect.html.twig')->end()
+                ->booleanNode('allow_404_query_params')->defaultFalse()->end()
                 ->booleanNode('log_statistics')->defaultFalse()->end()
-                ->booleanNode('log_404_errors')->defaultFalse()->end()
             ->end()
         ;
 
         return $treeBuilder;
     }
-
 }

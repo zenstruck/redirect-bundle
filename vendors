@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Symfony version: ${SYMFONY_VERSION}"
+
+if [ "${SYMFONY_VERSION}" = "2.0.*" ]; then
+    echo "Using Symfony 2.0 requirements"
+    rm composer.json
+    cp composer20.json composer.json
+fi
+
+php composer.phar install

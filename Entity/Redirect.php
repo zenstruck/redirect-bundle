@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class Redirect
+abstract class Redirect
 {
     const STATUS_CODE_NOTFOUND = 404;
     const STATUS_CODE_REDIRECT = 301;
@@ -25,59 +25,31 @@ class Redirect
 
     protected $destination;
 
-    protected $statusCode;
+    protected $statusCode = self::STATUS_CODE_NOTFOUND;
 
-    protected $count;
+    protected $count = 0;
 
     /**
      * @var \DateTime $lastAccessed
      */
     protected $lastAccessed;
 
-    public function __construct()
-    {
-        $this->setStatusCode(self::STATUS_CODE_NOTFOUND);
-        $this->setCount(0);
-    }
-
     /**
-     * Get id
-     *
-     * @return integer $id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set source
-     *
-     * @param string $source
+     * @param $source
      */
     public function setSource($source)
     {
-        if ($source) {
-            if ($this->isAbsolute($source)) {
-                // remove host from url
-                $source = explode(parse_url($source, PHP_URL_HOST), $source);
+        $value = trim(parse_url($source, PHP_URL_PATH));
 
-                $source = $source[1];
-            }
+        if ($query = parse_url($source, PHP_URL_QUERY)) {
+            $value .= '?' . $query;
+        }
 
-            $source = $this->addSlashToURL($source);
-         }
-
-        // remove encoded spaces
-        $source = str_replace('%20', ' ', $source);
-
-        $this->source = $source;
+        $this->source = urldecode($this->addSlashToURL($value));
     }
 
     /**
-     * Get source
-     *
-     * @return string $source
+     * @return string
      */
     public function getSource()
     {
@@ -85,8 +57,6 @@ class Redirect
     }
 
     /**
-     * Set destination
-     *
      * @param string $destination
      */
     public function setDestination($destination)
@@ -104,9 +74,7 @@ class Redirect
     }
 
     /**
-     * Get destination
-     *
-     * @return string $destination
+     * @return string
      */
     public function getDestination()
     {
@@ -137,9 +105,8 @@ class Redirect
     }
 
     /**
-     * Set statusCode
-     *
-     * @param smallint $statusCode
+     * @param int $statusCode
+     * @throws \InvalidArgumentException
      */
     public function setStatusCode($statusCode)
     {
@@ -151,9 +118,7 @@ class Redirect
     }
 
     /**
-     * Get statusCode
-     *
-     * @return smallint $statusCode
+     * @return int
      */
     public function getStatusCode()
     {
@@ -161,8 +126,6 @@ class Redirect
     }
 
     /**
-     * Set count
-     *
      * @param integer $count
      */
     public function setCount($count)
@@ -171,9 +134,7 @@ class Redirect
     }
 
     /**
-     * Get count
-     *
-     * @return integer $count
+     * @return integer
      */
     public function getCount()
     {
@@ -191,8 +152,6 @@ class Redirect
     }
 
     /**
-     * Set lastAccessed
-     *
      * @param \DateTime $lastAccessed
      */
     public function setLastAccessed($lastAccessed)
@@ -201,21 +160,20 @@ class Redirect
     }
 
     /**
-     * Get lastAccessed
-     *
-     * @return \DateTime $lastAccessed
+     * @return \DateTime
      */
     public function getLastAccessed()
     {
         return $this->lastAccessed;
     }
 
-    public function fixCodeForEmptyDestination()
+    public function fixCodeForDestination()
     {
         if (!$this->destination) {
             $this->setStatusCode(self::STATUS_CODE_NOTFOUND);
         } else {
-            if ($this->statusCode === self::STATUS_CODE_NOTFOUND) {
+            // make sure not a 404 error
+            if (self::STATUS_CODE_NOTFOUND === $this->statusCode) {
                 $this->setStatusCode(self::STATUS_CODE_REDIRECT);
             }
         }
@@ -232,10 +190,6 @@ class Redirect
 
     protected function addSlashToURL($url)
     {
-        if (!preg_match('#^/#', $url)) {
-            $url = '/' . $url;
-        }
-
-        return $url;
+        return sprintf('/%s', trim($url, '/'));
     }
 }

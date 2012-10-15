@@ -10,23 +10,27 @@ use Symfony\Component\Config\Loader\LoaderInterface;
  */
 class TestKernel extends Kernel
 {
-    function registerBundles()
+    public function registerBundles()
     {
-        return array(
+        $bundles = array(
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new \Symfony\Bundle\TwigBundle\TwigBundle(),
-            new \Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
-            new \Symfony\Bundle\MonologBundle\MonologBundle(),
-
             new \Zenstruck\Bundle\RedirectBundle\ZenstruckRedirectBundle(),
-
             new \Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle\RedirectTestBundle()
         );
+
+        // check for Symfony 2.0
+        if (version_compare(self::VERSION, '2.1', '<')) {
+            $bundles[] = new \Symfony\Bundle\DoctrineBundle\DoctrineBundle();
+        } else {
+            $bundles[] = new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle();
+        }
+
+        return $bundles;
     }
 
-    function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/default.yml');
+        $loader->load(__DIR__.'/config/' . $this->environment . '.yml');
     }
 
     public function getRootDir()

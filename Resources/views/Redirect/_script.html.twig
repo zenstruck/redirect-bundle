@@ -1,7 +1,0 @@
-<script type="text/javascript">
-    var redirectUrl = "{{ url('zenstruck_redirect') }}";
-    var baseUrl = "{{ baseUrl }}";
-    var encodedUrl = encodeURIComponent(window.location.href.replace(window.location.origin, "").replace(baseUrl, ""));
-
-    window.location = redirectUrl + "?url=" + encodedUrl;
-</script>

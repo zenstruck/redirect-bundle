@@ -1,13 +1,5 @@
 zenstruck_redirect:
     redirect_class: Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle\Entity\Redirect
-    log_statistics:     true
-    log_404_errors:     true
-
-monolog:
-    handlers:
-        test:
-            type: test
-
 
 framework:
     secret: test
@@ -16,13 +8,10 @@ framework:
         storage_id: session.storage.filesystem
     form:            true
     csrf_protection: false
+    router:   { resource: "%kernel.root_dir%/config/routing.yml" }
     validation:
         enabled: true
         enable_annotations: true
-    router:
-        resource: %kernel.root_dir%/config/routing.yml
-    templating:
-        engines: [twig]
 
 doctrine:
     dbal:

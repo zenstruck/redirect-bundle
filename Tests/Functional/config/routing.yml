@@ -1,2 +1,0 @@
-zenstruck_redirect:
-    resource: "@ZenstruckRedirectBundle/Resources/config/routing.xml"

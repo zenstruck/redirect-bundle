@@ -10,9 +10,41 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ExceptionListenerTest extends WebTestCase
 {
-    public function testRedirects()
+    public function testDefaultRedirects()
     {
-        $client = $this->createClient();
+        $client = $this->getClient();
+
+        $client->request('get', '/foo/bar');
+        $this->assertRedirect($client->getResponse(), '/');
+        $this->assertRedirectExists('/foo/bar', 301, 0);
+
+        $client->request('get', '/foo/bar');
+        $this->assertRedirect($client->getResponse(), '/');
+        $this->assertRedirectExists('/foo/bar', 301, 0);
+
+        $client->request('get', '/foo/google');
+        $this->assertRedirect($client->getResponse(), 'http://www.google.com');
+        $this->assertRedirectExists('/foo/google', 301, 0);
+
+        $client->request('get', '/foo?bar=10');
+        $this->assertRedirect($client->getResponse(), 'http://www.bar.com');
+        $this->assertRedirectExists('/foo?bar=10', 301, 0);
+    }
+
+    public function testDefault404()
+    {
+        $client = $this->getClient();
+
+        try {
+            $client->request('get', '/not-found');
+        } catch (NotFoundHttpException $e) {}
+
+        $this->assertRedirectDoesNotExist('/not-found');
+    }
+
+    public function testStatsEnabledRedirects()
+    {
+        $client = $this->getClient('stats');
 
         $client->request('get', '/foo/bar');
         $this->assertRedirect($client->getResponse(), '/');
@@ -21,27 +53,86 @@ class ExceptionListenerTest extends WebTestCase
         $client->request('get', '/foo/bar');
         $this->assertRedirect($client->getResponse(), '/');
         $this->assertRedirectExists('/foo/bar', 301, 2);
+
+        $client->request('get', '/foo?bar=10');
+        $this->assertRedirect($client->getResponse(), 'http://www.bar.com');
+        $this->assertRedirectExists('/foo?bar=10', 301, 1);
+
+        $client->request('get', '/foo?bar=10');
+        $this->assertRedirect($client->getResponse(), 'http://www.bar.com');
+        $this->assertRedirectExists('/foo?bar=10', 301, 2);
+
+        $client->request('get', '/no/path/version?foo=bar');
+        $this->assertRedirectExists('/no/path/version?foo=bar', 301, 1);
     }
 
-    public function test404Logging()
+    public function testStatsEnabled404()
     {
-        $client = $this->createClient();
+        $client = $this->getClient('stats');
 
-        $client->request('get', '/not-found');
+        try {
+            $client->request('get', '/not-found');
+        } catch (NotFoundHttpException $e) {}
+
         $this->assertRedirectExists('/not-found', 404, 1);
 
-        $client->request('get', '/not-found');
+        try {
+            $client->request('get', '/not-found');
+        } catch (NotFoundHttpException $e) {}
+
         $this->assertRedirectExists('/not-found', 404, 2);
+
+        try {
+            $client->request('get', '/not-found?foo=bar');
+        } catch (NotFoundHttpException $e) {}
+
+        $this->assertRedirectExists('/not-found', 404, 3);
+
+        try {
+            $client->request('get', '/no/path/version');
+        } catch (NotFoundHttpException $e) {}
+
+        $this->assertRedirectExists('/no/path/version', 404, 1);
+
+        try {
+            $client->request('get', '/no/path/version?foo=none');
+        } catch (NotFoundHttpException $e) {}
+
+        $this->assertRedirectExists('/no/path/version', 404, 2);
     }
 
-    public function testJavascriptRedirect()
+    public function testAllowQueryParams()
     {
-        $client = $this->createClient();
+        $client = $this->getClient('allow_query_params');
 
-        $client->request('get', '/foo');
-        $response = $client->getResponse();
+        try {
+            $client->request('get', '/not-found');
+        } catch (NotFoundHttpException $e) {}
 
-        $this->assertContains('Redirecting...', $response->getContent());
-        $this->assertRedirectExists('/foo', 301, 0);
+        $this->assertRedirectExists('/not-found', 404, 1);
+
+        try {
+            $client->request('get', '/not-found');
+        } catch (NotFoundHttpException $e) {}
+
+        $this->assertRedirectExists('/not-found', 404, 2);
+
+        try {
+            $client->request('get', '/not-found?foo=bar');
+        } catch (NotFoundHttpException $e) {}
+
+        $this->assertRedirectExists('/not-found?foo=bar', 404, 1);
+
+        try {
+            $client->request('get', '/no/path/version');
+        } catch (NotFoundHttpException $e) {}
+
+        $this->assertRedirectExists('/no/path/version', 404, 1);
+
+        try {
+            $client->request('get', '/no/path/version?foo=none');
+        } catch (NotFoundHttpException $e) {}
+
+        $this->assertRedirectExists('/no/path/version?foo=none', 404, 1);
     }
 }

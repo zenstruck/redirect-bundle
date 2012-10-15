@@ -33,9 +33,7 @@ class ZenstruckRedirectExtension extends Extension
         $loader->load('redirect.xml');
 
         $container->getDefinition('zenstruck_redirect.manager')
-                ->replaceArgument(2, $config);
-
-        $loader->load('controller.xml');
+                ->replaceArgument(1, $config);
     }
 
 }

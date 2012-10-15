@@ -4,5 +4,11 @@ php:
   - 5.3
   - 5.4
 
+env:
+    - SYMFONY_VERSION=2.0.*
+    - SYMFONY_VERSION=2.1.*
+    - SYMFONY_VERSION=dev-master
+
 before_script:
-    - curl --silent http://getcomposer.org/installer | php > /dev/null && php composer.phar install --dev --quiet
+    - curl -s http://getcomposer.org/installer | php
+    - sh vendors

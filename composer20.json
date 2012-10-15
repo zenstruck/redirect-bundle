@@ -1,0 +1,22 @@
+{
+    "name": "zenstruck/redirect-bundle",
+    "description": "Store redirects for your site and keeps statistics on redirects and 404 errors",
+    "keywords": ["redirect"],
+    "homepage": "http://zenstruck.com/project/ZenstruckRedirectBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Bond",
+            "email": "kevinbond@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/symfony": "2.0.*",
+        "doctrine/orm": "2.*"
+    },
+    "autoload": {
+        "psr-0": { "Zenstruck\\Bundle\\RedirectBundle": "" }
+    },
+    "target-dir": "Zenstruck/Bundle/RedirectBundle"
+}

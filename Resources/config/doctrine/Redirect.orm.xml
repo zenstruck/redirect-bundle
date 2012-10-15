@@ -12,8 +12,8 @@
         <field name="lastAccessed" column="last_accessed" type="datetime" nullable="true" />
 
         <lifecycle-callbacks>
-            <lifecycle-callback type="prePersist" method="fixCodeForEmptyDestination" />
-            <lifecycle-callback type="preUpdate" method="fixCodeForEmptyDestination" />
+            <lifecycle-callback type="prePersist" method="fixCodeForDestination" />
+            <lifecycle-callback type="preUpdate" method="fixCodeForDestination" />
         </lifecycle-callbacks>
     </mapped-superclass>
 
