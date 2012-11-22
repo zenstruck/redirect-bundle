@@ -13,7 +13,7 @@ This can be useful for determining bad links.
 
 # Installation
 
-1. Add `zenstruck/redirect-bundle` to your `composer.json` or this repository to your `deps`
+1. Add `zenstruck/redirect-bundle` to your `composer.json` or this repository to your `deps` (if using Symfony 2.0)
 2. Add the ``Zenstruck`` namespace to your ``app/autoloader.php`` (if not using composer)
 3. Register the bundle (``new Zenstruck\Bundle\RedirectBundle\ZenstruckRedirectBundle()``)
 4. (optional) add ``ZenstruckRedirectBundle`` to your doctrine mappings (not necessary if ``auto_mapping`` is true)
