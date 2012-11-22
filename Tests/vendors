@@ -8,4 +8,10 @@ if [ "${SYMFONY_VERSION}" = "2.0.*" ]; then
     cp Tests/composer20.json composer.json
 fi
 
+if [ "${SYMFONY_VERSION}" = "dev-master" ]; then
+    echo "Using Symfony dev-master requirements"
+    composer require --no-update doctrine/doctrine-bundle:dev-master
+fi
+
+composer require --no-update symfony/symfony:${SYMFONY_VERSION}
 composer install --dev
