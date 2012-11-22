@@ -1,7 +1,5 @@
 <?php
 
-namespace Zenstruck\Bundle\RedirectBundle\Tests\Functional;
-
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -15,7 +13,7 @@ class TestKernel extends Kernel
         $bundles = array(
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Zenstruck\Bundle\RedirectBundle\ZenstruckRedirectBundle(),
-            new \Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle\RedirectTestBundle()
+            new \Zenstruck\Bundle\RedirectBundle\Tests\Fixtures\App\Bundle\RedirectTestBundle()
         );
 
         // check for Symfony 2.0

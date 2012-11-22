@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle\Entity\Redirect;
+use Zenstruck\Bundle\RedirectBundle\Tests\Fixtures\App\Bundle\Entity\Redirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -53,12 +53,7 @@ abstract class WebTestCase extends BaseWebTestCase
         self::assertThat((boolean) $redirect, self::isFalse());
     }
 
-    static protected function getKernelClass()
-    {
-        return 'Zenstruck\Bundle\RedirectBundle\Tests\Functional\TestKernel';
-    }
-
-    public function getClient($environment = 'default')
+    protected function prepareEnvironment($environment = 'default')
     {
         $client = parent::createClient(array('environment' => $environment));
 

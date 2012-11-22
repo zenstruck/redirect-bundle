@@ -12,7 +12,7 @@ class ExceptionListenerTest extends WebTestCase
 {
     public function testDefaultRedirects()
     {
-        $client = $this->getClient();
+        $client = $this->prepareEnvironment();
 
         $client->request('get', '/foo/bar');
         $this->assertRedirect($client->getResponse(), '/');
@@ -33,7 +33,7 @@ class ExceptionListenerTest extends WebTestCase
 
     public function testDefault404()
     {
-        $client = $this->getClient();
+        $client = $this->prepareEnvironment();
 
         try {
             $client->request('get', '/not-found');
@@ -44,7 +44,7 @@ class ExceptionListenerTest extends WebTestCase
 
     public function testStatsEnabledRedirects()
     {
-        $client = $this->getClient('stats');
+        $client = $this->prepareEnvironment('stats');
 
         $client->request('get', '/foo/bar');
         $this->assertRedirect($client->getResponse(), '/');
@@ -68,7 +68,7 @@ class ExceptionListenerTest extends WebTestCase
 
     public function testStatsEnabled404()
     {
-        $client = $this->getClient('stats');
+        $client = $this->prepareEnvironment('stats');
 
         try {
             $client->request('get', '/not-found');
@@ -103,7 +103,7 @@ class ExceptionListenerTest extends WebTestCase
 
     public function testAllowQueryParams()
     {
-        $client = $this->getClient('allow_query_params');
+        $client = $this->prepareEnvironment('allow_query_params');
 
         try {
             $client->request('get', '/not-found');

@@ -1,5 +1,5 @@
 zenstruck_redirect:
-    redirect_class: Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle\Entity\Redirect
+    redirect_class: Zenstruck\Bundle\RedirectBundle\Tests\Fixtures\App\Bundle\Entity\Redirect
 
 framework:
     secret: test

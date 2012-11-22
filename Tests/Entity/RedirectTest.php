@@ -11,7 +11,7 @@
 
 namespace Zenstruck\Bundle\RedirectBundle\Tests\Entity;
 
-use Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle\Entity\Redirect;
+use Zenstruck\Bundle\RedirectBundle\Tests\Fixtures\App\Bundle\Entity\Redirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>

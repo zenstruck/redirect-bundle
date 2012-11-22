@@ -1,6 +1,6 @@
 <?php
 
-namespace Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle\Entity;
+namespace Zenstruck\Bundle\RedirectBundle\Tests\Fixtures\App\Bundle\Entity;
 
 use Zenstruck\Bundle\RedirectBundle\Entity\Redirect as BaseRedirect;
 use Doctrine\ORM\Mapping as ORM;

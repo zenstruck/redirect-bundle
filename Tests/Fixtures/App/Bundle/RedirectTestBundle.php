@@ -1,6 +1,6 @@
 <?php
 
-namespace Zenstruck\Bundle\RedirectBundle\Tests\Functional\Bundle;
+namespace Zenstruck\Bundle\RedirectBundle\Tests\Fixtures\App\Bundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
