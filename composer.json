@@ -19,5 +19,10 @@
     "autoload": {
         "psr-0": { "Zenstruck\\Bundle\\RedirectBundle": "" }
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
     "target-dir": "Zenstruck/Bundle/RedirectBundle"
 }
