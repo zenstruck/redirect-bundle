@@ -105,7 +105,7 @@ abstract class Redirect
     }
 
     /**
-     * @param int $statusCode
+     * @param  int                       $statusCode
      * @throws \InvalidArgumentException
      */
     public function setStatusCode($statusCode)

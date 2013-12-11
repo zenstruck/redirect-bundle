@@ -4,7 +4,6 @@ namespace Zenstruck\Bundle\RedirectBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Zenstruck\Bundle\RedirectBundle\Tests\Fixtures\App\Bundle\Entity\Redirect;
 
@@ -74,6 +73,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $options["-e"] = "test";
         $options["-q"] = null;
         $options = array_merge($options, array('command' => $command));
+
         return $application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
     }
 

@@ -33,7 +33,7 @@ class RedirectManager
 
     /**
      * @param \Doctrine\ORM\EntityManager $em
-     * @param array $options
+     * @param array                       $options
      */
     public function __construct(EntityManager $em, array $options)
     {
@@ -85,7 +85,7 @@ class RedirectManager
 
     /**
      * @param $source
-     * @param bool $allowQueryParams
+     * @param  bool     $allowQueryParams
      * @return Redirect
      */
     public function findOneBySourceOrCreate($source, $allowQueryParams = true)
