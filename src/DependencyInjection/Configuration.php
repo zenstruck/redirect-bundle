@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->validate()
                         ->ifTrue(function ($value) {
-                            return !class_exists($value);
+                            return !is_subclass_of($value, 'Zenstruck\RedirectBundle\Model\Redirect');
                         })
                         ->thenInvalid('Class "%s" does not exist')
                     ->end()
