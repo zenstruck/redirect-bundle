@@ -42,7 +42,9 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     public function testGetLastAccessedAt()
     {
         $redirect = $this->createRedirect('/');
+        $this->assertNull($redirect->getLastAccessed());
 
+        $redirect->updateLastAccessed();
         $this->assertInstanceOf('DateTime', $redirect->getLastAccessed());
         $this->assertEquals(time(), $redirect->getLastAccessed()->format('U'));
     }

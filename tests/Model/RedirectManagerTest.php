@@ -61,8 +61,7 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
     {
         $redirect = new DummyRedirect('/foo');
         $redirect->increaseCount(5);
-
-        sleep(2);
+        $this->assertNull($redirect->getLastAccessed());
 
         $this->repository->expects($this->once())
             ->method('findOneBy')

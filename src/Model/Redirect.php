@@ -17,7 +17,6 @@ abstract class Redirect
     {
         $this->setSource($source);
         $this->setDestination($destination);
-        $this->updateLastAccessed();
     }
 
     /**
@@ -105,7 +104,7 @@ abstract class Redirect
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getLastAccessed()
     {

@@ -9,6 +9,6 @@
         <field name="destination" column="destination" type="string" length="255" nullable="true" />
         <field name="statusCode" column="status_code" type="smallint" />
         <field name="count" type="integer" />
-        <field name="lastAccessed" column="last_accessed" type="datetime" />
+        <field name="lastAccessed" column="last_accessed" type="datetime" nullable="true" />
     </mapped-superclass>
 </doctrine-mapping>
