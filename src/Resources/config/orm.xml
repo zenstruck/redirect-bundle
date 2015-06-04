@@ -14,7 +14,7 @@
             <argument type="service" id="zenstruck_redirect.entity_manager" />
         </service>
 
-        <service id="zenstruck_redirect.entity_manager" factory-service="doctrine" factory-method="getManager" class="Doctrine\ORM\EntityManager" public="false">
+        <service id="zenstruck_redirect.entity_manager" class="Doctrine\ORM\EntityManager" public="false">
             <argument>%zenstruck_redirect.model_manager_name%</argument>
         </service>
     </services>
