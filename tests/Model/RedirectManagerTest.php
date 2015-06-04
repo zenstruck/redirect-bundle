@@ -3,14 +3,14 @@
 namespace Zenstruck\RedirectBundle\Tests\Model;
 
 use Zenstruck\RedirectBundle\Model\RedirectManager;
-use Zenstruck\RedirectBundle\Tests\Fixture\DummyRedirect;
+use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
 class RedirectManagerTest extends \PHPUnit_Framework_TestCase
 {
-    const REDIRECT_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\DummyRedirect';
+    const REDIRECT_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect';
 
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $om;

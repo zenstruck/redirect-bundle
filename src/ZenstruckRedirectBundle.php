@@ -2,6 +2,8 @@
 
 namespace Zenstruck\RedirectBundle;
 
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -9,4 +11,19 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class ZenstruckRedirectBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $this->addRegisterMappingsPass($container);
+    }
+
+    private function addRegisterMappingsPass(ContainerBuilder $container)
+    {
+        $mappings = array(
+            realpath(__DIR__.'/Resources/config/doctrine-mapping') => 'Zenstruck\RedirectBundle\Model',
+        );
+
+        $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
+    }
 }

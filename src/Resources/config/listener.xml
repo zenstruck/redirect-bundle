@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="zenstruck_redirect.not_found_listener.class">Zenstruck\RedirectBundle\EventListener\RedirectOnNotFoundListener</parameter>
+    </parameters>
+
+    <services>
+        <service id="zenstruck_redirect.not_found_listener" class="%zenstruck_redirect.not_found_listener.class%">
+            <argument type="service" id="zenstruck_redirect.redirect_manager" />
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
+        </service>
+    </services>
+</container>
