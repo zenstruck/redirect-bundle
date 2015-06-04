@@ -19,7 +19,8 @@
     "require-dev": {
         "matthiasnoback/symfony-dependency-injection-test": "~0.7.3",
         "symfony/finder": "~2.3",
-        "symfony/browser-kit": "~2.3"
+        "symfony/browser-kit": "~2.3",
+        "symfony/form": "~2.3"
     },
     "autoload": {
         "psr-4": { "Zenstruck\\RedirectBundle\\": "src/" }

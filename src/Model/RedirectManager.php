@@ -12,6 +12,10 @@ class RedirectManager
     private $class;
     private $om;
 
+    /**
+     * @param string        $class The Redirect class name
+     * @param ObjectManager $om
+     */
     public function __construct($class, ObjectManager $om)
     {
         $this->class = $class;

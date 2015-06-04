@@ -22,6 +22,10 @@ class ZenstruckRedirectExtension extends ConfigurableExtension
         $loader->load('listener.xml');
         $loader->load('orm.xml');
 
+        if (class_exists('Symfony\Component\Form\Form')) {
+            $loader->load('form.xml');
+        }
+
         $container->setParameter('zenstruck_redirect.redirect_class', $mergedConfig['redirect_class']);
         $container->setParameter('zenstruck_redirect.model_manager_name', $mergedConfig['model_manager_name']);
 
