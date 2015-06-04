@@ -9,15 +9,14 @@ abstract class Redirect
 {
     private $source;
     private $destination;
-    private $statusCode;
+    private $statusCode = 404;
     private $count = 0;
     private $lastAccessed;
 
-    public function __construct($source, $destination = null, $statusCode = 404)
+    public function __construct($source, $destination = null)
     {
         $this->setSource($source);
         $this->setDestination($destination);
-        $this->setStatusCode($statusCode);
         $this->updateLastAccessed();
     }
 
@@ -50,8 +49,19 @@ abstract class Redirect
     public function setDestination($destination)
     {
         $destination = trim($destination);
+        $destination = '' !== $destination ? $destination : null;
 
-        $this->destination = '' !== $destination ? $destination : null;
+        $this->destination = $destination;
+
+        if (null === $destination) {
+            $this->setStatusCode(404);
+
+            return;
+        }
+
+        if (404 === $this->getStatusCode()) {
+            $this->setStatusCode(301);
+        }
     }
 
     /**
