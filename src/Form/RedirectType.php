@@ -25,7 +25,7 @@ class RedirectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('source', null, array('label' => 'form.redirect', 'translation_domain' => 'ZenstruckRedirectBundle'))
+            ->add('source', null, array('label' => 'form.source', 'translation_domain' => 'ZenstruckRedirectBundle'))
             ->add('destination', null, array('label' => 'form.destination', 'translation_domain' => 'ZenstruckRedirectBundle'))
             ->add('status_code', 'choice', array(
                 'label' => 'form.status_code',
