@@ -1,5 +1,0 @@
-imports:
-    - { resource: stats.yml }
-
-zenstruck_redirect:
-    allow_404_query_params: true

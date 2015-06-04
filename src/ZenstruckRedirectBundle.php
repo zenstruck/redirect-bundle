@@ -1,13 +1,12 @@
 <?php
 
-namespace Zenstruck\Bundle\RedirectBundle\Tests\Fixtures\App\Bundle;
+namespace Zenstruck\RedirectBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class RedirectTestBundle extends Bundle
+class ZenstruckRedirectBundle extends Bundle
 {
-
 }

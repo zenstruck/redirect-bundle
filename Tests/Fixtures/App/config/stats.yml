@@ -1,5 +1,0 @@
-imports:
-    - { resource: default.yml }
-
-zenstruck_redirect:
-    log_statistics: true
