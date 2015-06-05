@@ -13,7 +13,7 @@ abstract class Redirect
     private $count = 0;
     private $lastAccessed;
 
-    public function __construct($source, $destination = null)
+    public function __construct($source = null, $destination = null)
     {
         $this->setSource($source);
         $this->setDestination($destination);
@@ -25,6 +25,14 @@ abstract class Redirect
     public function setSource($source)
     {
         $source = trim($source);
+        $source = !empty($source) ? $source : null;
+
+        if (null === $source) {
+            $this->source = $source;
+
+            return;
+        }
+
         $value = '/'.ltrim(parse_url($source, PHP_URL_PATH), '/');
 
         if ($query = parse_url($source, PHP_URL_QUERY)) {
@@ -48,7 +56,7 @@ abstract class Redirect
     public function setDestination($destination)
     {
         $destination = trim($destination);
-        $destination = '' !== $destination ? $destination : null;
+        $destination = !empty($destination) ? $destination : null;
 
         $this->destination = $destination;
 

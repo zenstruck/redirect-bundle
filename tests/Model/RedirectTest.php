@@ -81,6 +81,17 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(301, $redirect->getStatusCode());
     }
 
+    public function testEmptyConstructor()
+    {
+        $redirect = $this->createRedirect();
+
+        $this->assertNull($redirect->getSource());
+        $this->assertNull($redirect->getDestination());
+        $this->assertSame(404, $redirect->getStatusCode());
+        $this->assertSame(0, $redirect->getCount());
+        $this->assertNull($redirect->getLastAccessed());
+    }
+
     public function sourceProvider()
     {
         return array(
@@ -96,7 +107,8 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
             array('foo/bar?baz=true', '/foo/bar?baz=true'),
             array('http://www.example.com/foo?baz=bar&foo=baz', '/foo?baz=bar&foo=baz'),
             array('http://www.example.com/foo?baz=bar&foo=baz#baz', '/foo?baz=bar&foo=baz'),
-            array('', '/'),
+            array('', null),
+            array('   ', null),
             array('/', '/'),
         );
     }
@@ -127,7 +139,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     /**
      * @return \Zenstruck\RedirectBundle\Model\Redirect
      */
-    private function createRedirect($source, $destination = null, $statusCode = 404)
+    private function createRedirect($source = null, $destination = null, $statusCode = 404)
     {
         return $this->getMockForAbstractClass(
             'Zenstruck\RedirectBundle\Model\Redirect',
