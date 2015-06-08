@@ -1,6 +1,9 @@
 # ZenstruckRedirectBundle
 
 [![Build Status](http://img.shields.io/travis/kbond/ZenstruckRedirectBundle.svg?style=flat-square)](https://travis-ci.org/kbond/ZenstruckRedirectBundle)
+[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/kbond/ZenstruckRedirectBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/)
+[![Code Coverage](http://img.shields.io/scrutinizer/coverage/g/kbond/ZenstruckRedirectBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/98b24514-56a0-43a4-8c8b-760b86163dd2.svg?style=flat-square)](https://insight.sensiolabs.com/projects/98b24514-56a0-43a4-8c8b-760b86163dd2)
 [![Latest Stable Version](http://img.shields.io/packagist/v/zenstruck/redirect-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/redirect-bundle)
 [![License](http://img.shields.io/packagist/l/zenstruck/redirect-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/redirect-bundle)
 
