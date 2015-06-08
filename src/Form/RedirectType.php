@@ -65,9 +65,6 @@ class RedirectType extends AbstractType
             'status_code'    => false,
             'disable_source' => false,
         ));
-
-        $resolver->setAllowedTypes('status_code', 'bool');
-        $resolver->setAllowedTypes('disable_source', 'bool');
     }
 
     /**
