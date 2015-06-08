@@ -3,7 +3,7 @@
 namespace Zenstruck\RedirectBundle\Tests\Form;
 
 use Symfony\Component\Form\Test\TypeTestCase;
-use Zenstruck\RedirectBundle\Form\RedirectType;
+use Zenstruck\RedirectBundle\Form\Type\RedirectType;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>

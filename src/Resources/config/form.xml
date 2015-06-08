@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="zenstruck_redirect.redirect.form.type" class="Zenstruck\RedirectBundle\Form\RedirectType">
+        <service id="zenstruck_redirect.redirect.form.type" class="Zenstruck\RedirectBundle\Form\Type\RedirectType">
             <tag name="form.type" alias="zenstruck_redirect" />
             <argument>%zenstruck_redirect.redirect_class%</argument>
         </service>

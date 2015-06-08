@@ -1,6 +1,6 @@
 <?php
 
-namespace Zenstruck\RedirectBundle\Form;
+namespace Zenstruck\RedirectBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
