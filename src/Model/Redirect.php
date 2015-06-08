@@ -33,13 +33,7 @@ abstract class Redirect
             return;
         }
 
-        $value = '/'.ltrim(parse_url($source, PHP_URL_PATH), '/');
-
-        if ($query = parse_url($source, PHP_URL_QUERY)) {
-            $value .= '?'.$query;
-        }
-
-        $this->source = $value;
+        $this->source = $this->createAbsoluteUri($source);
     }
 
     /**
@@ -58,10 +52,9 @@ abstract class Redirect
         $destination = trim($destination);
         $destination = !empty($destination) ? $destination : null;
 
-        $this->destination = $destination;
-
         if (null === $destination) {
             $this->setStatusCode(404);
+            $this->destination = null;
 
             return;
         }
@@ -69,6 +62,15 @@ abstract class Redirect
         if (404 === $this->getStatusCode()) {
             $this->setStatusCode(301);
         }
+
+        if (null !== parse_url($destination, PHP_URL_SCHEME)) {
+            // absolute url
+            $this->destination = $destination;
+
+            return;
+        }
+
+        $this->destination = $this->createAbsoluteUri($destination);
     }
 
     /**
@@ -125,5 +127,21 @@ abstract class Redirect
     public function updateLastAccessed()
     {
         $this->lastAccessed = new \DateTime('now');
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    private function createAbsoluteUri($path)
+    {
+        $value = '/'.ltrim(parse_url($path, PHP_URL_PATH), '/');
+
+        if ($query = parse_url($path, PHP_URL_QUERY)) {
+            $value .= '?'.$query;
+        }
+
+        return $value;
     }
 }

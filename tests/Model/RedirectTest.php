@@ -117,7 +117,8 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('/foo', '/foo', 301),
-            array('foo', 'foo', 301),
+            array('foo', '/foo', 301),
+            array('foo?bar=baz', '/foo?bar=baz', 301),
             array(null, null, 404),
             array('', null, 404),
             array(' ', null, 404),
