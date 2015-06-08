@@ -24,24 +24,39 @@ class FunctionalTest extends WebTestCase
     /** @var EntityManager */
     private $em;
 
-    public function testRedirect()
+    public function test301Redirect()
     {
-        $this->assertSame(0, $this->getRedirect('/redirect-to-symfony')->getCount());
+        $this->assertSame(0, $this->getRedirect('/301-redirect')->getCount());
 
         $this->client->followRedirects(false);
-        $this->client->request('GET', '/redirect-to-symfony');
+        $this->client->request('GET', '/301-redirect');
         $response = $this->client->getResponse();
 
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $response);
         $this->assertSame('http://symfony.com', $response->getTargetUrl());
-        $this->assertSame(1, $this->getRedirect('/redirect-to-symfony')->getCount());
+        $this->assertSame(301, $response->getStatusCode());
+        $this->assertSame(1, $this->getRedirect('/301-redirect')->getCount());
 
-        $this->client->request('GET', '/redirect-to-symfony?foo=bar');
+        $this->client->request('GET', '/301-redirect?foo=bar');
         $response = $this->client->getResponse();
 
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $response);
         $this->assertSame('http://symfony.com', $response->getTargetUrl());
-        $this->assertSame(2, $this->getRedirect('/redirect-to-symfony')->getCount());
+        $this->assertSame(2, $this->getRedirect('/301-redirect')->getCount());
+    }
+
+    public function test302Redirect()
+    {
+        $this->assertSame(0, $this->getRedirect('/302-redirect')->getCount());
+
+        $this->client->followRedirects(false);
+        $this->client->request('GET', '/302-redirect');
+        $response = $this->client->getResponse();
+
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $response);
+        $this->assertSame('http://example.com', $response->getTargetUrl());
+        $this->assertSame(302, $response->getStatusCode());
+        $this->assertSame(1, $this->getRedirect('/302-redirect')->getCount());
     }
 
     public function test404()
@@ -73,7 +88,7 @@ class FunctionalTest extends WebTestCase
         $errors = $validator->validate(new DummyRedirect('/foo'));
         $this->assertCount(0, $errors);
 
-        $errors = $validator->validate(new DummyRedirect('/redirect-to-symfony'));
+        $errors = $validator->validate(new DummyRedirect('/301-redirect'));
         $this->assertCount(1, $errors);
         $this->assertSame('The source is already used', $errors[0]->getMessage());
         $this->assertSame('source', $errors[0]->getPropertyPath());
@@ -130,7 +145,12 @@ class FunctionalTest extends WebTestCase
             ->execute()
         ;
 
-        $this->em->persist(new DummyRedirect('/redirect-to-symfony', 'http://symfony.com'));
+        $this->em->persist(new DummyRedirect('/301-redirect', 'http://symfony.com'));
+
+        $redirect = new DummyRedirect('/302-redirect', 'http://example.com');
+        $redirect->setStatusCode(302);
+        $this->em->persist($redirect);
+
         $this->em->flush();
     }
 }
