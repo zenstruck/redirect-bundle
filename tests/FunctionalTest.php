@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Validator;
 use Zenstruck\RedirectBundle\Model\Redirect;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
 
@@ -62,6 +63,32 @@ class FunctionalTest extends WebTestCase
         }
 
         $this->fail('NotFoundHttpException should have been thrown.');
+    }
+
+    public function testValidation()
+    {
+        /** @var Validator $validator */
+        $validator = self::$kernel->getContainer()->get('validator');
+
+        $errors = $validator->validate(new DummyRedirect('/foo'));
+        $this->assertCount(0, $errors);
+
+        $errors = $validator->validate(new DummyRedirect('/redirect-to-symfony'));
+        $this->assertCount(1, $errors);
+        $this->assertSame('The source is already used', $errors[0]->getMessage());
+        $this->assertSame('source', $errors[0]->getPropertyPath());
+
+        $errors = $validator->validate(new DummyRedirect());
+        $this->assertCount(1, $errors);
+        $this->assertSame('Please enter a source', $errors[0]->getMessage());
+        $this->assertSame('source', $errors[0]->getPropertyPath());
+
+        $redirect = new DummyRedirect('/foo');
+        $redirect->setStatusCode(500);
+        $errors = $validator->validate($redirect);
+        $this->assertCount(1, $errors);
+        $this->assertSame('The status code is invalid', $errors[0]->getMessage());
+        $this->assertSame('statusCode', $errors[0]->getPropertyPath());
     }
 
     public function setUp()
