@@ -12,6 +12,10 @@ env:
     - SYMFONY_VERSION=2.6.*
     - SYMFONY_VERSION=2.7.*
 
+cache:
+    directories:
+        - $HOME/.composer/cache
+
 before_script:
     - composer require symfony/symfony:${SYMFONY_VERSION}
 
