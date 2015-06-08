@@ -5,6 +5,9 @@
                     http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
     <class name="Zenstruck\RedirectBundle\Model\Redirect">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">source</option>
+        </constraint>
         <property name="source">
             <constraint name="NotBlank" />
         </property>

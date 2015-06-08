@@ -25,17 +25,25 @@ class RedirectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('source', null, array('label' => 'form.source', 'translation_domain' => 'ZenstruckRedirectBundle'))
+            ->add('source', null, array(
+                'label' => 'form.source',
+                'translation_domain' => 'ZenstruckRedirectBundle',
+                'disabled' => $options['disable_source'],
+                'read_only' => $options['disable_source'],
+            ))
             ->add('destination', null, array('label' => 'form.destination', 'translation_domain' => 'ZenstruckRedirectBundle'))
-            ->add('status_code', 'choice', array(
+        ;
+
+        if ($options['status_code']) {
+            $builder->add('status_code', 'choice', array(
                 'label' => 'form.status_code',
                 'translation_domain' => 'ZenstruckRedirectBundle',
                 'choices' => array(
                     301 => '301 (Moved Permanently)',
                     302 => '302 (Found)',
                 )
-            ))
-        ;
+            ));
+        }
     }
 
     /**
@@ -52,9 +60,14 @@ class RedirectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->class,
-            'intention'  => 'redirect',
+            'data_class'     => $this->class,
+            'intention'      => 'redirect',
+            'status_code'    => false,
+            'disable_source' => false,
         ));
+
+        $resolver->setAllowedTypes('status_code', 'bool');
+        $resolver->setAllowedTypes('disable_source', 'bool');
     }
 
     /**
