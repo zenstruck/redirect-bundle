@@ -7,12 +7,15 @@
 [![Latest Stable Version](http://img.shields.io/packagist/v/zenstruck/redirect-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/redirect-bundle)
 [![License](http://img.shields.io/packagist/l/zenstruck/redirect-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/redirect-bundle)
 
-This bundle adds a database table that stores redirects for your site. 404 exceptions are intercepted and the requested
-uri is looked up. If a match is found it redirects to the found redirects destination. The count and last accessed
-date are stored as well.
+This bundle adds entities for redirects and 404 errors.
 
-In addition, 404 errors are logged as well. Their count and last accessed date will also be stored. This can be useful
-for determining bad links.
+For redirects, 404 errors are intercepted and the requested path is looked up. If a match is found it redirects to
+the found redirect's destination. The count and last accessed date are updated as well. A redirect form type and
+validation is available as well.
+
+404 errors can be logged as well. Each 404 errors is it's own record in the database. The path, full URL, timestamp, and
+referer are stored. Storing each error as a separate record allows viewing statistics over time and seeing all the
+referer URLs.
 
 ## Installation
 
@@ -34,7 +37,13 @@ for determining bad links.
     }
     ```
 
-3. Create your redirect class inheriting the MappedSuperClass this bundle provides:
+## Configuration
+
+**NOTE:** A `NotFound` or `Redirect` or both must be configured.
+
+### Redirect
+
+1. Create your redirect class inheriting the MappedSuperClass this bundle provides:
 
     ```php
     namespace Acme\DemoBundle\Entity;
@@ -57,32 +66,60 @@ for determining bad links.
     }
     ```
 
-4. Set this class in your `config.yml`:
+2. Set this class in your `config.yml`:
 
     ```yaml
     zenstruck_redirect:
         redirect_class: Acme\DemoBundle\Entity\Redirect
     ```
 
-7. Update your schema:
+3. Update your schema (or use a migration):
 
         $ app/console doctrine:schema:update --force
 
-# Form Type
+### NotFound
+
+1. Create your not found class inheriting the MappedSuperClass this bundle provides:
+
+    ```php
+    namespace Acme\DemoBundle\Entity;
+
+    use Zenstruck\RedirectBundle\Model\NotFound as BaseNotFound;
+    use Doctrine\ORM\Mapping as ORM;
+
+    /**
+     * @ORM\Entity
+     * @ORM\Table(name="not_founds")
+     */
+    class NotFound extends BaseNotFound
+    {
+        /**
+         * @ORM\Id
+         * @ORM\Column(type="integer")
+         * @ORM\GeneratedValue(strategy="AUTO")
+         */
+        private $id;
+    }
+    ```
+
+2. Set this class in your `config.yml`:
+
+    ```yaml
+    zenstruck_redirect:
+        not_found_class: Acme\DemoBundle\Entity\NotFound
+    ```
+
+3. Update your schema (or use a migration):
+
+        $ app/console doctrine:schema:update --force
+
+## Form Type
 
 This bundle provides a form type (`zenstruck_redirect`) for creating/editing redirects.
 
 ```php
 $redirect = // ...
 $form = $this->createForm('zenstruck_redirect', $redirect);
-```
-
-By default, a redirect with a `destination` has a status code of `301`, to give the option to set a `302` status code
-a status code choice field can be enabled when creating the form:
-
-```php
-$redirect = // ...
-$form = $this->createForm('zenstruck_redirect', $redirect, array('status_code' => true));
 ```
 
 You may want to disable the `source` field for already created redirects:
@@ -101,6 +138,7 @@ $form = $this->createForm('zenstruck_redirect', $redirect, array('disable_source
 
 ```yaml
 zenstruck_redirect:
-    redirect_class:     ~ # Required
+    redirect_class:     ~ # Required if not_found_class is not set
+    not_found_class:    ~ # Required if redirect_class is not set
     model_manager_name: ~
 ```
