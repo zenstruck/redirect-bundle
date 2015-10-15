@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                    http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="Zenstruck\RedirectBundle\Model\Redirect">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="message">zenstruck_redirect.source.unique</option>
+            <option name="fields">source</option>
+        </constraint>
+        <property name="source">
+            <constraint name="NotBlank">
+                <option name="message">zenstruck_redirect.source.blank</option>
+            </constraint>
+        </property>
+        <property name="destination">
+            <constraint name="NotBlank">
+                <option name="message">zenstruck_redirect.destination.blank</option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>
