@@ -2,7 +2,7 @@
 
 <phpunit bootstrap="./tests/bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="Queue Test Suite">
+        <testsuite name="ZenstruckRedirectBundle Test Suite">
             <directory suffix="Test.php">./tests/</directory>
         </testsuite>
     </testsuites>

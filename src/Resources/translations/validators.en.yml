@@ -1,6 +1,0 @@
-zenstruck_redirect:
-    source:
-        unique: The source is already used
-        blank: Please enter a source
-    status_code:
-        invalid: The status code is invalid

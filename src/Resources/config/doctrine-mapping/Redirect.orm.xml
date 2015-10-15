@@ -6,8 +6,8 @@
 
     <mapped-superclass name="Zenstruck\RedirectBundle\Model\Redirect">
         <field name="source" column="source" type="string" length="255" unique="true" />
-        <field name="destination" column="destination" type="string" length="255" nullable="true" />
-        <field name="statusCode" column="status_code" type="smallint" />
+        <field name="destination" column="destination" type="string" length="255" />
+        <field name="permanent" column="permanent" type="boolean" />
         <field name="count" type="integer" />
         <field name="lastAccessed" column="last_accessed" type="datetime" nullable="true" />
     </mapped-superclass>

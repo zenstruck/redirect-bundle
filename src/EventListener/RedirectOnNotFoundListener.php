@@ -4,14 +4,12 @@ namespace Zenstruck\RedirectBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Zenstruck\RedirectBundle\Model\RedirectManager;
+use Zenstruck\RedirectBundle\Service\RedirectManager;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class RedirectOnNotFoundListener
+class RedirectOnNotFoundListener extends NotFoundListener
 {
     private $redirectManager;
 
@@ -22,20 +20,19 @@ class RedirectOnNotFoundListener
 
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+        if (!$this->isNotFoundException($event)) {
             return;
         }
 
-        $exception = $event->getException();
+        $redirect = $this->redirectManager->findAndUpdate($event->getRequest()->getPathInfo());
 
-        if (!$exception instanceof HttpException || 404 !== (int) $exception->getStatusCode()) {
+        if (null === $redirect) {
             return;
         }
 
-        $redirect = $this->redirectManager->updateOrCreate($event->getRequest()->getPathInfo());
-
-        if (null !== $destination = $redirect->getDestination()) {
-            $event->setResponse(new RedirectResponse($destination, $redirect->getStatusCode()));
-        }
+        $event->setResponse(new RedirectResponse(
+            $redirect->getDestination(),
+            $redirect->isPermanent() ? 301 : 302
+        ));
     }
 }

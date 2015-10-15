@@ -10,15 +10,34 @@ use Zenstruck\RedirectBundle\DependencyInjection\ZenstruckRedirectExtension;
  */
 class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
 {
-    public function testValidConfig()
+    /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     * @expectedExceptionMessage A "redirect_class" or "not_found_class" must be set for "zenstruck_redirect".
+     */
+    public function testNoClassesSet()
+    {
+        $this->load(array());
+        $this->compile();
+    }
+
+    public function testRedirectClass()
     {
         $this->load(array('redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect'));
         $this->compile();
 
         $this->assertContainerBuilderHasService('zenstruck_redirect.redirect_manager');
         $this->assertContainerBuilderHasService('zenstruck_redirect.entity_manager');
+        $this->assertContainerBuilderHasService('zenstruck_redirect.redirect_listener');
+    }
+
+    public function testNotFoundClass()
+    {
+        $this->load(array('not_found_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound'));
+        $this->compile();
+
+        $this->assertContainerBuilderHasService('zenstruck_redirect.not_found_manager');
+        $this->assertContainerBuilderHasService('zenstruck_redirect.entity_manager');
         $this->assertContainerBuilderHasService('zenstruck_redirect.not_found_listener');
-        $this->assertContainerBuilderHasService('zenstruck_redirect.redirect.form.type');
     }
 
     /**
@@ -30,10 +49,18 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
         $this->load(array('redirect_class' => $class));
     }
 
+    /**
+     * @dataProvider invalidClassProvider
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
+    public function testInvalidNotFoundClass($class)
+    {
+        $this->load(array('not_found_class' => $class));
+    }
+
     public function invalidClassProvider()
     {
         return array(
-            array(null),
             array('Foo\Bar'),
             array(get_class($this)),
         );

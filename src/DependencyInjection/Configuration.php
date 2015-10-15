@@ -21,12 +21,21 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('redirect_class')
-                    ->isRequired()
+                    ->defaultNull()
                     ->validate()
                         ->ifTrue(function ($value) {
                             return !is_subclass_of($value, 'Zenstruck\RedirectBundle\Model\Redirect');
                         })
-                        ->thenInvalid('Class "%s" does not exist')
+                        ->thenInvalid('"redirect_class" must be an instance of "Zenstruck\RedirectBundle\Model\Redirect"')
+                    ->end()
+                ->end()
+                ->scalarNode('not_found_class')
+                    ->defaultNull()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return !is_subclass_of($value, 'Zenstruck\RedirectBundle\Model\NotFound');
+                        })
+                        ->thenInvalid('"not_found_class" must be an instance of "Zenstruck\RedirectBundle\Model\NotFound"')
                     ->end()
                 ->end()
                 ->scalarNode('model_manager_name')->defaultNull()->end()

@@ -3,6 +3,7 @@
 namespace Zenstruck\RedirectBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,26 +19,36 @@ class ZenstruckRedirectExtension extends ConfigurableExtension
      */
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
     {
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('listener.xml');
-        $loader->load('orm.xml');
-
-        if (class_exists('Symfony\Component\Form\Form')) {
-            $loader->load('form.xml');
+        if (null === $mergedConfig['redirect_class'] && null === $mergedConfig['not_found_class']) {
+            throw new InvalidConfigurationException('A "redirect_class" or "not_found_class" must be set for "zenstruck_redirect".');
         }
 
-        $container->setParameter('zenstruck_redirect.redirect_class', $mergedConfig['redirect_class']);
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('orm.xml');
+
         $container->setParameter('zenstruck_redirect.model_manager_name', $mergedConfig['model_manager_name']);
 
-        $definition = $container->getDefinition('zenstruck_redirect.entity_manager');
+        $emDefinition = $container->getDefinition('zenstruck_redirect.entity_manager');
 
-        if (method_exists($definition, 'setFactory')) {
+        if (method_exists($emDefinition, 'setFactory')) {
             // Symfony 2.6+
-            $definition->setFactory(array(new Reference('doctrine'), 'getManager'));
+            $emDefinition->setFactory(array(new Reference('doctrine'), 'getManager'));
         } else {
             // Symfony < 2.6
-            $definition->setFactoryService('doctrine');
-            $definition->setFactoryMethod('getManager');
+            $emDefinition->setFactoryService('doctrine');
+            $emDefinition->setFactoryMethod('getManager');
+        }
+
+        if (null !== $mergedConfig['redirect_class']) {
+            $container->setParameter('zenstruck_redirect.redirect_class', $mergedConfig['redirect_class']);
+
+            $loader->load('redirect.xml');
+        }
+
+        if (null !== $mergedConfig['not_found_class']) {
+            $container->setParameter('zenstruck_redirect.not_found_class', $mergedConfig['not_found_class']);
+
+            $loader->load('not_found.xml');
         }
     }
 }

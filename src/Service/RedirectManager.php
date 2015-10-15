@@ -1,8 +1,9 @@
 <?php
 
-namespace Zenstruck\RedirectBundle\Model;
+namespace Zenstruck\RedirectBundle\Service;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Zenstruck\RedirectBundle\Model\Redirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -19,27 +20,25 @@ class RedirectManager
     public function __construct($class, ObjectManager $om)
     {
         $this->class = $class;
-        $this->om = $om;
+        $this->om    = $om;
     }
 
     /**
      * @param string $source
      *
-     * @return Redirect
+     * @return Redirect|null
      */
-    public function updateOrCreate($source)
+    public function findAndUpdate($source)
     {
         /** @var Redirect|null $redirect */
         $redirect = $this->om->getRepository($this->class)->findOneBy(array('source' => $source));
 
         if (null === $redirect) {
-            $redirect = new $this->class($source);
-            $this->om->persist($redirect);
+            return null;
         }
 
         $redirect->increaseCount();
         $redirect->updateLastAccessed();
-
         $this->om->flush();
 
         return $redirect;
