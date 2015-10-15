@@ -37,7 +37,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
 
         $redirect->updateLastAccessed();
         $this->assertInstanceOf('DateTime', $redirect->getLastAccessed());
-        $this->assertEquals(time(), $redirect->getLastAccessed()->format('U'));
+        $this->assertEquals(time(), $redirect->getLastAccessed()->format('U'), '', 1);
     }
 
     public function testIncreaseCount()

@@ -13,7 +13,7 @@ For redirects, 404 errors are intercepted and the requested path is looked up. I
 the found redirect's destination. The count and last accessed date are updated as well. A redirect form type and
 validation is available as well.
 
-404 errors can be logged as well. Each 404 errors is it's own record in the database. The path, full URL, timestamp, and
+404 errors can be logged as well. Each 404 error is it's own record in the database. The path, full URL, timestamp, and
 referer are stored. Storing each error as a separate record allows viewing statistics over time and seeing all the
 referer URLs.
 

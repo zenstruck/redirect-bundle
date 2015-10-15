@@ -51,7 +51,7 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
         $redirect = $this->redirectManager->findAndUpdate('/foo');
 
         $this->assertSame(6, $redirect->getCount());
-        $this->assertEquals(time(), $redirect->getLastAccessed()->format('U'));
+        $this->assertEquals(time(), $redirect->getLastAccessed()->format('U'), '', 1);
     }
 
     public function testNoRedirectFound()

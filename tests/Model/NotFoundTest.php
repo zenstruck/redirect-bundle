@@ -17,7 +17,7 @@ class NotFoundTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedPath, $notFound->getPath());
         $this->assertNull($notFound->getReferer());
         $this->assertSame('http://foobar.com/baz', $notFound->getFullUrl());
-        $this->assertEquals(time(), $notFound->getTimestamp()->format('U'));
+        $this->assertEquals(time(), $notFound->getTimestamp()->format('U'), '', 1);
     }
 
     public function pathProvider()

@@ -44,6 +44,6 @@ class NotFoundManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('/foo/bar', $notFound->getPath());
         $this->assertSame('https://example.com/foo/bar?baz=foo', $notFound->getFullUrl());
         $this->assertSame('https://google.com', $notFound->getReferer());
-        $this->assertEquals(time(), $notFound->getTimestamp()->format('U'));
+        $this->assertEquals(time(), $notFound->getTimestamp()->format('U'), '', 1);
     }
 }
