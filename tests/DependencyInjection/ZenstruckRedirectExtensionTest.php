@@ -28,6 +28,7 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('zenstruck_redirect.redirect_manager');
         $this->assertContainerBuilderHasService('zenstruck_redirect.entity_manager');
         $this->assertContainerBuilderHasService('zenstruck_redirect.redirect_listener');
+        $this->assertContainerBuilderHasService('zenstruck_redirect.redirect.form.type');
     }
 
     public function testNotFoundClass()

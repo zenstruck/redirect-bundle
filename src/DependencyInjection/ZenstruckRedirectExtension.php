@@ -43,6 +43,7 @@ class ZenstruckRedirectExtension extends ConfigurableExtension
             $container->setParameter('zenstruck_redirect.redirect_class', $mergedConfig['redirect_class']);
 
             $loader->load('redirect.xml');
+            $loader->load('form.xml');
         }
 
         if (null !== $mergedConfig['not_found_class']) {
