@@ -4,6 +4,7 @@ namespace Zenstruck\RedirectBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -55,10 +56,18 @@ class RedirectType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $class = $this->class;
+
         $resolver->setDefaults(array(
             'data_class'     => $this->class,
             'intention'      => 'redirect',
             'disable_source' => false,
+            'empty_data'     => function (FormInterface $form) use ($class) {
+                return new $class(
+                    $form->get('source')->getData(),
+                    $form->get('destination')->getData()
+                );
+            }
         ));
     }
 
