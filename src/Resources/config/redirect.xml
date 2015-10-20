@@ -10,7 +10,7 @@
     </parameters>
 
     <services>
-        <service id="zenstruck_redirect.redirect_manager" class="%zenstruck_redirect.redirect_manager.class%" public="false">
+        <service id="zenstruck_redirect.redirect_manager" class="%zenstruck_redirect.redirect_manager.class%">
             <argument>%zenstruck_redirect.redirect_class%</argument>
             <argument type="service" id="zenstruck_redirect.entity_manager" />
         </service>
