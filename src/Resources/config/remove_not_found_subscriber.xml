@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services">
+    <parameters>
+        <parameter key="zenstruck_redirect.remove_not_found_subscriber.class">Zenstruck\RedirectBundle\EventListener\Doctrine\RemoveNotFoundSubscriber</parameter>
+    </parameters>
+
+    <services>
+        <service id="zenstruck_redirect.remove_not_found_subscriber" class="%zenstruck_redirect.remove_not_found_subscriber.class%" public="false">
+            <argument type="service" id="service_container" />
+            <tag name="doctrine.event_subscriber" />
+        </service>
+    </services>
+</container>

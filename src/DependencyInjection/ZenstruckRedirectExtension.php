@@ -51,5 +51,9 @@ class ZenstruckRedirectExtension extends ConfigurableExtension
 
             $loader->load('not_found.xml');
         }
+
+        if ($mergedConfig['remove_not_founds'] && null !== $mergedConfig['not_found_class'] && null !== $mergedConfig['redirect_class']) {
+            $loader->load('remove_not_found_subscriber.xml');
+        }
     }
 }

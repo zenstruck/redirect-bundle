@@ -15,7 +15,7 @@ validation is available as well.
 
 404 errors can be logged as well. Each 404 error is it's own record in the database. The path, full URL, timestamp, and
 referer are stored. Storing each error as a separate record allows viewing statistics over time and seeing all the
-referer URLs.
+referer URLs. When a redirect is created or updated, 404 records that match it's path are deleted.
 
 ## Installation
 
@@ -141,4 +141,7 @@ zenstruck_redirect:
     redirect_class:     ~ # Required if not_found_class is not set
     not_found_class:    ~ # Required if redirect_class is not set
     model_manager_name: ~
+
+    # When enabled, when a redirect is updated or created, the NotFound entites with a matching path are removed.
+    remove_not_founds: true
 ```

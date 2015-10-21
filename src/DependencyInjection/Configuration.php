@@ -38,6 +38,10 @@ class Configuration implements ConfigurationInterface
                         ->thenInvalid('"not_found_class" must be an instance of "Zenstruck\RedirectBundle\Model\NotFound"')
                     ->end()
                 ->end()
+                ->booleanNode('remove_not_founds')
+                    ->info('When enabled, when a redirect is updated or created, the NotFound entites with a matching path are removed.')
+                    ->defaultTrue()
+                ->end()
                 ->scalarNode('model_manager_name')->defaultNull()->end()
             ->end()
         ;

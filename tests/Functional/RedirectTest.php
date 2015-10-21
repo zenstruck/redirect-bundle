@@ -2,8 +2,6 @@
 
 namespace Zenstruck\RedirectBundle\Tests\Functional;
 
-use Zenstruck\RedirectBundle\Model\Redirect;
-
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
@@ -42,21 +40,5 @@ class RedirectTest extends FunctionalTest
         $this->assertSame('http://example.com', $response->getTargetUrl());
         $this->assertSame(302, $response->getStatusCode());
         $this->assertSame(1, $this->getRedirect('/302-redirect')->getCount());
-    }
-
-    /**
-     * @param string $source
-     *
-     * @return Redirect|null
-     */
-    private function getRedirect($source)
-    {
-        if (null === $redirect = $this->em->getRepository('TestBundle:DummyRedirect')->findOneBy(array('source' => $source))) {
-            return null;
-        }
-
-        $this->em->refresh($redirect);
-
-        return $redirect;
     }
 }

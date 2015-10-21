@@ -5,6 +5,7 @@ namespace Zenstruck\RedirectBundle\Service;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Zenstruck\RedirectBundle\Model\NotFound;
+use Zenstruck\RedirectBundle\Model\Redirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -41,5 +42,21 @@ class NotFoundManager
         $this->om->flush();
 
         return $notFound;
+    }
+
+    /**
+     * Deletes NotFound entities for a Redirect's path.
+     *
+     * @param Redirect $redirect
+     */
+    public function removeForRedirect(Redirect $redirect)
+    {
+        $notFounds = $this->om->getRepository($this->class)->findBy(array('path' => $redirect->getSource()));
+
+        foreach ($notFounds as $notFound) {
+            $this->om->remove($notFound);
+        }
+
+        $this->om->flush();
     }
 }

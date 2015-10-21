@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
+use Zenstruck\RedirectBundle\Model\NotFound;
+use Zenstruck\RedirectBundle\Model\Redirect;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
 
 /**
@@ -38,9 +40,37 @@ abstract class FunctionalTest extends WebTestCase
         $this->addTestData();
     }
 
-    private function addTestData()
+    /**
+     * @param string $source
+     *
+     * @return Redirect|null
+     */
+    protected function getRedirect($source)
+    {
+        if (null === $redirect = $this->em->getRepository('TestBundle:DummyRedirect')->findOneBy(array('source' => $source))) {
+            return null;
+        }
+
+        $this->em->refresh($redirect);
+
+        return $redirect;
+    }
+
+    /**
+     * @return NotFound[]
+     */
+    protected function getNotFounds()
+    {
+        return $this->em->getRepository('TestBundle:DummyNotFound')->findAll();
+    }
+
+    protected function addTestData()
     {
         $this->em->createQuery('DELETE TestBundle:DummyRedirect')
+            ->execute()
+        ;
+
+        $this->em->createQuery('DELETE TestBundle:DummyNotFound')
             ->execute()
         ;
 

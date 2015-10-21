@@ -3,7 +3,6 @@
 namespace Zenstruck\RedirectBundle\Tests\Functional;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Zenstruck\RedirectBundle\Model\NotFound;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -28,13 +27,5 @@ class NotFoundTest extends FunctionalTest
         }
 
         $this->fail('NotFoundHttpException should have been thrown.');
-    }
-
-    /**
-     * @return NotFound[]
-     */
-    private function getNotFounds()
-    {
-        return $this->em->getRepository('TestBundle:DummyNotFound')->findAll();
     }
 }

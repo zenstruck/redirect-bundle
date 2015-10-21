@@ -41,6 +41,29 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('zenstruck_redirect.not_found_listener');
     }
 
+    public function testRemoveNotFoundSubscriber()
+    {
+        $this->load(array(
+            'not_found_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound',
+            'redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
+        ));
+        $this->compile();
+
+        $this->assertContainerBuilderHasService('zenstruck_redirect.remove_not_found_subscriber');
+    }
+
+    public function testDisableRemoveNotFoundSubscriber()
+    {
+        $this->load(array(
+            'not_found_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound',
+            'redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
+            'remove_not_founds' => false,
+        ));
+        $this->compile();
+
+        $this->assertContainerBuilderNotHasService('zenstruck_redirect.remove_not_found_subscriber');
+    }
+
     /**
      * @dataProvider invalidClassProvider
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
