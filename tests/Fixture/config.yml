@@ -1,5 +1,6 @@
 zenstruck_redirect:
     redirect_class: Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect
+    not_found_class: Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound
 
 framework:
     secret: xxxxxxxxxx

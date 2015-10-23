@@ -4,6 +4,7 @@ namespace Zenstruck\RedirectBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -22,6 +23,9 @@ class RedirectType extends AbstractType
         $this->class = $class;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -31,19 +35,12 @@ class RedirectType extends AbstractType
                 'disabled' => $options['disable_source'],
                 'read_only' => $options['disable_source'],
             ))
-            ->add('destination', null, array('label' => 'form.destination', 'translation_domain' => 'ZenstruckRedirectBundle'))
-        ;
 
-        if ($options['status_code']) {
-            $builder->add('status_code', 'choice', array(
-                'label' => 'form.status_code',
-                'translation_domain' => 'ZenstruckRedirectBundle',
-                'choices' => array(
-                    301 => '301 (Moved Permanently)',
-                    302 => '302 (Found)',
-                )
-            ));
-        }
+            ->add('destination', null, array(
+                'label' => 'form.destination',
+                'translation_domain' => 'ZenstruckRedirectBundle'
+            ))
+        ;
     }
 
     /**
@@ -59,11 +56,18 @@ class RedirectType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $class = $this->class;
+
         $resolver->setDefaults(array(
             'data_class'     => $this->class,
             'intention'      => 'redirect',
-            'status_code'    => false,
             'disable_source' => false,
+            'empty_data'     => function (FormInterface $form) use ($class) {
+                return new $class(
+                    $form->get('source')->getData(),
+                    $form->get('destination')->getData()
+                );
+            }
         ));
     }
 

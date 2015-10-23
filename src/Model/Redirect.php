@@ -9,31 +9,32 @@ abstract class Redirect
 {
     private $source;
     private $destination;
-    private $statusCode = 404;
-    private $count = 0;
-    private $lastAccessed;
+    private $permanent;
+    private $count        = 0;
+    private $lastAccessed = null;
 
-    public function __construct($source = null, $destination = null)
+    /**
+     * @param NotFound $notFound
+     * @param string   $destination
+     * @param bool     $permanent
+     *
+     * @return static
+     */
+    public static function createFromNotFound(NotFound $notFound, $destination, $permanent = true)
     {
-        $this->setSource($source);
-        $this->setDestination($destination);
+        return new static($notFound->getPath(), $destination, $permanent);
     }
 
     /**
      * @param string $source
+     * @param string $destination
+     * @param bool   $permanent
      */
-    public function setSource($source)
+    public function __construct($source, $destination, $permanent = true)
     {
-        $source = trim($source);
-        $source = !empty($source) ? $source : null;
-
-        if (null === $source) {
-            $this->source = $source;
-
-            return;
-        }
-
-        $this->source = $this->createAbsoluteUri($source);
+        $this->setSource($source);
+        $this->setDestination($destination);
+        $this->setPermanent($permanent);
     }
 
     /**
@@ -45,36 +46,22 @@ abstract class Redirect
     }
 
     /**
-     * @param string|null $destination
+     * @param string $source
      */
-    public function setDestination($destination)
+    public function setSource($source)
     {
-        $destination = trim($destination);
-        $destination = !empty($destination) ? $destination : null;
+        $source = trim($source);
+        $source = !empty($source) ? $source : null;
 
-        if (null === $destination) {
-            $this->setStatusCode(404);
-            $this->destination = null;
-
-            return;
+        if (null !== $source) {
+            $source = $this->createAbsoluteUri($source);
         }
 
-        if (404 === $this->getStatusCode()) {
-            $this->setStatusCode(301);
-        }
-
-        if (null !== parse_url($destination, PHP_URL_SCHEME)) {
-            // absolute url
-            $this->destination = $destination;
-
-            return;
-        }
-
-        $this->destination = $this->createAbsoluteUri($destination);
+        $this->source = $source;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getDestination()
     {
@@ -82,19 +69,34 @@ abstract class Redirect
     }
 
     /**
-     * @param int $statusCode
+     * @param string $destination
      */
-    public function setStatusCode($statusCode)
+    public function setDestination($destination)
     {
-        $this->statusCode = (int) $statusCode;
+        $destination = trim($destination);
+        $destination = !empty($destination) ? $destination : null;
+
+        if (null !== $destination && null === parse_url($destination, PHP_URL_SCHEME)) {
+            $destination = $this->createAbsoluteUri($destination, true);
+        }
+
+        $this->destination = $destination;
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getStatusCode()
+    public function isPermanent()
     {
-        return $this->statusCode;
+        return $this->permanent;
+    }
+
+    /**
+     * @param bool $permanent
+     */
+    public function setPermanent($permanent)
+    {
+        $this->permanent = $permanent;
     }
 
     /**
@@ -114,7 +116,7 @@ abstract class Redirect
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTime
      */
     public function getLastAccessed()
     {
@@ -122,23 +124,28 @@ abstract class Redirect
     }
 
     /**
-     * Set lastAccessed to the current time.
+     * @param \DateTime $time
      */
-    public function updateLastAccessed()
+    public function updateLastAccessed(\DateTime $time = null)
     {
-        $this->lastAccessed = new \DateTime('now');
+        if (null === $time) {
+            $time = new \DateTime('now');
+        }
+
+        $this->lastAccessed = $time;
     }
 
     /**
      * @param string $path
+     * @param bool   $allowQueryString
      *
      * @return string
      */
-    private function createAbsoluteUri($path)
+    private function createAbsoluteUri($path, $allowQueryString = false)
     {
         $value = '/'.ltrim(parse_url($path, PHP_URL_PATH), '/');
 
-        if ($query = parse_url($path, PHP_URL_QUERY)) {
+        if ($allowQueryString && $query = parse_url($path, PHP_URL_QUERY)) {
             $value .= '?'.$query;
         }
 
