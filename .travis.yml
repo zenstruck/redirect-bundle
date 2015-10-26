@@ -11,18 +11,24 @@ php:
   - hhvm
 
 env:
-  - SYMFONY_VERSION=2.3.*
   - SYMFONY_VERSION=2.7.*
+
+matrix:
+  include:
+    - php: 5.6
+      env: SYMFONY_VERSION=2.3.*
+    - php: 5.6
+      env: SYMFONY_VERSION=2.8.*@dev
 
 cache:
   directories:
-    - $HOME/.composer/cache
+    - $HOME/.composer/cache/files
 
 before_install:
-  - composer selfupdate
-  - composer require symfony/symfony:${SYMFONY_VERSION} --no-update
+  - composer self-update
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
 
-install: composer update --prefer-dist --no-interaction
+install: composer update --prefer-source $COMPOSER_FLAGS
 
 script: phpunit --coverage-clover=coverage.clover
 
