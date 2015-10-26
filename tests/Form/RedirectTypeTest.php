@@ -31,7 +31,7 @@ class RedirectTypeTest extends TypeTestCase
     public function testSubmitUpdate()
     {
         $redirect = new DummyRedirect('/baz', 'http://example.com');
-        $form = $this->factory->create($this->createType(), $redirect);
+        $form     = $this->factory->create($this->createType(), $redirect);
         $formData = array(
             'source'      => '/foo',
             'destination' => '/bar',
@@ -47,7 +47,7 @@ class RedirectTypeTest extends TypeTestCase
 
     public function testSubmitCreate()
     {
-        $form = $this->factory->create($this->createType());
+        $form     = $this->factory->create($this->createType());
         $formData = array(
             'source'      => '/foo',
             'destination' => '/bar',

@@ -45,7 +45,7 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
     {
         $this->load(array(
             'not_found_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound',
-            'redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
+            'redirect_class'  => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
         ));
         $this->compile();
 
@@ -55,8 +55,8 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
     public function testDisableRemoveNotFoundSubscriber()
     {
         $this->load(array(
-            'not_found_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound',
-            'redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
+            'not_found_class'   => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound',
+            'redirect_class'    => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
             'remove_not_founds' => false,
         ));
         $this->compile();

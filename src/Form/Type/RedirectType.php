@@ -30,15 +30,15 @@ class RedirectType extends AbstractType
     {
         $builder
             ->add('source', null, array(
-                'label' => 'form.source',
+                'label'              => 'form.source',
                 'translation_domain' => 'ZenstruckRedirectBundle',
-                'disabled' => $options['disable_source'],
-                'read_only' => $options['disable_source'],
+                'disabled'           => $options['disable_source'],
+                'read_only'          => $options['disable_source'],
             ))
 
             ->add('destination', null, array(
-                'label' => 'form.destination',
-                'translation_domain' => 'ZenstruckRedirectBundle'
+                'label'              => 'form.destination',
+                'translation_domain' => 'ZenstruckRedirectBundle',
             ))
         ;
     }
@@ -67,7 +67,7 @@ class RedirectType extends AbstractType
                     $form->get('source')->getData(),
                     $form->get('destination')->getData()
                 );
-            }
+            },
         ));
     }
 

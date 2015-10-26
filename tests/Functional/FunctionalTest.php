@@ -34,7 +34,7 @@ abstract class FunctionalTest extends WebTestCase
         $application->run(new StringInput('doctrine:database:create'), new NullOutput());
         $application->run(new StringInput('doctrine:schema:create'), new NullOutput());
 
-        $this->em = $client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $this->em     = $client->getContainer()->get('doctrine.orm.default_entity_manager');
         $this->client = $client;
 
         $this->addTestData();

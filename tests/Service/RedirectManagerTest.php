@@ -23,7 +23,7 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
+        $this->om         = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
 
         $this->om->expects($this->once())
