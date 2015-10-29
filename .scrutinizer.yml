@@ -1,10 +1,6 @@
-imports:
-    - php
-
 filter:
-    excluded_paths:
-        - tests/*
-
+  paths: [src/*]
+checks:
+  php: true
 tools:
-    external_code_coverage:
-        timeout: 600
+  external_code_coverage: true
