@@ -33,7 +33,6 @@ class RedirectType extends AbstractType
                 'label'              => 'form.source',
                 'translation_domain' => 'ZenstruckRedirectBundle',
                 'disabled'           => $options['disable_source'],
-                'read_only'          => $options['disable_source'],
             ))
 
             ->add('destination', null, array(

@@ -2,7 +2,9 @@
 
 namespace Zenstruck\RedirectBundle\Tests\Form;
 
+use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\HttpKernel\Kernel;
 use Zenstruck\RedirectBundle\Form\Type\RedirectType;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
 
@@ -11,6 +13,16 @@ use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
  */
 class RedirectTypeTest extends TypeTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->factory = Forms::createFormFactoryBuilder()
+            ->addExtensions($this->getExtensions())
+            ->addType(new RedirectType('Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect'))
+            ->getFormFactory();
+    }
+
     public function testCreateDefault()
     {
         $form = $this->factory->create($this->createType());
@@ -18,14 +30,12 @@ class RedirectTypeTest extends TypeTestCase
         $this->assertTrue($form->has('source'));
         $this->assertTrue($form->has('destination'));
         $this->assertFalse($form->get('source')->isDisabled());
-        $this->assertFalse($form->get('source')->getConfig()->getOption('read_only'));
     }
 
     public function testCreateWithOptions()
     {
         $form = $this->factory->create($this->createType(), null, array('disable_source' => true));
         $this->assertTrue($form->get('source')->isDisabled());
-        $this->assertTrue($form->get('source')->getConfig()->getOption('read_only'));
     }
 
     public function testSubmitUpdate()
@@ -62,10 +72,14 @@ class RedirectTypeTest extends TypeTestCase
     }
 
     /**
-     * @return RedirectType
+     * @return string
      */
     private function createType()
     {
-        return new RedirectType('Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect');
+        if (version_compare(Kernel::VERSION, '2.8.0', '<')) {
+            return 'zenstruck_redirect';
+        }
+
+        return RedirectType::class;
     }
 }
