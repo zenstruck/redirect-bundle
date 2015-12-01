@@ -80,6 +80,6 @@ class RedirectTypeTest extends TypeTestCase
             return 'zenstruck_redirect';
         }
 
-        return RedirectType::class;
+        return 'Zenstruck\RedirectBundle\Form\Type\RedirectType';
     }
 }
