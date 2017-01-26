@@ -8,33 +8,35 @@ php:
   - 5.5
   - 5.6
   - 7.0
+  - 7.1
   - hhvm
 
 env:
-  - SYMFONY_VERSION=2.7.*
+  global:
+    - deps=no
 
 matrix:
   include:
-    - php: 5.6
-      env: SYMFONY_VERSION=2.3.*
     - php: 5.6
       env: SYMFONY_VERSION=2.8.*
     - php: 5.6
       env: SYMFONY_VERSION=3.0.*
     - php: 5.3
-      env: COMPOSER_FLAGS="--prefer-lowest"
+      env: deps=low
 
 cache:
   directories:
-    - $HOME/.composer/cache/files
+    - $HOME/.composer/cache
 
 before_install:
   - composer self-update
-  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/symfony:${SYMFONY_VERSION}; fi;
 
-install: composer update --prefer-source $COMPOSER_FLAGS
+install:
+  - if [ "$deps" = "no" ]; then composer update; fi;
+  - if [ "$deps" = "low" ]; then composer --prefer-lowest --prefer-stable update; fi;
 
-script: phpunit --coverage-clover=coverage.clover
+script: ./vendor/bin/phpunit -v --coverage-clover=coverage.clover
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
