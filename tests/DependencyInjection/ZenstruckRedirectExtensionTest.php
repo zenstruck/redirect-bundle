@@ -26,9 +26,20 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
         $this->compile();
 
         $this->assertContainerBuilderHasService('zenstruck_redirect.redirect_manager');
-        $this->assertContainerBuilderHasService('zenstruck_redirect.entity_manager');
+        $this->assertContainerBuilderHasAlias('zenstruck_redirect.entity_manager', 'doctrine.orm.default_entity_manager');
         $this->assertContainerBuilderHasService('zenstruck_redirect.redirect_listener');
         $this->assertContainerBuilderHasService('zenstruck_redirect.redirect.form.type');
+    }
+
+    public function testCustomModelManagerName()
+    {
+        $this->load(array(
+            'redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
+            'model_manager_name' => 'foo',
+        ));
+        $this->compile();
+
+        $this->assertContainerBuilderHasAlias('zenstruck_redirect.entity_manager', 'doctrine.orm.foo_entity_manager');
     }
 
     public function testNotFoundClass()
@@ -37,7 +48,7 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
         $this->compile();
 
         $this->assertContainerBuilderHasService('zenstruck_redirect.not_found_manager');
-        $this->assertContainerBuilderHasService('zenstruck_redirect.entity_manager');
+        $this->assertContainerBuilderHasAlias('zenstruck_redirect.entity_manager', 'doctrine.orm.default_entity_manager');
         $this->assertContainerBuilderHasService('zenstruck_redirect.not_found_listener');
     }
 
