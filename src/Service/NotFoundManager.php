@@ -22,7 +22,7 @@ class NotFoundManager
     public function __construct($class, ObjectManager $om)
     {
         $this->class = $class;
-        $this->om    = $om;
+        $this->om = $om;
     }
 
     /**

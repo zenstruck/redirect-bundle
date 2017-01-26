@@ -30,13 +30,13 @@ class RedirectType extends AbstractType
     {
         $builder
             ->add('source', null, array(
-                'label'              => 'form.source',
+                'label' => 'form.source',
                 'translation_domain' => 'ZenstruckRedirectBundle',
-                'disabled'           => $options['disable_source'],
+                'disabled' => $options['disable_source'],
             ))
 
             ->add('destination', null, array(
-                'label'              => 'form.destination',
+                'label' => 'form.destination',
                 'translation_domain' => 'ZenstruckRedirectBundle',
             ))
         ;
@@ -58,10 +58,10 @@ class RedirectType extends AbstractType
         $class = $this->class;
 
         $resolver->setDefaults(array(
-            'data_class'     => $this->class,
-            'intention'      => 'redirect',
+            'data_class' => $this->class,
+            'intention' => 'redirect',
             'disable_source' => false,
-            'empty_data'     => function (FormInterface $form) use ($class) {
+            'empty_data' => function (FormInterface $form) use ($class) {
                 return new $class(
                     $form->get('source')->getData(),
                     $form->get('destination')->getData()

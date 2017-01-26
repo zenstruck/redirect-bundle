@@ -31,9 +31,9 @@ abstract class NotFound
             $path = '/'.ltrim(parse_url($path, PHP_URL_PATH), '/');
         }
 
-        $this->path      = $path;
-        $this->fullUrl   = $fullUrl;
-        $this->referer   = $referer;
+        $this->path = $path;
+        $this->fullUrl = $fullUrl;
+        $this->referer = $referer;
         $this->timestamp = $timestamp;
     }
 
