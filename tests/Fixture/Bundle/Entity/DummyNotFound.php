@@ -2,8 +2,8 @@
 
 namespace Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity;
 
-use Zenstruck\RedirectBundle\Model\NotFound;
 use Doctrine\ORM\Mapping as ORM;
+use Zenstruck\RedirectBundle\Model\NotFound;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
