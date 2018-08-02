@@ -2,10 +2,12 @@
 
 namespace Zenstruck\RedirectBundle\Tests\Model;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class NotFoundTest extends \PHPUnit_Framework_TestCase
+class NotFoundTest extends TestCase
 {
     /**
      * @dataProvider pathProvider

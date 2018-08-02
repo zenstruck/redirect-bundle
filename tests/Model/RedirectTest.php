@@ -2,13 +2,14 @@
 
 namespace Zenstruck\RedirectBundle\Tests\Model;
 
+use PHPUnit\Framework\TestCase;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class RedirectTest extends \PHPUnit_Framework_TestCase
+class RedirectTest extends TestCase
 {
     /**
      * @dataProvider sourceProvider

@@ -16,7 +16,7 @@ class CreateNotFoundListenerTest extends NotFoundListenerTest
 
     public function setUp()
     {
-        $this->notFoundManager = $this->getMock('Zenstruck\RedirectBundle\Service\NotFoundManager', array(), array(), '', false);
+        $this->notFoundManager = $this->createMock('Zenstruck\RedirectBundle\Service\NotFoundManager', array(), array(), '', false);
         $this->listener = new CreateNotFoundListener($this->notFoundManager);
     }
 

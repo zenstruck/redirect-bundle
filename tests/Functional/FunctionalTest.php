@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\NullOutput;
 use Zenstruck\RedirectBundle\Model\NotFound;
 use Zenstruck\RedirectBundle\Model\Redirect;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
+use Zenstruck\RedirectBundle\Tests\Fixture\TestKernel;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -22,6 +23,11 @@ abstract class FunctionalTest extends WebTestCase
 
     /** @var EntityManager */
     protected $em;
+
+    protected static function getKernelClass()
+    {
+        return TestKernel::class;
+    }
 
     public function setUp()
     {
