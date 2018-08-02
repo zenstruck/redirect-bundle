@@ -14,6 +14,7 @@ use Zenstruck\RedirectBundle\Service\NotFoundManager;
 class RemoveNotFoundSubscriber implements EventSubscriber
 {
     private $container;
+
     private $notFoundManager;
 
     public function __construct(ContainerInterface $container)

@@ -13,6 +13,7 @@ use Zenstruck\RedirectBundle\Model\Redirect;
 class NotFoundManager
 {
     private $class;
+
     private $om;
 
     /**
