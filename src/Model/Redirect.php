@@ -8,9 +8,13 @@ namespace Zenstruck\RedirectBundle\Model;
 abstract class Redirect
 {
     private $source;
+
     private $destination;
+
     private $permanent;
+
     private $count = 0;
+
     private $lastAccessed = null;
 
     /**

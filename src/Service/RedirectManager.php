@@ -11,6 +11,7 @@ use Zenstruck\RedirectBundle\Model\Redirect;
 class RedirectManager
 {
     private $class;
+
     private $om;
 
     /**

@@ -8,8 +8,11 @@ namespace Zenstruck\RedirectBundle\Model;
 abstract class NotFound
 {
     private $path;
+
     private $fullUrl;
+
     private $timestamp;
+
     private $referer;
 
     /**
