@@ -14,6 +14,7 @@ class RedirectManagerTest extends TestCase
     const REDIRECT_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect';
 
     private $om;
+
     private $repository;
 
     /** @var RedirectManager */
