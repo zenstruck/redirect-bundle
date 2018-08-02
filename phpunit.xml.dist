@@ -9,6 +9,7 @@
 
     <php>
         <server name="KERNEL_DIR" value="./tests/Fixture/" />
+        <env name="SHELL_VERBOSITY" value="-1" />
     </php>
 
     <filter>
