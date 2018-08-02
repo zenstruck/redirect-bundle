@@ -2,20 +2,18 @@
 
 namespace Zenstruck\RedirectBundle\Tests\Service;
 
+use PHPUnit\Framework\TestCase;
 use Zenstruck\RedirectBundle\Service\RedirectManager;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class RedirectManagerTest extends \PHPUnit_Framework_TestCase
+class RedirectManagerTest extends TestCase
 {
     const REDIRECT_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect';
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $om;
-
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $repository;
 
     /** @var RedirectManager */
@@ -23,8 +21,8 @@ class RedirectManagerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
-        $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
+        $this->om = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
+        $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
 
         $this->om->expects($this->once())
             ->method('getRepository')

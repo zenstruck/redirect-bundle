@@ -2,20 +2,19 @@
 
 namespace Zenstruck\RedirectBundle\Tests\Service;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Zenstruck\RedirectBundle\Service\NotFoundManager;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class NotFoundManagerTest extends \PHPUnit_Framework_TestCase
+class NotFoundManagerTest extends TestCase
 {
     const NOT_FOUND_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound';
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $om;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $repository;
 
     /** @var NotFoundManager */
@@ -23,8 +22,8 @@ class NotFoundManagerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
-        $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
+        $this->om = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
+        $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
 
         $this->notFoundManager = new NotFoundManager(self::NOT_FOUND_DUMMY_CLASS, $this->om);
     }

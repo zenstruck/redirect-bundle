@@ -2,12 +2,13 @@
 
 namespace Zenstruck\RedirectBundle\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Zenstruck\RedirectBundle\ZenstruckRedirectBundle;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class ZenstruckRedirectBundleTest extends \PHPUnit_Framework_TestCase
+class ZenstruckRedirectBundleTest extends TestCase
 {
     public function testBuild()
     {
