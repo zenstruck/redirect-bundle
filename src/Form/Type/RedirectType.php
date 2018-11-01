@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -45,7 +44,7 @@ class RedirectType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'zenstruck_redirect';
     }
@@ -59,7 +58,6 @@ class RedirectType extends AbstractType
 
         $resolver->setDefaults(array(
             'data_class' => $this->class,
-            'intention' => 'redirect',
             'disable_source' => false,
             'empty_data' => function (FormInterface $form) use ($class) {
                 return new $class(
@@ -68,15 +66,5 @@ class RedirectType extends AbstractType
                 );
             },
         ));
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * BC for SF < 2.7
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

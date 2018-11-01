@@ -4,7 +4,6 @@ namespace Zenstruck\RedirectBundle\Tests\Form;
 
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Test\TypeTestCase;
-use Symfony\Component\HttpKernel\Kernel;
 use Zenstruck\RedirectBundle\Form\Type\RedirectType;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
 
@@ -25,7 +24,7 @@ class RedirectTypeTest extends TypeTestCase
 
     public function testCreateDefault()
     {
-        $form = $this->factory->create($this->createType());
+        $form = $this->factory->create(RedirectType::class);
 
         $this->assertTrue($form->has('source'));
         $this->assertTrue($form->has('destination'));
@@ -34,14 +33,14 @@ class RedirectTypeTest extends TypeTestCase
 
     public function testCreateWithOptions()
     {
-        $form = $this->factory->create($this->createType(), null, array('disable_source' => true));
+        $form = $this->factory->create(RedirectType::class, null, array('disable_source' => true));
         $this->assertTrue($form->get('source')->isDisabled());
     }
 
     public function testSubmitUpdate()
     {
         $redirect = new DummyRedirect('/baz', 'http://example.com');
-        $form = $this->factory->create($this->createType(), $redirect);
+        $form = $this->factory->create(RedirectType::class, $redirect);
         $formData = array(
             'source' => '/foo',
             'destination' => '/bar',
@@ -57,7 +56,7 @@ class RedirectTypeTest extends TypeTestCase
 
     public function testSubmitCreate()
     {
-        $form = $this->factory->create($this->createType());
+        $form = $this->factory->create(RedirectType::class);
         $formData = array(
             'source' => '/foo',
             'destination' => '/bar',
@@ -69,17 +68,5 @@ class RedirectTypeTest extends TypeTestCase
         $this->assertInstanceOf('Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect', $redirect);
         $this->assertSame('/foo', $redirect->getSource());
         $this->assertSame('/bar', $redirect->getDestination());
-    }
-
-    /**
-     * @return string
-     */
-    private function createType()
-    {
-        if (version_compare(Kernel::VERSION, '2.8.0', '<')) {
-            return 'zenstruck_redirect';
-        }
-
-        return 'Zenstruck\RedirectBundle\Form\Type\RedirectType';
     }
 }
