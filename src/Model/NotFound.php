@@ -7,13 +7,25 @@ namespace Zenstruck\RedirectBundle\Model;
  */
 abstract class NotFound
 {
-    private $path;
+    /**
+     * @var string
+     */
+    protected $path;
 
-    private $fullUrl;
+    /**
+     * @var string
+     */
+    protected $fullUrl;
 
-    private $timestamp;
+    /**
+     * @var \DateTime
+     */
+    protected $timestamp;
 
-    private $referer;
+    /**
+     * @var string
+     */
+    protected $referer;
 
     /**
      * @param string         $path
