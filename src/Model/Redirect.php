@@ -7,15 +7,30 @@ namespace Zenstruck\RedirectBundle\Model;
  */
 abstract class Redirect
 {
-    private $source;
+    /**
+     * @var string
+     */
+    protected $source;
 
-    private $destination;
+    /**
+     * @var string
+     */
+    protected $destination;
 
-    private $permanent;
+    /**
+     * @var boolean
+     */
+    protected $permanent;
 
-    private $count = 0;
+    /**
+     * @var integer
+     */
+    protected $count = 0;
 
-    private $lastAccessed = null;
+    /**
+     * @var \DateTime
+     */
+    protected $lastAccessed = null;
 
     /**
      * @param NotFound $notFound
@@ -145,7 +160,7 @@ abstract class Redirect
      *
      * @return string
      */
-    private function createAbsoluteUri($path, $allowQueryString = false)
+    protected function createAbsoluteUri($path, $allowQueryString = false)
     {
         $value = '/'.ltrim(parse_url($path, PHP_URL_PATH), '/');
 
