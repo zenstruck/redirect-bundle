@@ -18,12 +18,12 @@ abstract class Redirect
     protected $destination;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $permanent;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $count = 0;
 
