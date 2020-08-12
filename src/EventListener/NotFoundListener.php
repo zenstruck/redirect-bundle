@@ -22,7 +22,7 @@ abstract class NotFoundListener
             return false;
         }
 
-        $exception = $event->getException();
+        $exception = method_exists($event, 'getThrowable') ? $event->getThrowable() : $event->getException();
 
         if (!$exception instanceof HttpException || 404 !== (int) $exception->getStatusCode()) {
             return false;
