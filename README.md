@@ -24,18 +24,15 @@ referer URLs. When a redirect is created or updated, 404 records that match it's
 
         $ composer require zenstruck/redirect-bundle
 
-2. Enable the bundle in the kernel:
+2. Enable the bundle:
 
     ```php
-    // app/AppKernel.php
+    // config/bundles.php
 
-    public function registerBundles()
-    {
-        $bundles = array(
+    return [
             // ...
-            new Zenstruck\RedirectBundle\ZenstruckRedirectBundle(),
-        );
-    }
+            Zenstruck\RedirectBundle\ZenstruckRedirectBundle::class => ['all' => true],
+        ];
     ```
 
 ## Configuration
@@ -47,7 +44,7 @@ referer URLs. When a redirect is created or updated, 404 records that match it's
 1. Create your redirect class inheriting the MappedSuperClass this bundle provides:
 
     ```php
-    namespace Acme\DemoBundle\Entity;
+    namespace App\Entity;
 
     use Zenstruck\RedirectBundle\Model\Redirect as BaseRedirect;
     use Doctrine\ORM\Mapping as ORM;
@@ -67,23 +64,23 @@ referer URLs. When a redirect is created or updated, 404 records that match it's
     }
     ```
 
-2. Set this class in your `config.yml`:
+2. Set this class in your `zenstruck_redirect.yml`:
 
     ```yaml
     zenstruck_redirect:
-        redirect_class: Acme\DemoBundle\Entity\Redirect
+        redirect_class: App\Entity\Redirect
     ```
 
 3. Update your schema (or use a migration):
 
-        $ app/console doctrine:schema:update --force
+        $ bin/console doctrine:schema:update --force
 
 ### NotFound
 
 1. Create your not found class inheriting the MappedSuperClass this bundle provides:
 
     ```php
-    namespace Acme\DemoBundle\Entity;
+    namespace App\Entity;
 
     use Zenstruck\RedirectBundle\Model\NotFound as BaseNotFound;
     use Doctrine\ORM\Mapping as ORM;
@@ -103,16 +100,16 @@ referer URLs. When a redirect is created or updated, 404 records that match it's
     }
     ```
 
-2. Set this class in your `config.yml`:
+2. Set this class in your `zenstruck_redirect.yml`:
 
     ```yaml
     zenstruck_redirect:
-        not_found_class: Acme\DemoBundle\Entity\NotFound
+        not_found_class: App\Entity\NotFound
     ```
 
 3. Update your schema (or use a migration):
 
-        $ app/console doctrine:schema:update --force
+        $ bin/console doctrine:schema:update --force
 
 ## Form Type
 
