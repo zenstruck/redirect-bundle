@@ -17,16 +17,20 @@ class RedirectOnNotFoundListenerTest extends NotFoundListenerTest
 
     public function setUp(): void
     {
-        $this->redirectManager = $this->createMock('Zenstruck\RedirectBundle\Service\RedirectManager', array(), array(), '', false);
+        $this->redirectManager = $this->createMock('Zenstruck\RedirectBundle\Service\RedirectManager', [], [], '', false);
         $this->listener = new RedirectOnNotFoundListener($this->redirectManager);
     }
 
-    public function testHandleRedirect()
+    /**
+     * @test
+     */
+    public function handle_redirect()
     {
         $this->redirectManager->expects($this->once())
             ->method('findAndUpdate')
             ->with('/foo/bar')
-            ->will($this->returnValue(new DummyRedirect('/foo/bar', '/baz')));
+            ->willReturn(new DummyRedirect('/foo/bar', '/baz'))
+        ;
 
         $event = $this->createEvent(new NotFoundHttpException(), Request::create('/foo/bar'));
         $this->assertNull($event->getResponse());
@@ -38,12 +42,16 @@ class RedirectOnNotFoundListenerTest extends NotFoundListenerTest
         $this->assertSame('/baz', $response->getTargetUrl());
     }
 
-    public function testCannotHandleRedirect()
+    /**
+     * @test
+     */
+    public function cannot_handle_redirect()
     {
         $this->redirectManager->expects($this->once())
             ->method('findAndUpdate')
             ->with('/foo/bar')
-            ->will($this->returnValue(null));
+            ->willReturn(null)
+        ;
 
         $event = $this->createEvent(new NotFoundHttpException(), Request::create('/foo/bar'));
         $this->assertNull($event->getResponse());

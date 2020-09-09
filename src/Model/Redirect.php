@@ -33,18 +33,6 @@ abstract class Redirect
     protected $lastAccessed = null;
 
     /**
-     * @param NotFound $notFound
-     * @param string   $destination
-     * @param bool     $permanent
-     *
-     * @return static
-     */
-    public static function createFromNotFound(NotFound $notFound, $destination, $permanent = true)
-    {
-        return new static($notFound->getPath(), $destination, $permanent);
-    }
-
-    /**
      * @param string $source
      * @param string $destination
      * @param bool   $permanent
@@ -54,6 +42,17 @@ abstract class Redirect
         $this->setSource($source);
         $this->setDestination($destination);
         $this->setPermanent($permanent);
+    }
+
+    /**
+     * @param string $destination
+     * @param bool   $permanent
+     *
+     * @return static
+     */
+    public static function createFromNotFound(NotFound $notFound, $destination, $permanent = true)
+    {
+        return new static($notFound->getPath(), $destination, $permanent);
     }
 
     /**
@@ -69,7 +68,7 @@ abstract class Redirect
      */
     public function setSource($source)
     {
-        $source = trim($source);
+        $source = \trim($source);
         $source = !empty($source) ? $source : null;
 
         if (null !== $source) {
@@ -92,10 +91,10 @@ abstract class Redirect
      */
     public function setDestination($destination)
     {
-        $destination = trim($destination);
+        $destination = \trim($destination);
         $destination = !empty($destination) ? $destination : null;
 
-        if (null !== $destination && null === parse_url($destination, PHP_URL_SCHEME)) {
+        if (null !== $destination && null === \parse_url($destination, PHP_URL_SCHEME)) {
             $destination = $this->createAbsoluteUri($destination, true);
         }
 
@@ -162,9 +161,9 @@ abstract class Redirect
      */
     protected function createAbsoluteUri($path, $allowQueryString = false)
     {
-        $value = '/'.ltrim(parse_url($path, PHP_URL_PATH), '/');
+        $value = '/'.\ltrim(\parse_url($path, PHP_URL_PATH), '/');
 
-        if ($allowQueryString && $query = parse_url($path, PHP_URL_QUERY)) {
+        if ($allowQueryString && $query = \parse_url($path, PHP_URL_QUERY)) {
             $value .= '?'.$query;
         }
 

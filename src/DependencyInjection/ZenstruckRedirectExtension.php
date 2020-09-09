@@ -13,9 +13,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
  */
 class ZenstruckRedirectExtension extends ConfigurableExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
     {
         if (null === $mergedConfig['redirect_class'] && null === $mergedConfig['not_found_class']) {
@@ -25,7 +22,7 @@ class ZenstruckRedirectExtension extends ConfigurableExtension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $modelManagerName = $mergedConfig['model_manager_name'] ?: 'default';
 
-        $container->setAlias('zenstruck_redirect.entity_manager', sprintf('doctrine.orm.%s_entity_manager', $modelManagerName));
+        $container->setAlias('zenstruck_redirect.entity_manager', \sprintf('doctrine.orm.%s_entity_manager', $modelManagerName));
 
         if (null !== $mergedConfig['redirect_class']) {
             $container->setParameter('zenstruck_redirect.redirect_class', $mergedConfig['redirect_class']);

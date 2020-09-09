@@ -11,7 +11,7 @@ use Zenstruck\RedirectBundle\Service\NotFoundManager;
  */
 class NotFoundManagerTest extends TestCase
 {
-    const NOT_FOUND_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound';
+    public const NOT_FOUND_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound';
 
     private $om;
 
@@ -28,21 +28,26 @@ class NotFoundManagerTest extends TestCase
         $this->notFoundManager = new NotFoundManager(self::NOT_FOUND_DUMMY_CLASS, $this->om);
     }
 
-    public function testCreateNotFound()
+    /**
+     * @test
+     */
+    public function create_not_found()
     {
         $this->om->expects($this->once())
-            ->method('persist');
+            ->method('persist')
+        ;
 
         $this->om->expects($this->once())
-            ->method('flush');
+            ->method('flush')
+        ;
 
-        $request = Request::create('https://example.com/foo/bar?baz=foo', 'GET', array(), array(), array(), array('HTTP_REFERER' => 'https://google.com'));
+        $request = Request::create('https://example.com/foo/bar?baz=foo', 'GET', [], [], [], ['HTTP_REFERER' => 'https://google.com']);
 
         $notFound = $this->notFoundManager->createFromRequest($request);
 
         $this->assertSame('/foo/bar', $notFound->getPath());
         $this->assertSame('https://example.com/foo/bar?baz=foo', $notFound->getFullUrl());
         $this->assertSame('https://google.com', $notFound->getReferer());
-        $this->assertEqualsWithDelta(time(), $notFound->getTimestamp()->format('U'), 1);
+        $this->assertEqualsWithDelta(\time(), $notFound->getTimestamp()->format('U'), 1);
     }
 }

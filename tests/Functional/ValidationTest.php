@@ -10,7 +10,10 @@ use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
  */
 class ValidationTest extends FunctionalTest
 {
-    public function testValidation()
+    /**
+     * @test
+     */
+    public function validation()
     {
         /** @var RecursiveValidator $validator */
         $validator = self::$kernel->getContainer()->get('validator');

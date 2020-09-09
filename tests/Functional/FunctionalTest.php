@@ -24,11 +24,6 @@ abstract class FunctionalTest extends WebTestCase
     /** @var EntityManager */
     protected $em;
 
-    protected static function getKernelClass()
-    {
-        return TestKernel::class;
-    }
-
     public function setUp(): void
     {
         $client = self::createClient();
@@ -46,6 +41,11 @@ abstract class FunctionalTest extends WebTestCase
         $this->addTestData();
     }
 
+    protected static function getKernelClass()
+    {
+        return TestKernel::class;
+    }
+
     /**
      * @param string $source
      *
@@ -53,7 +53,7 @@ abstract class FunctionalTest extends WebTestCase
      */
     protected function getRedirect($source)
     {
-        if (null === $redirect = $this->em->getRepository('TestBundle:DummyRedirect')->findOneBy(array('source' => $source))) {
+        if (null === $redirect = $this->em->getRepository('TestBundle:DummyRedirect')->findOneBy(['source' => $source])) {
             return null;
         }
 

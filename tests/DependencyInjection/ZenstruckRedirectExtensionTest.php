@@ -11,18 +11,24 @@ use Zenstruck\RedirectBundle\DependencyInjection\ZenstruckRedirectExtension;
  */
 class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
 {
-    public function testNoClassesSet()
+    /**
+     * @test
+     */
+    public function no_classes_set()
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('A "redirect_class" or "not_found_class" must be set for "zenstruck_redirect".');
 
-        $this->load(array());
+        $this->load([]);
         $this->compile();
     }
 
-    public function testRedirectClass()
+    /**
+     * @test
+     */
+    public function redirect_class()
     {
-        $this->load(array('redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect'));
+        $this->load(['redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect']);
         $this->compile();
 
         $this->assertContainerBuilderHasService('zenstruck_redirect.redirect_manager');
@@ -31,20 +37,26 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('zenstruck_redirect.redirect.form.type');
     }
 
-    public function testCustomModelManagerName()
+    /**
+     * @test
+     */
+    public function custom_model_manager_name()
     {
-        $this->load(array(
+        $this->load([
             'redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
             'model_manager_name' => 'foo',
-        ));
+        ]);
         $this->compile();
 
         $this->assertContainerBuilderHasAlias('zenstruck_redirect.entity_manager', 'doctrine.orm.foo_entity_manager');
     }
 
-    public function testNotFoundClass()
+    /**
+     * @test
+     */
+    public function not_found_class()
     {
-        $this->load(array('not_found_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound'));
+        $this->load(['not_found_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound']);
         $this->compile();
 
         $this->assertContainerBuilderHasService('zenstruck_redirect.not_found_manager');
@@ -52,24 +64,30 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('zenstruck_redirect.not_found_listener');
     }
 
-    public function testRemoveNotFoundSubscriber()
+    /**
+     * @test
+     */
+    public function remove_not_found_subscriber()
     {
-        $this->load(array(
+        $this->load([
             'not_found_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound',
             'redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
-        ));
+        ]);
         $this->compile();
 
         $this->assertContainerBuilderHasService('zenstruck_redirect.remove_not_found_subscriber');
     }
 
-    public function testDisableRemoveNotFoundSubscriber()
+    /**
+     * @test
+     */
+    public function disable_remove_not_found_subscriber()
     {
-        $this->load(array(
+        $this->load([
             'not_found_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound',
             'redirect_class' => 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect',
             'remove_not_founds' => false,
-        ));
+        ]);
         $this->compile();
 
         $this->assertContainerBuilderNotHasService('zenstruck_redirect.remove_not_found_subscriber');
@@ -77,37 +95,38 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @dataProvider invalidClassProvider
+     *
+     * @test
      */
-    public function testInvalidRedirectClass($class)
+    public function invalid_redirect_class($class)
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $this->load(array('redirect_class' => $class));
+        $this->load(['redirect_class' => $class]);
     }
 
     /**
      * @dataProvider invalidClassProvider
+     *
+     * @test
      */
-    public function testInvalidNotFoundClass($class)
+    public function invalid_not_found_class($class)
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $this->load(array('not_found_class' => $class));
+        $this->load(['not_found_class' => $class]);
     }
 
     public function invalidClassProvider()
     {
-        return array(
-            array('Foo\Bar'),
-            array(get_class($this)),
-        );
+        return [
+            ['Foo\Bar'],
+            [static::class],
+        ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getContainerExtensions(): array
     {
-        return array(new ZenstruckRedirectExtension());
+        return [new ZenstruckRedirectExtension()];
     }
 }

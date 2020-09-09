@@ -21,7 +21,10 @@ class RemoveNotFoundSubscriberTest extends FunctionalTest
         $this->em->flush();
     }
 
-    public function testDeleteNotFoundOnCreateRedirect()
+    /**
+     * @test
+     */
+    public function delete_not_found_on_create_redirect()
     {
         $this->assertCount(3, $this->getNotFounds());
 
@@ -31,7 +34,10 @@ class RemoveNotFoundSubscriberTest extends FunctionalTest
         $this->assertCount(1, $this->getNotFounds());
     }
 
-    public function testDeleteNotFoundOnUpdateRedirect()
+    /**
+     * @test
+     */
+    public function delete_not_found_on_update_redirect()
     {
         $this->assertCount(3, $this->getNotFounds());
 

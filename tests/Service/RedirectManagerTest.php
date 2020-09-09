@@ -11,7 +11,7 @@ use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
  */
 class RedirectManagerTest extends TestCase
 {
-    const REDIRECT_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect';
+    public const REDIRECT_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect';
 
     private $om;
 
@@ -28,40 +28,51 @@ class RedirectManagerTest extends TestCase
         $this->om->expects($this->once())
             ->method('getRepository')
             ->with($this->equalTo(self::REDIRECT_DUMMY_CLASS))
-            ->will($this->returnValue($this->repository));
+            ->willReturn($this->repository)
+        ;
 
         $this->redirectManager = new RedirectManager(self::REDIRECT_DUMMY_CLASS, $this->om);
     }
 
-    public function testUpdateRedirect()
+    /**
+     * @test
+     */
+    public function update_redirect()
     {
         $redirect = new DummyRedirect('/foo', '/bar');
         $redirect->increaseCount(5);
         $this->assertNull($redirect->getLastAccessed());
 
         $this->om->expects($this->once())
-            ->method('flush');
+            ->method('flush')
+        ;
 
         $this->repository->expects($this->once())
             ->method('findOneBy')
-            ->with(array('source' => '/foo'))
-            ->will($this->returnValue($redirect));
+            ->with(['source' => '/foo'])
+            ->willReturn($redirect)
+        ;
 
         $redirect = $this->redirectManager->findAndUpdate('/foo');
 
         $this->assertSame(6, $redirect->getCount());
-        $this->assertEqualsWithDelta(time(), $redirect->getLastAccessed()->format('U'), 1);
+        $this->assertEqualsWithDelta(\time(), $redirect->getLastAccessed()->format('U'), 1);
     }
 
-    public function testNoRedirectFound()
+    /**
+     * @test
+     */
+    public function no_redirect_found()
     {
         $this->om->expects($this->never())
-            ->method('flush');
+            ->method('flush')
+        ;
 
         $this->repository->expects($this->once())
             ->method('findOneBy')
-            ->with(array('source' => '/foo'))
-            ->will($this->returnValue(null));
+            ->with(['source' => '/foo'])
+            ->willReturn(null)
+        ;
 
         $redirect = $this->redirectManager->findAndUpdate('/foo');
 
