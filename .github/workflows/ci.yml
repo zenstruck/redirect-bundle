@@ -1,0 +1,184 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 1,16 * *'
+
+jobs:
+  symfony-version-tests:
+    name: "Test: PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}"
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [7.2, 7.3, 7.4]
+        symfony: [4.4.*, 5.0.*]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-${{ matrix.php }}-${{ matrix.symfony }}-${{ hashFiles('composer.json') }}
+
+      - name: Install dependencies
+        run: |
+          composer global require --no-progress --no-scripts --no-plugins symfony/flex dev-master
+          composer update --prefer-dist --no-interaction --no-suggest
+          vendor/bin/simple-phpunit install
+        env:
+          SYMFONY_REQUIRE: ${{ matrix.symfony }}
+
+      - name: Run tests
+        run: vendor/bin/simple-phpunit -v
+
+#  prefer-lowest-tests:
+#    name: "Test: PHP ${{ matrix.php }}, --prefer-lowest"
+#
+#    runs-on: ubuntu-latest
+#
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        php: [7.2, 7.3, 7.4]
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: ${{ matrix.php }}
+#          coverage: none
+#
+#      - name: Cache dependencies
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.composer/cache/files
+#          key: prefer-lowest-${{ matrix.php }}-${{ hashFiles('composer.json') }}
+#
+#      - name: Install dependencies
+#        run: |
+#          composer update --prefer-lowest --prefer-dist --no-interaction --no-suggest
+#          vendor/bin/simple-phpunit install
+#
+#      - name: Run tests
+#        run: vendor/bin/simple-phpunit -v
+
+#  dev-master-tests:
+#    name: "Test: PHP ${{ matrix.php }}, dev-master"
+#
+#    runs-on: ubuntu-latest
+#
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        php: [7.2, 7.3, 7.4]
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: ${{ matrix.php }}
+#          coverage: none
+#
+#      - name: Cache dependencies
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.composer/cache/files
+#          key: dev-master-${{ matrix.php }}-${{ hashFiles('composer.json') }}
+#
+#      - name: Install dependencies
+#        run: |
+#          composer config minimum-stability dev
+#          composer update --prefer-dist --no-interaction --no-suggest
+#          vendor/bin/simple-phpunit install
+#
+#      - name: Run tests
+#        run: vendor/bin/simple-phpunit -v
+
+  code-coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          coverage: xdebug
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache/files
+          key: coverage-${{ hashFiles('composer.json') }}
+
+      - name: Install dependencies
+        run: |
+          composer update --prefer-dist --no-interaction --no-suggest
+          vendor/bin/simple-phpunit install
+
+      - name: Run code coverage
+        run: vendor/bin/simple-phpunit -v --coverage-text --coverage-clover=coverage.clover
+
+      - name: Send code coverage
+        run: |
+          wget https://scrutinizer-ci.com/ocular.phar
+          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
+  composer-validate:
+    name: Validate composer.json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          coverage: none
+
+      - name: Validate composer.json
+        run: composer validate --strict --no-check-lock
+
+#  cs-check:
+#    name: PHP Coding Standards
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: 7.4
+#          coverage: none
+#
+#      - name: Install dependencies
+#        run: |
+#          wget https://cs.symfony.com/download/php-cs-fixer-v2.phar -O php-cs-fixer.phar
+#          php php-cs-fixer.phar self-update
+#
+#      - name: Check CS
+#        run: php php-cs-fixer.phar fix -v --dry-run --diff-format=udiff
