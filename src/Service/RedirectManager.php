@@ -2,7 +2,7 @@
 
 namespace Zenstruck\RedirectBundle\Service;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Zenstruck\RedirectBundle\Model\Redirect;
 
 /**

@@ -19,7 +19,7 @@ class NotFoundTest extends TestCase
         $this->assertSame($expectedPath, $notFound->getPath());
         $this->assertNull($notFound->getReferer());
         $this->assertSame('http://foobar.com/baz', $notFound->getFullUrl());
-        $this->assertEquals(time(), $notFound->getTimestamp()->format('U'), '', 1);
+        $this->assertEqualsWithDelta(time(), $notFound->getTimestamp()->format('U'), 1);
     }
 
     public function pathProvider()

@@ -20,10 +20,10 @@ class RedirectManagerTest extends TestCase
     /** @var RedirectManager */
     private $redirectManager;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->om = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
-        $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
+        $this->om = $this->createMock('Doctrine\Persistence\ObjectManager');
+        $this->repository = $this->createMock('Doctrine\Persistence\ObjectRepository');
 
         $this->om->expects($this->once())
             ->method('getRepository')
@@ -50,7 +50,7 @@ class RedirectManagerTest extends TestCase
         $redirect = $this->redirectManager->findAndUpdate('/foo');
 
         $this->assertSame(6, $redirect->getCount());
-        $this->assertEquals(time(), $redirect->getLastAccessed()->format('U'), '', 1);
+        $this->assertEqualsWithDelta(time(), $redirect->getLastAccessed()->format('U'), 1);
     }
 
     public function testNoRedirectFound()

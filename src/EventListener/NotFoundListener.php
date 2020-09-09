@@ -2,7 +2,7 @@
 
 namespace Zenstruck\RedirectBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -12,11 +12,9 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 abstract class NotFoundListener
 {
     /**
-     * @param GetResponseForExceptionEvent $event
-     *
      * @return bool
      */
-    public function isNotFoundException(GetResponseForExceptionEvent $event)
+    public function isNotFoundException(ExceptionEvent $event)
     {
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
             return false;
@@ -31,5 +29,5 @@ abstract class NotFoundListener
         return true;
     }
 
-    abstract public function onKernelException(GetResponseForExceptionEvent $event);
+    abstract public function onKernelException(ExceptionEvent $event);
 }

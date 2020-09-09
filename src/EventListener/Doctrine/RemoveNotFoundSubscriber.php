@@ -3,7 +3,7 @@
 namespace Zenstruck\RedirectBundle\EventListener\Doctrine;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Zenstruck\RedirectBundle\Model\Redirect;
 use Zenstruck\RedirectBundle\Service\NotFoundManager;

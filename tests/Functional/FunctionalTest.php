@@ -29,7 +29,7 @@ abstract class FunctionalTest extends WebTestCase
         return TestKernel::class;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $client = self::createClient();
 

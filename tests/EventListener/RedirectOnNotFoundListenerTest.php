@@ -15,7 +15,7 @@ class RedirectOnNotFoundListenerTest extends NotFoundListenerTest
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $redirectManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->redirectManager = $this->createMock('Zenstruck\RedirectBundle\Service\RedirectManager', array(), array(), '', false);
         $this->listener = new RedirectOnNotFoundListener($this->redirectManager);

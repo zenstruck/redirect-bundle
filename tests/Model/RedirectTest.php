@@ -38,7 +38,7 @@ class RedirectTest extends TestCase
 
         $redirect->updateLastAccessed();
         $this->assertInstanceOf('DateTime', $redirect->getLastAccessed());
-        $this->assertEquals(time(), $redirect->getLastAccessed()->format('U'), '', 1);
+        $this->assertEqualsWithDelta(time(), $redirect->getLastAccessed()->format('U'), 1);
     }
 
     public function testIncreaseCount()
