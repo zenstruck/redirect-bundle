@@ -2,8 +2,6 @@
 
 namespace Zenstruck\RedirectBundle\Tests\Functional;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
@@ -13,19 +11,13 @@ class NotFoundTest extends FunctionalTest
     {
         $this->assertCount(0, $this->getNotFounds());
 
-        try {
-            $this->client->request('GET', '/not-found?foo=bar');
-        } catch (NotFoundHttpException $e) {
-            $notFounds = $this->getNotFounds();
+        $this->client->request('GET', '/not-found?foo=bar');
 
-            $this->assertCount(1, $notFounds);
-            $this->assertSame('/not-found', $notFounds[0]->getPath());
-            $this->assertSame('http://localhost/not-found?foo=bar', $notFounds[0]->getFullUrl());
-            $this->assertNull($notFounds[0]->getReferer());
+        $notFounds = $this->getNotFounds();
 
-            return;
-        }
-
-        $this->fail('NotFoundHttpException should have been thrown.');
+        $this->assertCount(1, $notFounds);
+        $this->assertSame('/not-found', $notFounds[0]->getPath());
+        $this->assertSame('http://localhost/not-found?foo=bar', $notFounds[0]->getFullUrl());
+        $this->assertNull($notFounds[0]->getReferer());
     }
 }
