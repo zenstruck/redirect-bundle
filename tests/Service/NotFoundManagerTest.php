@@ -20,10 +20,10 @@ class NotFoundManagerTest extends TestCase
     /** @var NotFoundManager */
     private $notFoundManager;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->om = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
-        $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
+        $this->om = $this->createMock('Doctrine\Persistence\ObjectManager');
+        $this->repository = $this->createMock('Doctrine\Persistence\ObjectRepository');
 
         $this->notFoundManager = new NotFoundManager(self::NOT_FOUND_DUMMY_CLASS, $this->om);
     }
@@ -43,6 +43,6 @@ class NotFoundManagerTest extends TestCase
         $this->assertSame('/foo/bar', $notFound->getPath());
         $this->assertSame('https://example.com/foo/bar?baz=foo', $notFound->getFullUrl());
         $this->assertSame('https://google.com', $notFound->getReferer());
-        $this->assertEquals(time(), $notFound->getTimestamp()->format('U'), '', 1);
+        $this->assertEqualsWithDelta(time(), $notFound->getTimestamp()->format('U'), 1);
     }
 }

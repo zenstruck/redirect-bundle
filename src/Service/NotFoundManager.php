@@ -2,7 +2,7 @@
 
 namespace Zenstruck\RedirectBundle\Service;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Zenstruck\RedirectBundle\Model\NotFound;
 use Zenstruck\RedirectBundle\Model\Redirect;

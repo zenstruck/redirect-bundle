@@ -4,7 +4,7 @@ namespace Zenstruck\RedirectBundle\Tests\EventListener;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Zenstruck\RedirectBundle\EventListener\NotFoundListener;
@@ -46,7 +46,7 @@ abstract class NotFoundListenerTest extends TestCase
 
     protected function createEvent(\Exception $exception, Request $request = null, $requestType = HttpKernelInterface::MASTER_REQUEST)
     {
-        return new GetResponseForExceptionEvent(
+        return new ExceptionEvent(
             $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface'),
             $request ?: new Request(),
             $requestType,

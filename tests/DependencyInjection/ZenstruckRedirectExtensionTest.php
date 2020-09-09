@@ -3,6 +3,7 @@
 namespace Zenstruck\RedirectBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Zenstruck\RedirectBundle\DependencyInjection\ZenstruckRedirectExtension;
 
 /**
@@ -10,12 +11,11 @@ use Zenstruck\RedirectBundle\DependencyInjection\ZenstruckRedirectExtension;
  */
 class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
 {
-    /**
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     * @expectedExceptionMessage A "redirect_class" or "not_found_class" must be set for "zenstruck_redirect".
-     */
     public function testNoClassesSet()
     {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('A "redirect_class" or "not_found_class" must be set for "zenstruck_redirect".');
+
         $this->load(array());
         $this->compile();
     }
@@ -77,19 +77,21 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @dataProvider invalidClassProvider
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
     public function testInvalidRedirectClass($class)
     {
+        $this->expectException(InvalidConfigurationException::class);
+
         $this->load(array('redirect_class' => $class));
     }
 
     /**
      * @dataProvider invalidClassProvider
-     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      */
     public function testInvalidNotFoundClass($class)
     {
+        $this->expectException(InvalidConfigurationException::class);
+
         $this->load(array('not_found_class' => $class));
     }
 
@@ -104,7 +106,7 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
     /**
      * {@inheritdoc}
      */
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return array(new ZenstruckRedirectExtension());
     }

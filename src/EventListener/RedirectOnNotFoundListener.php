@@ -3,7 +3,7 @@
 namespace Zenstruck\RedirectBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Zenstruck\RedirectBundle\Service\RedirectManager;
 
 /**
@@ -18,7 +18,7 @@ class RedirectOnNotFoundListener extends NotFoundListener
         $this->redirectManager = $redirectManager;
     }
 
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event)
     {
         if (!$this->isNotFoundException($event)) {
             return;
