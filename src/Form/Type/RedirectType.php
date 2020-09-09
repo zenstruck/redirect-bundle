@@ -22,49 +22,40 @@ class RedirectType extends AbstractType
         $this->class = $class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('source', null, array(
+            ->add('source', null, [
                 'label' => 'form.source',
                 'translation_domain' => 'ZenstruckRedirectBundle',
                 'disabled' => $options['disable_source'],
-            ))
+            ])
 
-            ->add('destination', null, array(
+            ->add('destination', null, [
                 'label' => 'form.destination',
                 'translation_domain' => 'ZenstruckRedirectBundle',
-            ))
+            ])
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'zenstruck_redirect';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $class = $this->class;
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => $this->class,
             'disable_source' => false,
-            'empty_data' => function (FormInterface $form) use ($class) {
+            'empty_data' => function(FormInterface $form) use ($class) {
                 return new $class(
                     $form->get('source')->getData(),
                     $form->get('destination')->getData()
                 );
             },
-        ));
+        ]);
     }
 }

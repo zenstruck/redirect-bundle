@@ -28,10 +28,9 @@ abstract class NotFound
     protected $referer;
 
     /**
-     * @param string         $path
-     * @param string         $fullUrl
-     * @param string|null    $referer
-     * @param \DateTime|null $timestamp
+     * @param string      $path
+     * @param string      $fullUrl
+     * @param string|null $referer
      */
     public function __construct($path, $fullUrl, $referer = null, \DateTime $timestamp = null)
     {
@@ -39,11 +38,11 @@ abstract class NotFound
             $timestamp = new \DateTime('now');
         }
 
-        $path = trim($path);
+        $path = \trim($path);
         $path = !empty($path) ? $path : null;
 
         if (null !== $path) {
-            $path = '/'.ltrim(parse_url($path, PHP_URL_PATH), '/');
+            $path = '/'.\ltrim(\parse_url($path, PHP_URL_PATH), '/');
         }
 
         $this->path = $path;
@@ -77,7 +76,7 @@ abstract class NotFound
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getReferer()
     {

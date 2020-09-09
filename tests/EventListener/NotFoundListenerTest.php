@@ -17,7 +17,10 @@ abstract class NotFoundListenerTest extends TestCase
     /** @var NotFoundListener */
     protected $listener;
 
-    public function testNonMasterRequest()
+    /**
+     * @test
+     */
+    public function non_master_request()
     {
         $event = $this->createEvent(new \Exception(), null, HttpKernelInterface::SUB_REQUEST);
         $this->assertNull($event->getResponse());
@@ -26,7 +29,10 @@ abstract class NotFoundListenerTest extends TestCase
         $this->assertNull($event->getResponse());
     }
 
-    public function testNonHttpException()
+    /**
+     * @test
+     */
+    public function non_http_exception()
     {
         $event = $this->createEvent(new \Exception());
         $this->assertNull($event->getResponse());
@@ -35,7 +41,10 @@ abstract class NotFoundListenerTest extends TestCase
         $this->assertNull($event->getResponse());
     }
 
-    public function testNon404HttpException()
+    /**
+     * @test
+     */
+    public function non404_http_exception()
     {
         $event = $this->createEvent(new HttpException(403));
         $this->assertNull($event->getResponse());

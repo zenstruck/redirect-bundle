@@ -17,8 +17,7 @@ class NotFoundManager
     private $om;
 
     /**
-     * @param string        $class The NotFound class name
-     * @param ObjectManager $om
+     * @param string $class The NotFound class name
      */
     public function __construct($class, ObjectManager $om)
     {
@@ -27,8 +26,6 @@ class NotFoundManager
     }
 
     /**
-     * @param Request $request
-     *
      * @return NotFound
      */
     public function createFromRequest(Request $request)
@@ -47,12 +44,10 @@ class NotFoundManager
 
     /**
      * Deletes NotFound entities for a Redirect's path.
-     *
-     * @param Redirect $redirect
      */
     public function removeForRedirect(Redirect $redirect)
     {
-        $notFounds = $this->om->getRepository($this->class)->findBy(array('path' => $redirect->getSource()));
+        $notFounds = $this->om->getRepository($this->class)->findBy(['path' => $redirect->getSource()]);
 
         foreach ($notFounds as $notFound) {
             $this->om->remove($notFound);

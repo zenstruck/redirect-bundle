@@ -20,9 +20,9 @@ class ZenstruckRedirectBundle extends Bundle
 
     private function addRegisterMappingsPass(ContainerBuilder $container)
     {
-        $mappings = array(
-            realpath(__DIR__.'/Resources/config/doctrine-mapping') => 'Zenstruck\RedirectBundle\Model',
-        );
+        $mappings = [
+            \realpath(__DIR__.'/Resources/config/doctrine-mapping') => 'Zenstruck\RedirectBundle\Model',
+        ];
 
         $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
     }

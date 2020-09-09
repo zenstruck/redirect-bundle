@@ -10,16 +10,21 @@ use Zenstruck\RedirectBundle\ZenstruckRedirectBundle;
  */
 class ZenstruckRedirectBundleTest extends TestCase
 {
-    public function testBuild()
+    /**
+     * @test
+     */
+    public function build()
     {
         $container = $this
             ->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(array('addCompilerPass'))
-            ->getMock();
+            ->setMethods(['addCompilerPass'])
+            ->getMock()
+        ;
         $container
             ->expects($this->once())
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf('Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass'));
+            ->with($this->isInstanceOf('Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass'))
+        ;
 
         $bundle = new ZenstruckRedirectBundle();
         $bundle->build($container);

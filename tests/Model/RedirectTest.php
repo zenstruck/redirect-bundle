@@ -13,8 +13,10 @@ class RedirectTest extends TestCase
 {
     /**
      * @dataProvider sourceProvider
+     *
+     * @test
      */
-    public function testSetSource($source, $expected)
+    public function set_source($source, $expected)
     {
         $redirect = $this->createRedirect($source, '/foo');
 
@@ -23,25 +25,33 @@ class RedirectTest extends TestCase
 
     /**
      * @dataProvider destinationProvider
+     *
+     * @test
      */
-    public function testSetDestination($destination, $expectedDestination)
+    public function set_destination($destination, $expectedDestination)
     {
         $redirect = $this->createRedirect('/', $destination);
 
         $this->assertSame($expectedDestination, $redirect->getDestination());
     }
 
-    public function testGetLastAccessedAt()
+    /**
+     * @test
+     */
+    public function get_last_accessed_at()
     {
         $redirect = $this->createRedirect('/', '/');
         $this->assertNull($redirect->getLastAccessed());
 
         $redirect->updateLastAccessed();
         $this->assertInstanceOf('DateTime', $redirect->getLastAccessed());
-        $this->assertEqualsWithDelta(time(), $redirect->getLastAccessed()->format('U'), 1);
+        $this->assertEqualsWithDelta(\time(), $redirect->getLastAccessed()->format('U'), 1);
     }
 
-    public function testIncreaseCount()
+    /**
+     * @test
+     */
+    public function increase_count()
     {
         $redirect = $this->createRedirect('/', '/');
 
@@ -54,7 +64,10 @@ class RedirectTest extends TestCase
         $this->assertSame(5, $redirect->getCount());
     }
 
-    public function testCreateFromNotFound()
+    /**
+     * @test
+     */
+    public function create_from_not_found()
     {
         $redirect = DummyRedirect::createFromNotFound(new DummyNotFound('/foo', 'https://example.com/foo'), '/baz');
 
@@ -63,37 +76,37 @@ class RedirectTest extends TestCase
 
     public function sourceProvider()
     {
-        return array(
-            array('foo/bar', '/foo/bar'),
-            array('/foo/bar/', '/foo/bar/'),
-            array('foo', '/foo'),
-            array('foo/bar ', '/foo/bar'),
-            array(' foo/bar/', '/foo/bar/'),
-            array('   /foo', '/foo'),
-            array('http://www.example.com/foo', '/foo'),
-            array('http://www.example.com/', '/'),
-            array('http://www.example.com', '/'),
-            array('foo/bar?baz=true', '/foo/bar'),
-            array('http://www.example.com/foo?baz=bar&foo=baz', '/foo'),
-            array('http://www.example.com/foo?baz=bar&foo=baz#baz', '/foo'),
-            array('', null),
-            array('   ', null),
-            array('/', '/'),
-        );
+        return [
+            ['foo/bar', '/foo/bar'],
+            ['/foo/bar/', '/foo/bar/'],
+            ['foo', '/foo'],
+            ['foo/bar ', '/foo/bar'],
+            [' foo/bar/', '/foo/bar/'],
+            ['   /foo', '/foo'],
+            ['http://www.example.com/foo', '/foo'],
+            ['http://www.example.com/', '/'],
+            ['http://www.example.com', '/'],
+            ['foo/bar?baz=true', '/foo/bar'],
+            ['http://www.example.com/foo?baz=bar&foo=baz', '/foo'],
+            ['http://www.example.com/foo?baz=bar&foo=baz#baz', '/foo'],
+            ['', null],
+            ['   ', null],
+            ['/', '/'],
+        ];
     }
 
     public function destinationProvider()
     {
-        return array(
-            array('/foo', '/foo'),
-            array('foo', '/foo'),
-            array('foo?bar=baz', '/foo?bar=baz'),
-            array(null, null),
-            array('', null),
-            array(' ', null),
-            array('   ', null),
-            array('http://www.example.com/foo', 'http://www.example.com/foo'),
-        );
+        return [
+            ['/foo', '/foo'],
+            ['foo', '/foo'],
+            ['foo?bar=baz', '/foo?bar=baz'],
+            [null, null],
+            ['', null],
+            [' ', null],
+            ['   ', null],
+            ['http://www.example.com/foo', 'http://www.example.com/foo'],
+        ];
     }
 
     /**
@@ -103,7 +116,7 @@ class RedirectTest extends TestCase
     {
         return $this->getMockForAbstractClass(
             'Zenstruck\RedirectBundle\Model\Redirect',
-            array($source, $destination, $permanent)
+            [$source, $destination, $permanent]
         );
     }
 }

@@ -7,7 +7,10 @@ namespace Zenstruck\RedirectBundle\Tests\Functional;
  */
 class RedirectTest extends FunctionalTest
 {
-    public function test301Redirect()
+    /**
+     * @test
+     */
+    public function test301_redirect()
     {
         $this->assertSame(0, $this->getRedirect('/301-redirect')->getCount());
 
@@ -28,7 +31,10 @@ class RedirectTest extends FunctionalTest
         $this->assertSame(2, $this->getRedirect('/301-redirect')->getCount());
     }
 
-    public function test302Redirect()
+    /**
+     * @test
+     */
+    public function test302_redirect()
     {
         $this->assertSame(0, $this->getRedirect('/302-redirect')->getCount());
 

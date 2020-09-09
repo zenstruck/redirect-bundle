@@ -7,7 +7,10 @@ namespace Zenstruck\RedirectBundle\Tests\Functional;
  */
 class NotFoundTest extends FunctionalTest
 {
-    public function testNotFoundCreated()
+    /**
+     * @test
+     */
+    public function not_found_created()
     {
         $this->assertCount(0, $this->getNotFounds());
 

@@ -19,10 +19,14 @@ class RedirectTypeTest extends TypeTestCase
         $this->factory = Forms::createFormFactoryBuilder()
             ->addExtensions($this->getExtensions())
             ->addType(new RedirectType('Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect'))
-            ->getFormFactory();
+            ->getFormFactory()
+        ;
     }
 
-    public function testCreateDefault()
+    /**
+     * @test
+     */
+    public function create_default()
     {
         $form = $this->factory->create(RedirectType::class);
 
@@ -31,20 +35,26 @@ class RedirectTypeTest extends TypeTestCase
         $this->assertFalse($form->get('source')->isDisabled());
     }
 
-    public function testCreateWithOptions()
+    /**
+     * @test
+     */
+    public function create_with_options()
     {
-        $form = $this->factory->create(RedirectType::class, null, array('disable_source' => true));
+        $form = $this->factory->create(RedirectType::class, null, ['disable_source' => true]);
         $this->assertTrue($form->get('source')->isDisabled());
     }
 
-    public function testSubmitUpdate()
+    /**
+     * @test
+     */
+    public function submit_update()
     {
         $redirect = new DummyRedirect('/baz', 'http://example.com');
         $form = $this->factory->create(RedirectType::class, $redirect);
-        $formData = array(
+        $formData = [
             'source' => '/foo',
             'destination' => '/bar',
-        );
+        ];
         $form->submit($formData);
         $this->assertTrue($form->isSynchronized());
 
@@ -54,13 +64,16 @@ class RedirectTypeTest extends TypeTestCase
         $this->assertSame('/bar', $redirect->getDestination());
     }
 
-    public function testSubmitCreate()
+    /**
+     * @test
+     */
+    public function submit_create()
     {
         $form = $this->factory->create(RedirectType::class);
-        $formData = array(
+        $formData = [
             'source' => '/foo',
             'destination' => '/bar',
-        );
+        ];
         $form->submit($formData);
         $this->assertTrue($form->isSynchronized());
 

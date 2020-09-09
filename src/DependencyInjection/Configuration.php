@@ -10,9 +10,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('zenstruck_redirect');
@@ -29,8 +26,8 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('redirect_class')
                     ->defaultNull()
                     ->validate()
-                        ->ifTrue(function ($value) {
-                            return !is_subclass_of($value, 'Zenstruck\RedirectBundle\Model\Redirect');
+                        ->ifTrue(function($value) {
+                            return !\is_subclass_of($value, 'Zenstruck\RedirectBundle\Model\Redirect');
                         })
                         ->thenInvalid('"redirect_class" must be an instance of "Zenstruck\RedirectBundle\Model\Redirect"')
                     ->end()
@@ -38,8 +35,8 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('not_found_class')
                     ->defaultNull()
                     ->validate()
-                        ->ifTrue(function ($value) {
-                            return !is_subclass_of($value, 'Zenstruck\RedirectBundle\Model\NotFound');
+                        ->ifTrue(function($value) {
+                            return !\is_subclass_of($value, 'Zenstruck\RedirectBundle\Model\NotFound');
                         })
                         ->thenInvalid('"not_found_class" must be an instance of "Zenstruck\RedirectBundle\Model\NotFound"')
                     ->end()

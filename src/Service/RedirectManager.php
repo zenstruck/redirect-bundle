@@ -15,8 +15,7 @@ class RedirectManager
     private $om;
 
     /**
-     * @param string        $class The Redirect class name
-     * @param ObjectManager $om
+     * @param string $class The Redirect class name
      */
     public function __construct($class, ObjectManager $om)
     {
@@ -32,7 +31,7 @@ class RedirectManager
     public function findAndUpdate($source)
     {
         /** @var Redirect|null $redirect */
-        $redirect = $this->om->getRepository($this->class)->findOneBy(array('source' => $source));
+        $redirect = $this->om->getRepository($this->class)->findOneBy(['source' => $source]);
 
         if (null === $redirect) {
             return null;

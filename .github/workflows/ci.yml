@@ -162,23 +162,23 @@ jobs:
       - name: Validate composer.json
         run: composer validate --strict --no-check-lock
 
-#  cs-check:
-#    name: PHP Coding Standards
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#
-#      - name: Setup PHP
-#        uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: 7.4
-#          coverage: none
-#
-#      - name: Install dependencies
-#        run: |
-#          wget https://cs.symfony.com/download/php-cs-fixer-v2.phar -O php-cs-fixer.phar
-#          php php-cs-fixer.phar self-update
-#
-#      - name: Check CS
-#        run: php php-cs-fixer.phar fix -v --dry-run --diff-format=udiff
+  cs-check:
+    name: PHP Coding Standards
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          wget https://cs.symfony.com/download/php-cs-fixer-v2.phar -O php-cs-fixer.phar
+          php php-cs-fixer.phar self-update
+
+      - name: Check CS
+        run: php php-cs-fixer.phar fix -v --dry-run --diff-format=udiff

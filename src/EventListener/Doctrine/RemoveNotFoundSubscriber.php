@@ -22,15 +22,12 @@ class RemoveNotFoundSubscriber implements EventSubscriber
         $this->container = $container;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             'postPersist',
             'postUpdate',
-        );
+        ];
     }
 
     public function postUpdate(LifecycleEventArgs $args)
