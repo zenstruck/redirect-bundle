@@ -1,12 +1,10 @@
 # ZenstruckRedirectBundle
 
-[![Build Status](http://img.shields.io/travis/kbond/ZenstruckRedirectBundle.svg?style=flat-square)](https://travis-ci.org/kbond/ZenstruckRedirectBundle)
-[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/kbond/ZenstruckRedirectBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/)
-[![Code Coverage](http://img.shields.io/scrutinizer/coverage/g/kbond/ZenstruckRedirectBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/98b24514-56a0-43a4-8c8b-760b86163dd2.svg?style=flat-square)](https://insight.sensiolabs.com/projects/98b24514-56a0-43a4-8c8b-760b86163dd2)
-[![StyleCI](https://styleci.io/repos/1902245/shield)](https://styleci.io/repos/1902245)
-[![Latest Stable Version](http://img.shields.io/packagist/v/zenstruck/redirect-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/redirect-bundle)
-[![License](http://img.shields.io/packagist/l/zenstruck/redirect-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/redirect-bundle)
+[![CI](https://github.com/kbond/ZenstruckRedirectBundle/workflows/CI/badge.svg)](https://github.com/kbond/ZenstruckRedirectBundle/actions?query=workflow%3ACI)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/?branch=master)
+[![Latest Version](https://img.shields.io/packagist/v/zenstruck/redirect-bundle.svg)](https://packagist.org/packages/zenstruck/redirect-bundle)
+[![Total Downloads](https://img.shields.io/packagist/dt/zenstruck/redirect-bundle.svg)](https://packagist.org/packages/zenstruck/redirect-bundle)
 
 This bundle adds entities for redirects and 404 errors.
 
