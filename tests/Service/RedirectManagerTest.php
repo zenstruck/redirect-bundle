@@ -20,7 +20,7 @@ class RedirectManagerTest extends TestCase
     /** @var RedirectManager */
     private $redirectManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->om = $this->createMock('Doctrine\Persistence\ObjectManager');
         $this->repository = $this->createMock('Doctrine\Persistence\ObjectRepository');

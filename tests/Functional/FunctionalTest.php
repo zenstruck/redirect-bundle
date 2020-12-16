@@ -24,7 +24,7 @@ abstract class FunctionalTest extends WebTestCase
     /** @var EntityManager */
     protected $em;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $client = self::createClient();
 

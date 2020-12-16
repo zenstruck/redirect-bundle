@@ -12,7 +12,7 @@ use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
  */
 class RedirectTypeTest extends TypeTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
