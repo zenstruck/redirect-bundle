@@ -42,7 +42,7 @@ abstract class NotFound
         $path = !empty($path) ? $path : null;
 
         if (null !== $path) {
-            $path = '/'.\ltrim(\parse_url($path, PHP_URL_PATH), '/');
+            $path = '/'.\ltrim(\parse_url($path, \PHP_URL_PATH), '/');
         }
 
         $this->path = $path;

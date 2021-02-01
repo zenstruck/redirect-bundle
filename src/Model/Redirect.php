@@ -94,7 +94,7 @@ abstract class Redirect
         $destination = \trim($destination);
         $destination = !empty($destination) ? $destination : null;
 
-        if (null !== $destination && null === \parse_url($destination, PHP_URL_SCHEME)) {
+        if (null !== $destination && null === \parse_url($destination, \PHP_URL_SCHEME)) {
             $destination = $this->createAbsoluteUri($destination, true);
         }
 
@@ -161,9 +161,9 @@ abstract class Redirect
      */
     protected function createAbsoluteUri($path, $allowQueryString = false)
     {
-        $value = '/'.\ltrim(\parse_url($path, PHP_URL_PATH), '/');
+        $value = '/'.\ltrim(\parse_url($path, \PHP_URL_PATH), '/');
 
-        if ($allowQueryString && $query = \parse_url($path, PHP_URL_QUERY)) {
+        if ($allowQueryString && $query = \parse_url($path, \PHP_URL_QUERY)) {
             $value .= '?'.$query;
         }
 
