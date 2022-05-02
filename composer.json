@@ -31,6 +31,8 @@
     "autoload-dev": {
         "psr-4": { "Zenstruck\\RedirectBundle\\Tests\\": "tests/" }
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "3.x-dev"
