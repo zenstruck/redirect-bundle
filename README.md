@@ -1,8 +1,6 @@
 # ZenstruckRedirectBundle
 
 [![CI](https://github.com/kbond/ZenstruckRedirectBundle/workflows/CI/badge.svg)](https://github.com/kbond/ZenstruckRedirectBundle/actions?query=workflow%3ACI)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kbond/ZenstruckRedirectBundle/?branch=master)
 [![Latest Version](https://img.shields.io/packagist/v/zenstruck/redirect-bundle.svg)](https://packagist.org/packages/zenstruck/redirect-bundle)
 [![Total Downloads](https://img.shields.io/packagist/dt/zenstruck/redirect-bundle.svg)](https://packagist.org/packages/zenstruck/redirect-bundle)
 
