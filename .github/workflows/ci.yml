@@ -7,174 +7,43 @@ on:
     - cron: '0 0 1,16 * *'
 
 jobs:
-  symfony-version-tests:
-    name: "Test: PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}"
-
+  tests:
+    name: PHP ${{ matrix.php }}, SF ${{ matrix.symfony }} - ${{ matrix.deps }}
     runs-on: ubuntu-latest
-
     strategy:
-      fail-fast: true
       matrix:
-        php: [7.2, 7.3, 7.4, 8.0, 8.1]
-        symfony: [4.4.*, 5.0.*, 5.1.*, 5.2.*, 6.0.*]
-
+        php: [ 7.4, 8.0, 8.1 ]
+        deps: [ hightest ]
+        symfony: [ 4.4.*, 5.4.* ]
+        include:
+          - php: 7.2
+            deps: lowest
+            symfony: '*'
+          - php: 8.0
+            deps: hightest
+            symfony: 6.0.*
+          - php: 8.1
+            deps: hightest
+            symfony: 6.0.*
+          - php: 8.1
+            deps: hightest
+            symfony: 6.1.*
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - uses: zenstruck/.github@php-test-symfony
         with:
-          php-version: ${{ matrix.php }}
-          coverage: none
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache/files
-          key: dependencies-${{ matrix.php }}-${{ matrix.symfony }}-${{ hashFiles('composer.json') }}
-
-      - name: Install dependencies
-        run: |
-          composer global require --no-progress --no-scripts --no-plugins symfony/flex dev-main
-          composer update --prefer-dist --no-interaction --no-suggest
-          vendor/bin/simple-phpunit install
-        env:
-          SYMFONY_REQUIRE: ${{ matrix.symfony }}
-
-      - name: Run tests
-        run: vendor/bin/simple-phpunit -v
-
-#  prefer-lowest-tests:
-#    name: "Test: PHP ${{ matrix.php }}, --prefer-lowest"
-#
-#    runs-on: ubuntu-latest
-#
-#    strategy:
-#      fail-fast: true
-#      matrix:
-#        php: [7.2, 7.3, 7.4]
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#
-#      - name: Setup PHP
-#        uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: ${{ matrix.php }}
-#          coverage: none
-#
-#      - name: Cache dependencies
-#        uses: actions/cache@v1
-#        with:
-#          path: ~/.composer/cache/files
-#          key: prefer-lowest-${{ matrix.php }}-${{ hashFiles('composer.json') }}
-#
-#      - name: Install dependencies
-#        run: |
-#          composer update --prefer-lowest --prefer-dist --no-interaction --no-suggest
-#          vendor/bin/simple-phpunit install
-#
-#      - name: Run tests
-#        run: vendor/bin/simple-phpunit -v
-
-#  dev-master-tests:
-#    name: "Test: PHP ${{ matrix.php }}, dev-master"
-#
-#    runs-on: ubuntu-latest
-#
-#    strategy:
-#      fail-fast: true
-#      matrix:
-#        php: [7.2, 7.3, 7.4]
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#
-#      - name: Setup PHP
-#        uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: ${{ matrix.php }}
-#          coverage: none
-#
-#      - name: Cache dependencies
-#        uses: actions/cache@v1
-#        with:
-#          path: ~/.composer/cache/files
-#          key: dev-master-${{ matrix.php }}-${{ hashFiles('composer.json') }}
-#
-#      - name: Install dependencies
-#        run: |
-#          composer config minimum-stability dev
-#          composer update --prefer-dist --no-interaction --no-suggest
-#          vendor/bin/simple-phpunit install
-#
-#      - name: Run tests
-#        run: vendor/bin/simple-phpunit -v
+          php: ${{ matrix.php }}
+          symfony: ${{ matrix.symfony }}
+          deps: ${{ matrix.deps }}
+          phpunit: simple-phpunit
 
   code-coverage:
-    name: Code Coverage
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          coverage: xdebug
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache/files
-          key: coverage-${{ hashFiles('composer.json') }}
-
-      - name: Install dependencies
-        run: |
-          composer update --prefer-dist --no-interaction --no-suggest
-          vendor/bin/simple-phpunit install
-
-      - name: Run code coverage
-        run: vendor/bin/simple-phpunit -v --coverage-text --coverage-clover=coverage.clover
-
-      - name: Send code coverage
-        run: |
-          wget https://scrutinizer-ci.com/ocular.phar
-          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    uses: zenstruck/.github/.github/workflows/php-coverage-codecov.yml@main
+    with:
+      php: 8.1
+      phpunit: simple-phpunit
 
   composer-validate:
-    name: Validate composer.json
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          coverage: none
-
-      - name: Validate composer.json
-        run: composer validate --strict --no-check-lock
+    uses: zenstruck/.github/.github/workflows/php-composer-validate.yml@main
 
   cs-check:
-    name: PHP Coding Standards
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          coverage: none
-          tools: php-cs-fixer:2.18.3
-
-      - name: Check CS
-        run: php-cs-fixer fix --dry-run --diff --diff-format=udiff
+    uses: zenstruck/.github/.github/workflows/php-cs-fixer.yml@main
