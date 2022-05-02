@@ -144,7 +144,7 @@ abstract class Redirect
     /**
      * @param \DateTime $time
      */
-    public function updateLastAccessed(\DateTime $time = null)
+    public function updateLastAccessed(?\DateTime $time = null)
     {
         if (null === $time) {
             $time = new \DateTime('now');

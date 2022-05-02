@@ -32,7 +32,7 @@ abstract class NotFound
      * @param string      $fullUrl
      * @param string|null $referer
      */
-    public function __construct($path, $fullUrl, $referer = null, \DateTime $timestamp = null)
+    public function __construct($path, $fullUrl, $referer = null, ?\DateTime $timestamp = null)
     {
         if (null === $timestamp) {
             $timestamp = new \DateTime('now');

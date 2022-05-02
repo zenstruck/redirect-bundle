@@ -73,11 +73,11 @@ abstract class FunctionalTest extends WebTestCase
 
     protected function addTestData()
     {
-        $this->em->createQuery('DELETE ' . DummyRedirect::class)
+        $this->em->createQuery('DELETE '.DummyRedirect::class)
             ->execute()
         ;
 
-        $this->em->createQuery('DELETE ' . DummyNotFound::class)
+        $this->em->createQuery('DELETE '.DummyNotFound::class)
             ->execute()
         ;
 

@@ -53,7 +53,7 @@ abstract class NotFoundListenerTest extends TestCase
         $this->assertNull($event->getResponse());
     }
 
-    protected function createEvent(\Exception $exception, Request $request = null, $requestType = HttpKernelInterface::MASTER_REQUEST)
+    protected function createEvent(\Exception $exception, ?Request $request = null, $requestType = HttpKernelInterface::MASTER_REQUEST)
     {
         return new ExceptionEvent(
             $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface'),
