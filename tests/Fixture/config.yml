@@ -11,8 +11,9 @@ framework:
     translator: { fallbacks: [en] }
     form: true
     test:   ~
-    session:
-        storage_id: session.storage.mock_file
+    session: { storage_factory_id: session.storage.factory.mock_file }
+    property_access: true
+    validation: true
 
 doctrine:
     dbal:
@@ -22,3 +23,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: true
         auto_mapping: true
+        mappings:
+            TestBundle:
+                is_bundle: false
+                dir: '%kernel.project_dir%/tests/Fixture/Bundle/Entity/'
+                prefix: 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity'
+                alias: TestBundle

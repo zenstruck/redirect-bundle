@@ -16,7 +16,7 @@ class ValidationTest extends FunctionalTest
     public function validation()
     {
         /** @var RecursiveValidator $validator */
-        $validator = self::$kernel->getContainer()->get('validator');
+        $validator = self::getContainer()->get('validator');
 
         $this->assertCount(0, $validator->validate(new DummyRedirect('/foo', '/bar')));
 

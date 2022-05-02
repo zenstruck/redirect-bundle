@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Zenstruck\RedirectBundle\Model\NotFound;
 use Zenstruck\RedirectBundle\Model\Redirect;
+use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
 use Zenstruck\RedirectBundle\Tests\Fixture\TestKernel;
 
@@ -41,7 +42,7 @@ abstract class FunctionalTest extends WebTestCase
         $this->addTestData();
     }
 
-    protected static function getKernelClass()
+    protected static function getKernelClass(): string
     {
         return TestKernel::class;
     }
@@ -53,7 +54,7 @@ abstract class FunctionalTest extends WebTestCase
      */
     protected function getRedirect($source)
     {
-        if (null === $redirect = $this->em->getRepository('TestBundle:DummyRedirect')->findOneBy(['source' => $source])) {
+        if (null === $redirect = $this->em->getRepository(DummyRedirect::class)->findOneBy(['source' => $source])) {
             return null;
         }
 
@@ -67,16 +68,16 @@ abstract class FunctionalTest extends WebTestCase
      */
     protected function getNotFounds()
     {
-        return $this->em->getRepository('TestBundle:DummyNotFound')->findAll();
+        return $this->em->getRepository(DummyNotFound::class)->findAll();
     }
 
     protected function addTestData()
     {
-        $this->em->createQuery('DELETE TestBundle:DummyRedirect')
+        $this->em->createQuery('DELETE ' . DummyRedirect::class)
             ->execute()
         ;
 
-        $this->em->createQuery('DELETE TestBundle:DummyNotFound')
+        $this->em->createQuery('DELETE ' . DummyNotFound::class)
             ->execute()
         ;
 

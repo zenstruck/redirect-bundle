@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class TestKernel extends Kernel
 {
-    public function registerBundles()
+    public function registerBundles(): array
     {
         return [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -25,12 +25,12 @@ class TestKernel extends Kernel
         $loader->load(\sprintf('%s/config.yml', __DIR__));
     }
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return \sys_get_temp_dir().'/ZenstruckRedirectBundle/'.Kernel::VERSION.'/cache/'.$this->environment;
     }
 
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return \sys_get_temp_dir().'/ZenstruckRedirectBundle/'.Kernel::VERSION.'/logs';
     }
