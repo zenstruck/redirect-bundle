@@ -16,11 +16,9 @@ class RemoveNotFoundSubscriber implements EventSubscriber
     private NotFoundManager|null $notFoundManager = null;
 
     public function __construct(private ContainerInterface $container)
-    {}
+    {
+    }
 
-    /**
-     * @inheritdoc
-     */
     public function getSubscribedEvents(): array
     {
         return [

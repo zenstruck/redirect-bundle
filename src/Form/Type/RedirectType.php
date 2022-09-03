@@ -16,7 +16,8 @@ class RedirectType extends AbstractType
      * @param string $class The Redirect class name
      */
     public function __construct(private string $class)
-    {}
+    {
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

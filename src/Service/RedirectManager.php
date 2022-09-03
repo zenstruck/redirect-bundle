@@ -14,7 +14,8 @@ class RedirectManager
      * @param string $class The Redirect class name
      */
     public function __construct(private string $class, private ObjectManager $om)
-    {}
+    {
+    }
 
     public function findAndUpdate(string $source): ?Redirect
     {

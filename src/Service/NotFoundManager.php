@@ -16,7 +16,8 @@ class NotFoundManager
      * @param string $class The NotFound class name
      */
     public function __construct(private string $class, private ObjectManager $om)
-    {}
+    {
+    }
 
     public function createFromRequest(Request $request): NotFound
     {

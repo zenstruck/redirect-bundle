@@ -101,10 +101,11 @@ abstract class Redirect
     {
         $parse_url = \parse_url($path, \PHP_URL_PATH);
 
-        if($parse_url != null)
-        {$value = '/'.\ltrim($parse_url, '/');}
-        else
-        {$value = '/';}
+        if (null != $parse_url) {
+            $value = '/'.\ltrim($parse_url, '/');
+        } else {
+            $value = '/';
+        }
 
         if ($allowQueryString && $query = \parse_url($path, \PHP_URL_QUERY)) {
             $value .= '?'.$query;

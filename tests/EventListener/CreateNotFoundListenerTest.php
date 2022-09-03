@@ -13,7 +13,7 @@ use Zenstruck\RedirectBundle\Service\NotFoundManager;
  */
 class CreateNotFoundListenerTest extends NotFoundListenerTest
 {
-    /** @var MockObject&NotFoundManager $notFoundManager */
+    /** @var MockObject&NotFoundManager */
     private $notFoundManager;
 
     protected function setUp(): void

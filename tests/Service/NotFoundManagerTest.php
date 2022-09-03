@@ -15,9 +15,8 @@ class NotFoundManagerTest extends TestCase
 {
     public const NOT_FOUND_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyNotFound';
 
-    /** @var MockObject&ObjectManager $om */
+    /** @var MockObject&ObjectManager */
     private $om;
-
 
     private NotFoundManager $notFoundManager;
 

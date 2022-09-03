@@ -16,10 +16,10 @@ class RedirectManagerTest extends TestCase
 {
     public const REDIRECT_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect';
 
-    /** @var MockObject&ObjectManager $om */
+    /** @var MockObject&ObjectManager */
     private $om;
 
-    /** @var MockObject&ObjectRepository $repository */
+    /** @var MockObject&ObjectRepository */
     private $repository;
 
     private RedirectManager $redirectManager;

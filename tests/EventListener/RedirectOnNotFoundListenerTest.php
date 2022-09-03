@@ -14,7 +14,7 @@ use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
  */
 class RedirectOnNotFoundListenerTest extends NotFoundListenerTest
 {
-    /** @var MockObject&RedirectManager $redirectManager */
+    /** @var MockObject&RedirectManager */
     private $redirectManager;
 
     protected function setUp(): void
