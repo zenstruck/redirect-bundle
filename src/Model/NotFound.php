@@ -7,32 +7,13 @@ namespace Zenstruck\RedirectBundle\Model;
  */
 abstract class NotFound
 {
-    /**
-     * @var string
-     */
-    protected $path;
+    protected string $path;
 
-    /**
-     * @var string
-     */
-    protected $fullUrl;
+    protected ?\DateTime $timestamp;
 
-    /**
-     * @var \DateTime
-     */
-    protected $timestamp;
+    protected ?string $referer;
 
-    /**
-     * @var string
-     */
-    protected $referer;
-
-    /**
-     * @param string      $path
-     * @param string      $fullUrl
-     * @param string|null $referer
-     */
-    public function __construct($path, $fullUrl, $referer = null, ?\DateTime $timestamp = null)
+    public function __construct(string $path, protected string $fullUrl, ?string $referer = null, ?\DateTime $timestamp = null)
     {
         if (null === $timestamp) {
             $timestamp = new \DateTime('now');
@@ -42,43 +23,35 @@ abstract class NotFound
         $path = !empty($path) ? $path : null;
 
         if (null !== $path) {
-            $path = '/'.\ltrim(\parse_url($path, \PHP_URL_PATH), '/');
+            $parse_url = \parse_url($path, \PHP_URL_PATH);
+
+            if($parse_url != null)
+            {$path = '/'.\ltrim($parse_url, '/');}
+            else
+            {$path = '/';}
         }
 
         $this->path = $path;
-        $this->fullUrl = $fullUrl;
         $this->referer = $referer;
         $this->timestamp = $timestamp;
     }
 
-    /**
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): ?string
     {
         return $this->path;
     }
 
-    /**
-     * @return string
-     */
-    public function getFullUrl()
+    public function getFullUrl(): string
     {
         return $this->fullUrl;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getTimestamp()
+    public function getTimestamp(): \DateTime
     {
         return $this->timestamp;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getReferer()
+    public function getReferer(): ?string
     {
         return $this->referer;
     }

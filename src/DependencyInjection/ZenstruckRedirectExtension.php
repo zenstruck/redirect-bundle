@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
  */
 class ZenstruckRedirectExtension extends ConfigurableExtension
 {
-    protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
+    protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
         if (null === $mergedConfig['redirect_class'] && null === $mergedConfig['not_found_class']) {
             throw new InvalidConfigurationException('A "redirect_class" or "not_found_class" must be set for "zenstruck_redirect".');

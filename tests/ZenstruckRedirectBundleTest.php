@@ -17,7 +17,6 @@ class ZenstruckRedirectBundleTest extends TestCase
     {
         $container = $this
             ->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(['addCompilerPass'])
             ->getMock()
         ;
         $container

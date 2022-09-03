@@ -11,16 +11,13 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 abstract class NotFoundListener
 {
-    /**
-     * @return bool
-     */
-    public function isNotFoundException(ExceptionEvent $event)
+    public function isNotFoundException(ExceptionEvent $event): bool
     {
-        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+        if (HttpKernelInterface::MAIN_REQUEST !== $event->getRequestType()) {
             return false;
         }
 
-        $exception = \method_exists($event, 'getThrowable') ? $event->getThrowable() : $event->getException();
+        $exception = $event->getThrowable();
 
         if (!$exception instanceof HttpException || 404 !== (int) $exception->getStatusCode()) {
             return false;

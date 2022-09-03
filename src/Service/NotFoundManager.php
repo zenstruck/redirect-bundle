@@ -12,23 +12,13 @@ use Zenstruck\RedirectBundle\Model\Redirect;
  */
 class NotFoundManager
 {
-    private $class;
-
-    private $om;
-
     /**
      * @param string $class The NotFound class name
      */
-    public function __construct($class, ObjectManager $om)
-    {
-        $this->class = $class;
-        $this->om = $om;
-    }
+    public function __construct(private string $class, private ObjectManager $om)
+    {}
 
-    /**
-     * @return NotFound
-     */
-    public function createFromRequest(Request $request)
+    public function createFromRequest(Request $request): NotFound
     {
         $notFound = new $this->class(
             $request->getPathInfo(),
@@ -45,7 +35,7 @@ class NotFoundManager
     /**
      * Deletes NotFound entities for a Redirect's path.
      */
-    public function removeForRedirect(Redirect $redirect)
+    public function removeForRedirect(Redirect $redirect): void
     {
         $notFounds = $this->om->getRepository($this->class)->findBy(['path' => $redirect->getSource()]);
 

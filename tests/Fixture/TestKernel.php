@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class TestKernel extends Kernel
 {
-    public function registerBundles(): array
+    public function registerBundles(): iterable
     {
         return [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -20,7 +20,7 @@ class TestKernel extends Kernel
         ];
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(\sprintf('%s/config.yml', __DIR__));
     }

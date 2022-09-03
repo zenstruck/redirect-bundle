@@ -21,6 +21,7 @@ referer URLs. When a redirect is created or updated, 404 records that match it's
         $ composer require zenstruck/redirect-bundle
 
 2. Enable the bundle:
+   This Step is only needed if you are not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.html).
 
     ```php
     // config/bundles.php
@@ -70,6 +71,7 @@ referer URLs. When a redirect is created or updated, 404 records that match it's
 3. Update your schema (or use a migration):
 
         $ bin/console doctrine:schema:update --force
+   
 
 ### NotFound
 
@@ -136,6 +138,6 @@ zenstruck_redirect:
     not_found_class:    ~ # Required if redirect_class is not set
     model_manager_name: ~
 
-    # When enabled, when a redirect is updated or created, the NotFound entites with a matching path are removed.
+    # When enabled, when a redirect is updated or created, the NotFound entities with a matching path are removed.
     remove_not_founds: true
 ```

@@ -10,25 +10,13 @@ use Zenstruck\RedirectBundle\Model\Redirect;
  */
 class RedirectManager
 {
-    private $class;
-
-    private $om;
-
     /**
      * @param string $class The Redirect class name
      */
-    public function __construct($class, ObjectManager $om)
-    {
-        $this->class = $class;
-        $this->om = $om;
-    }
+    public function __construct(private string $class, private ObjectManager $om)
+    {}
 
-    /**
-     * @param string $source
-     *
-     * @return Redirect|null
-     */
-    public function findAndUpdate($source)
+    public function findAndUpdate(string $source): ?Redirect
     {
         /** @var Redirect|null $redirect */
         $redirect = $this->om->getRepository($this->class)->findOneBy(['source' => $source]);

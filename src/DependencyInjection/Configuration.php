@@ -10,16 +10,11 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('zenstruck_redirect');
 
-        // Keep compatibility with symfony/config < 4.2
-        if (\method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            $rootNode = $treeBuilder->root('zenstruck_redirect');
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
