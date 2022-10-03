@@ -3,8 +3,8 @@
 namespace Zenstruck\RedirectBundle\Tests\Functional;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -19,11 +19,9 @@ use Zenstruck\RedirectBundle\Tests\Fixture\TestKernel;
  */
 abstract class FunctionalTest extends WebTestCase
 {
-    /** @var Client */
-    protected $client;
+    protected KernelBrowser $client;
 
-    /** @var EntityManager */
-    protected $em;
+    protected null|EntityManager $em;
 
     protected function setUp(): void
     {
@@ -47,12 +45,7 @@ abstract class FunctionalTest extends WebTestCase
         return TestKernel::class;
     }
 
-    /**
-     * @param string $source
-     *
-     * @return Redirect|null
-     */
-    protected function getRedirect($source)
+    protected function getRedirect(string $source): ?Redirect
     {
         if (null === $redirect = $this->em->getRepository(DummyRedirect::class)->findOneBy(['source' => $source])) {
             return null;
@@ -66,12 +59,12 @@ abstract class FunctionalTest extends WebTestCase
     /**
      * @return NotFound[]
      */
-    protected function getNotFounds()
+    protected function getNotFounds(): array
     {
         return $this->em->getRepository(DummyNotFound::class)->findAll();
     }
 
-    protected function addTestData()
+    protected function addTestData(): void
     {
         $this->em->createQuery('DELETE '.DummyRedirect::class)
             ->execute()

@@ -7,66 +7,34 @@ namespace Zenstruck\RedirectBundle\Model;
  */
 abstract class Redirect
 {
-    /**
-     * @var string
-     */
-    protected $source;
+    protected string $source;
 
-    /**
-     * @var string
-     */
-    protected $destination;
+    protected string $destination;
 
-    /**
-     * @var bool
-     */
-    protected $permanent;
+    protected bool $permanent;
 
-    /**
-     * @var int
-     */
-    protected $count = 0;
+    protected int $count = 0;
 
-    /**
-     * @var \DateTime
-     */
-    protected $lastAccessed = null;
+    protected ?\DateTime $lastAccessed = null;
 
-    /**
-     * @param string $source
-     * @param string $destination
-     * @param bool   $permanent
-     */
-    public function __construct($source, $destination, $permanent = true)
+    public function __construct(string $source, string $destination, bool $permanent = true)
     {
         $this->setSource($source);
         $this->setDestination($destination);
         $this->setPermanent($permanent);
     }
 
-    /**
-     * @param string $destination
-     * @param bool   $permanent
-     *
-     * @return static
-     */
-    public static function createFromNotFound(NotFound $notFound, $destination, $permanent = true)
+    public static function createFromNotFound(NotFound $notFound, string $destination, bool $permanent = true): static
     {
         return new static($notFound->getPath(), $destination, $permanent);
     }
 
-    /**
-     * @return string
-     */
-    public function getSource()
+    public function getSource(): string
     {
         return $this->source;
     }
 
-    /**
-     * @param string $source
-     */
-    public function setSource($source)
+    public function setSource(string $source): void
     {
         $source = \trim($source);
         $source = !empty($source) ? $source : null;
@@ -78,18 +46,12 @@ abstract class Redirect
         $this->source = $source;
     }
 
-    /**
-     * @return string
-     */
-    public function getDestination()
+    public function getDestination(): string
     {
         return $this->destination;
     }
 
-    /**
-     * @param string $destination
-     */
-    public function setDestination($destination)
+    public function setDestination(string $destination): void
     {
         $destination = \trim($destination);
         $destination = !empty($destination) ? $destination : null;
@@ -101,50 +63,32 @@ abstract class Redirect
         $this->destination = $destination;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPermanent()
+    public function isPermanent(): bool
     {
         return $this->permanent;
     }
 
-    /**
-     * @param bool $permanent
-     */
-    public function setPermanent($permanent)
+    public function setPermanent(bool $permanent): void
     {
         $this->permanent = $permanent;
     }
 
-    /**
-     * @return int
-     */
-    public function getCount()
+    public function getCount(): int
     {
         return $this->count;
     }
 
-    /**
-     * @param int $amount
-     */
-    public function increaseCount($amount = 1)
+    public function increaseCount(int $amount = 1): void
     {
         $this->count += $amount;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getLastAccessed()
+    public function getLastAccessed(): ?\DateTime
     {
         return $this->lastAccessed;
     }
 
-    /**
-     * @param \DateTime $time
-     */
-    public function updateLastAccessed(?\DateTime $time = null)
+    public function updateLastAccessed(?\DateTime $time = null): void
     {
         if (null === $time) {
             $time = new \DateTime('now');
@@ -153,15 +97,15 @@ abstract class Redirect
         $this->lastAccessed = $time;
     }
 
-    /**
-     * @param string $path
-     * @param bool   $allowQueryString
-     *
-     * @return string
-     */
-    protected function createAbsoluteUri($path, $allowQueryString = false)
+    protected function createAbsoluteUri(string $path, bool $allowQueryString = false): string
     {
-        $value = '/'.\ltrim(\parse_url($path, \PHP_URL_PATH), '/');
+        $parse_url = \parse_url($path, \PHP_URL_PATH);
+
+        if (null != $parse_url) {
+            $value = '/'.\ltrim($parse_url, '/');
+        } else {
+            $value = '/';
+        }
 
         if ($allowQueryString && $query = \parse_url($path, \PHP_URL_QUERY)) {
             $value .= '?'.$query;

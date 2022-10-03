@@ -117,7 +117,7 @@ class ZenstruckRedirectExtensionTest extends AbstractExtensionTestCase
         $this->load(['not_found_class' => $class]);
     }
 
-    public function invalidClassProvider()
+    public function invalidClassProvider(): array
     {
         return [
             ['Foo\Bar'],

@@ -2,9 +2,11 @@
 
 namespace Zenstruck\RedirectBundle\Tests\EventListener;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Zenstruck\RedirectBundle\EventListener\RedirectOnNotFoundListener;
+use Zenstruck\RedirectBundle\Service\RedirectManager;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
 
 /**
@@ -12,12 +14,12 @@ use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
  */
 class RedirectOnNotFoundListenerTest extends NotFoundListenerTest
 {
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    /** @var MockObject&RedirectManager */
     private $redirectManager;
 
     protected function setUp(): void
     {
-        $this->redirectManager = $this->createMock('Zenstruck\RedirectBundle\Service\RedirectManager', [], [], '', false);
+        $this->redirectManager = $this->createMock('Zenstruck\RedirectBundle\Service\RedirectManager');
         $this->listener = new RedirectOnNotFoundListener($this->redirectManager);
     }
 

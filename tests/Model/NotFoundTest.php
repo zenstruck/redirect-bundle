@@ -24,7 +24,7 @@ class NotFoundTest extends TestCase
         $this->assertEqualsWithDelta(\time(), $notFound->getTimestamp()->format('U'), 1);
     }
 
-    public function pathProvider()
+    public function pathProvider(): array
     {
         return [
             ['foo/bar', '/foo/bar'],
@@ -39,16 +39,11 @@ class NotFoundTest extends TestCase
             ['foo/bar?baz=true', '/foo/bar'],
             ['http://www.example.com/foo?baz=bar&foo=baz', '/foo'],
             ['http://www.example.com/foo?baz=bar&foo=baz#baz', '/foo'],
-            ['', null],
-            ['   ', null],
             ['/', '/'],
         ];
     }
 
-    /**
-     * @return \Zenstruck\RedirectBundle\Model\NotFound
-     */
-    private function createNotFound($path, $fullUrl, $referer = null, ?\DateTime $timestamp = null)
+    private function createNotFound(string $path, string $fullUrl, ?string $referer = null, ?\DateTime $timestamp = null): \Zenstruck\RedirectBundle\Model\NotFound
     {
         return $this->getMockForAbstractClass(
             'Zenstruck\RedirectBundle\Model\NotFound',

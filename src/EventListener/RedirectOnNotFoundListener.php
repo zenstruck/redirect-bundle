@@ -11,14 +11,11 @@ use Zenstruck\RedirectBundle\Service\RedirectManager;
  */
 class RedirectOnNotFoundListener extends NotFoundListener
 {
-    private $redirectManager;
-
-    public function __construct(RedirectManager $redirectManager)
+    public function __construct(private RedirectManager $redirectManager)
     {
-        $this->redirectManager = $redirectManager;
     }
 
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         if (!$this->isNotFoundException($event)) {
             return;

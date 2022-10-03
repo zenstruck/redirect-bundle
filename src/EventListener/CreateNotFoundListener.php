@@ -10,14 +10,11 @@ use Zenstruck\RedirectBundle\Service\NotFoundManager;
  */
 class CreateNotFoundListener extends NotFoundListener
 {
-    private $notFoundManager;
-
-    public function __construct(NotFoundManager $notFoundManager)
+    public function __construct(private NotFoundManager $notFoundManager)
     {
-        $this->notFoundManager = $notFoundManager;
     }
 
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         if (!$this->isNotFoundException($event)) {
             return;

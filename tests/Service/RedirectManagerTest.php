@@ -2,6 +2,9 @@
 
 namespace Zenstruck\RedirectBundle\Tests\Service;
 
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Zenstruck\RedirectBundle\Service\RedirectManager;
 use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
@@ -13,12 +16,13 @@ class RedirectManagerTest extends TestCase
 {
     public const REDIRECT_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect';
 
+    /** @var MockObject&ObjectManager */
     private $om;
 
+    /** @var MockObject&ObjectRepository */
     private $repository;
 
-    /** @var RedirectManager */
-    private $redirectManager;
+    private RedirectManager $redirectManager;
 
     protected function setUp(): void
     {

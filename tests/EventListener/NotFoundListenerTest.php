@@ -14,8 +14,7 @@ use Zenstruck\RedirectBundle\EventListener\NotFoundListener;
  */
 abstract class NotFoundListenerTest extends TestCase
 {
-    /** @var NotFoundListener */
-    protected $listener;
+    protected NotFoundListener $listener;
 
     /**
      * @test
@@ -53,7 +52,7 @@ abstract class NotFoundListenerTest extends TestCase
         $this->assertNull($event->getResponse());
     }
 
-    protected function createEvent(\Exception $exception, ?Request $request = null, $requestType = HttpKernelInterface::MASTER_REQUEST)
+    protected function createEvent(\Exception $exception, ?Request $request = null, $requestType = HttpKernelInterface::MAIN_REQUEST): ExceptionEvent
     {
         return new ExceptionEvent(
             $this->createMock('Symfony\Component\HttpKernel\HttpKernelInterface'),

@@ -10,7 +10,7 @@ use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
  */
 class RemoveNotFoundSubscriberTest extends FunctionalTest
 {
-    public function addTestData()
+    public function addTestData(): void
     {
         parent::addTestData();
 

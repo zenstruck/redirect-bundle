@@ -74,7 +74,7 @@ class RedirectTest extends TestCase
         $this->assertSame('/foo', $redirect->getSource());
     }
 
-    public function sourceProvider()
+    public function sourceProvider(): array
     {
         return [
             ['foo/bar', '/foo/bar'],
@@ -89,30 +89,21 @@ class RedirectTest extends TestCase
             ['foo/bar?baz=true', '/foo/bar'],
             ['http://www.example.com/foo?baz=bar&foo=baz', '/foo'],
             ['http://www.example.com/foo?baz=bar&foo=baz#baz', '/foo'],
-            ['', null],
-            ['   ', null],
             ['/', '/'],
         ];
     }
 
-    public function destinationProvider()
+    public function destinationProvider(): array
     {
         return [
             ['/foo', '/foo'],
             ['foo', '/foo'],
             ['foo?bar=baz', '/foo?bar=baz'],
-            [null, null],
-            ['', null],
-            [' ', null],
-            ['   ', null],
             ['http://www.example.com/foo', 'http://www.example.com/foo'],
         ];
     }
 
-    /**
-     * @return \Zenstruck\RedirectBundle\Model\Redirect
-     */
-    private function createRedirect($source, $destination, $permanent = true)
+    private function createRedirect(string $source, string $destination, bool $permanent = true): \Zenstruck\RedirectBundle\Model\Redirect
     {
         return $this->getMockForAbstractClass(
             'Zenstruck\RedirectBundle\Model\Redirect',

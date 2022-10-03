@@ -1,0 +1,6 @@
+zenstruck_redirect:
+    source:
+        unique: Diese Quelle ist bereits in Verwendung.
+        blank: Bitte eine Quelle angeben.
+    destination:
+        blank: Bitte ein Ziel angeben.

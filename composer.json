@@ -12,13 +12,13 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.6",
         "symfony/framework-bundle": "^5.4|^6.0"
     },
     "require-dev": {
-        "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.3",
         "symfony/browser-kit": "^5.4|^6.0",
         "symfony/form": "^5.4|^6.0",
         "symfony/phpunit-bridge": "^6.0",

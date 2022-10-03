@@ -13,16 +13,13 @@ use Zenstruck\RedirectBundle\Service\NotFoundManager;
  */
 class RemoveNotFoundSubscriber implements EventSubscriber
 {
-    private $container;
+    private NotFoundManager|null $notFoundManager = null;
 
-    private $notFoundManager;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(private ContainerInterface $container)
     {
-        $this->container = $container;
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             'postPersist',
@@ -30,17 +27,17 @@ class RemoveNotFoundSubscriber implements EventSubscriber
         ];
     }
 
-    public function postUpdate(LifecycleEventArgs $args)
+    public function postUpdate(LifecycleEventArgs $args): void
     {
         $this->remoteNotFoundForRedirect($args);
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args): void
     {
         $this->remoteNotFoundForRedirect($args);
     }
 
-    private function remoteNotFoundForRedirect(LifecycleEventArgs $args)
+    private function remoteNotFoundForRedirect(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();
 
@@ -51,10 +48,7 @@ class RemoveNotFoundSubscriber implements EventSubscriber
         $this->getNotFoundManager()->removeForRedirect($entity);
     }
 
-    /**
-     * @return NotFoundManager
-     */
-    private function getNotFoundManager()
+    private function getNotFoundManager(): NotFoundManager
     {
         if (null === $this->notFoundManager) {
             $this->notFoundManager = $this->container->get('zenstruck_redirect.not_found_manager');
