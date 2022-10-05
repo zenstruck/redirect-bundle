@@ -7,9 +7,9 @@ namespace Zenstruck\RedirectBundle\Model;
  */
 abstract class NotFound
 {
-    protected string $path;
+    protected ?string $path = null;
 
-    protected string $fullUrl;
+    protected ?string $fullUrl = null;
 
     protected ?\DateTime $timestamp;
 
@@ -49,22 +49,22 @@ abstract class NotFound
         return $this->path;
     }
 
-    public function setPath(string $path): void
+    public function setPath(?string $path): void
     {
         $this->path = $path;
     }
 
-    public function getFullUrl(): string
+    public function getFullUrl(): ?string
     {
         return $this->fullUrl;
     }
 
-    public function setFullUrl(string $fullUrl): void
+    public function setFullUrl(?string $fullUrl): void
     {
         $this->fullUrl = $fullUrl;
     }
 
-    public function getTimestamp(): \DateTime
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }

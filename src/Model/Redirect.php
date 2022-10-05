@@ -7,11 +7,11 @@ namespace Zenstruck\RedirectBundle\Model;
  */
 abstract class Redirect
 {
-    protected string $source;
+    protected ?string $source = null;
 
-    protected string $destination;
+    protected ?string $destination = null;
 
-    protected bool $permanent;
+    protected bool $permanent = true;
 
     protected int $count = 0;
 
@@ -33,12 +33,12 @@ abstract class Redirect
         return self::create($notFound->getPath(), $destination, $permanent);
     }
 
-    public function getSource(): string
+    public function getSource(): ?string
     {
         return $this->source;
     }
 
-    public function setSource(string $source): void
+    public function setSource(?string $source): void
     {
         $source = \trim($source);
         $source = !empty($source) ? $source : null;
@@ -50,12 +50,12 @@ abstract class Redirect
         $this->source = $source;
     }
 
-    public function getDestination(): string
+    public function getDestination(): ?string
     {
         return $this->destination;
     }
 
-    public function setDestination(string $destination): void
+    public function setDestination(?string $destination): void
     {
         $destination = \trim($destination);
         $destination = !empty($destination) ? $destination : null;
