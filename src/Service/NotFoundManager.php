@@ -21,7 +21,7 @@ class NotFoundManager
 
     public function createFromRequest(Request $request): NotFound
     {
-        $notFound = new $this->class(
+        $notFound = $this->class::create(
             $request->getPathInfo(),
             $request->getUri(),
             $request->server->get('HTTP_REFERER')

@@ -31,7 +31,7 @@ class RedirectOnNotFoundListenerTest extends NotFoundListenerTest
         $this->redirectManager->expects($this->once())
             ->method('findAndUpdate')
             ->with('/foo/bar')
-            ->willReturn(new DummyRedirect('/foo/bar', '/baz'))
+            ->willReturn(DummyRedirect::create('/foo/bar', '/baz'))
         ;
 
         $event = $this->createEvent(new NotFoundHttpException(), Request::create('/foo/bar'));

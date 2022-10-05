@@ -69,7 +69,7 @@ class RedirectTest extends TestCase
      */
     public function create_from_not_found()
     {
-        $redirect = DummyRedirect::createFromNotFound(new DummyNotFound('/foo', 'https://example.com/foo'), '/baz');
+        $redirect = DummyRedirect::createFromNotFound(DummyNotFound::create('/foo', 'https://example.com/foo'), '/baz');
 
         $this->assertSame('/foo', $redirect->getSource());
     }
@@ -105,9 +105,8 @@ class RedirectTest extends TestCase
 
     private function createRedirect(string $source, string $destination, bool $permanent = true): \Zenstruck\RedirectBundle\Model\Redirect
     {
-        return $this->getMockForAbstractClass(
-            'Zenstruck\RedirectBundle\Model\Redirect',
-            [$source, $destination, $permanent]
-        );
+        $mock = $this->getMockForAbstractClass('Zenstruck\RedirectBundle\Model\Redirect');
+
+        return $mock::create($source, $destination, $permanent);
     }
 }

@@ -18,9 +18,9 @@ class ValidationTest extends FunctionalTest
         /** @var RecursiveValidator $validator */
         $validator = self::getContainer()->get('validator');
 
-        $this->assertCount(0, $validator->validate(new DummyRedirect('/foo', '/bar')));
+        $this->assertCount(0, $validator->validate(DummyRedirect::create('/foo', '/bar')));
 
-        $errors = $validator->validate(new DummyRedirect('/301-redirect', '/foo'));
+        $errors = $validator->validate(DummyRedirect::create('/301-redirect', '/foo'));
         $this->assertCount(1, $errors);
         $this->assertSame('The source is already used.', $errors[0]->getMessage());
         $this->assertSame('source', $errors[0]->getPropertyPath());

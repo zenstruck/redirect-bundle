@@ -17,16 +17,20 @@ abstract class Redirect
 
     protected ?\DateTime $lastAccessed = null;
 
-    public function __construct(string $source, string $destination, bool $permanent = true)
+    public static function create(string $source, string $destination, bool $permanent = true): static
     {
-        $this->setSource($source);
-        $this->setDestination($destination);
-        $this->setPermanent($permanent);
+        $redirect = new static();
+
+        $redirect->setSource($source);
+        $redirect->setDestination($destination);
+        $redirect->setPermanent($permanent);
+
+        return $redirect;
     }
 
     public static function createFromNotFound(NotFound $notFound, string $destination, bool $permanent = true): static
     {
-        return new static($notFound->getPath(), $destination, $permanent);
+        return self::create($notFound->getPath(), $destination, $permanent);
     }
 
     public function getSource(): string

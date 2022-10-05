@@ -14,9 +14,9 @@ class RemoveNotFoundSubscriberTest extends FunctionalTest
     {
         parent::addTestData();
 
-        $this->em->persist(new DummyNotFound('/foo', 'http://example.com/foo'));
-        $this->em->persist(new DummyNotFound('/foo', 'http://example.com/foo?bar=foo'));
-        $this->em->persist(new DummyNotFound('/bar', 'http://example.com/bar'));
+        $this->em->persist(DummyNotFound::create('/foo', 'http://example.com/foo'));
+        $this->em->persist(DummyNotFound::create('/foo', 'http://example.com/foo?bar=foo'));
+        $this->em->persist(DummyNotFound::create('/bar', 'http://example.com/bar'));
 
         $this->em->flush();
     }
@@ -28,7 +28,7 @@ class RemoveNotFoundSubscriberTest extends FunctionalTest
     {
         $this->assertCount(3, $this->getNotFounds());
 
-        $this->em->persist(new DummyRedirect('/foo', '/bar'));
+        $this->em->persist(DummyRedirect::create('/foo', '/bar'));
         $this->em->flush();
 
         $this->assertCount(1, $this->getNotFounds());

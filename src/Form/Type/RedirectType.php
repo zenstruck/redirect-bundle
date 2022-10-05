@@ -48,7 +48,7 @@ class RedirectType extends AbstractType
             'data_class' => $this->class,
             'disable_source' => false,
             'empty_data' => function(FormInterface $form) use ($class) {
-                return new $class(
+                return $class::create(
                     $form->get('source')->getData(),
                     $form->get('destination')->getData()
                 );
