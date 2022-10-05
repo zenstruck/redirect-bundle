@@ -40,6 +40,7 @@ class NotFoundTest extends TestCase
             ['http://www.example.com/foo?baz=bar&foo=baz', '/foo'],
             ['http://www.example.com/foo?baz=bar&foo=baz#baz', '/foo'],
             ['/', '/'],
+            ['', null],
         ];
     }
 

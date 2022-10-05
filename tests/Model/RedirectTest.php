@@ -90,6 +90,7 @@ class RedirectTest extends TestCase
             ['http://www.example.com/foo?baz=bar&foo=baz', '/foo'],
             ['http://www.example.com/foo?baz=bar&foo=baz#baz', '/foo'],
             ['/', '/'],
+            ['', null],
         ];
     }
 
@@ -100,6 +101,7 @@ class RedirectTest extends TestCase
             ['foo', '/foo'],
             ['foo?bar=baz', '/foo?bar=baz'],
             ['http://www.example.com/foo', 'http://www.example.com/foo'],
+            ['', null],
         ];
     }
 
