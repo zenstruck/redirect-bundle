@@ -45,9 +45,8 @@ class NotFoundTest extends TestCase
 
     private function createNotFound(string $path, string $fullUrl, ?string $referer = null, ?\DateTime $timestamp = null): \Zenstruck\RedirectBundle\Model\NotFound
     {
-        return $this->getMockForAbstractClass(
-            'Zenstruck\RedirectBundle\Model\NotFound',
-            [$path, $fullUrl, $referer, $timestamp]
-        );
+        $mock = $this->getMockForAbstractClass('Zenstruck\RedirectBundle\Model\NotFound');
+
+        return $mock::create($path, $fullUrl, $referer, $timestamp);
     }
 }

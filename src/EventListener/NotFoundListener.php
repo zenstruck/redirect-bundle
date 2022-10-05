@@ -19,7 +19,7 @@ abstract class NotFoundListener
 
         $exception = $event->getThrowable();
 
-        if (!$exception instanceof HttpException || 404 !== (int) $exception->getStatusCode()) {
+        if (!$exception instanceof HttpException || 404 !== $exception->getStatusCode()) {
             return false;
         }
 

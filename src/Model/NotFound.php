@@ -7,14 +7,18 @@ namespace Zenstruck\RedirectBundle\Model;
  */
 abstract class NotFound
 {
-    protected string $path;
+    protected ?string $path = null;
+
+    protected ?string $fullUrl = null;
 
     protected ?\DateTime $timestamp;
 
     protected ?string $referer;
 
-    public function __construct(string $path, protected string $fullUrl, ?string $referer = null, ?\DateTime $timestamp = null)
+    public static function create(string $path, string $fullUrl, ?string $referer = null, ?\DateTime $timestamp = null): static
     {
+        $notFound = new static();
+
         if (null === $timestamp) {
             $timestamp = new \DateTime('now');
         }
@@ -32,9 +36,12 @@ abstract class NotFound
             }
         }
 
-        $this->path = $path;
-        $this->referer = $referer;
-        $this->timestamp = $timestamp;
+        $notFound->setPath($path);
+        $notFound->setFullUrl($fullUrl);
+        $notFound->setReferer($referer);
+        $notFound->setTimestamp($timestamp);
+
+        return $notFound;
     }
 
     public function getPath(): ?string
@@ -42,18 +49,38 @@ abstract class NotFound
         return $this->path;
     }
 
-    public function getFullUrl(): string
+    public function setPath(?string $path): void
+    {
+        $this->path = $path;
+    }
+
+    public function getFullUrl(): ?string
     {
         return $this->fullUrl;
     }
 
-    public function getTimestamp(): \DateTime
+    public function setFullUrl(?string $fullUrl): void
+    {
+        $this->fullUrl = $fullUrl;
+    }
+
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
+    }
+
+    public function setTimestamp(?\DateTime $timestamp): void
+    {
+        $this->timestamp = $timestamp;
     }
 
     public function getReferer(): ?string
     {
         return $this->referer;
+    }
+
+    public function setReferer(?string $referer): void
+    {
+        $this->referer = $referer;
     }
 }

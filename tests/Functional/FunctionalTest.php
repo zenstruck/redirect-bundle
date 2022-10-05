@@ -74,8 +74,8 @@ abstract class FunctionalTest extends WebTestCase
             ->execute()
         ;
 
-        $this->em->persist(new DummyRedirect('/301-redirect', 'http://symfony.com'));
-        $this->em->persist(new DummyRedirect('/302-redirect', 'http://example.com', false));
+        $this->em->persist(DummyRedirect::create('/301-redirect', 'http://symfony.com'));
+        $this->em->persist(DummyRedirect::create('/302-redirect', 'http://example.com', false));
 
         $this->em->flush();
     }
