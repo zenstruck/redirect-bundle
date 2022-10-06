@@ -7,13 +7,13 @@ namespace Zenstruck\RedirectBundle\Model;
  */
 abstract class NotFound
 {
-    protected string $path;
+    protected ?string $path;
 
     protected ?\DateTime $timestamp;
 
     protected ?string $referer;
 
-    public function __construct(string $path, protected string $fullUrl, ?string $referer = null, ?\DateTime $timestamp = null)
+    public function __construct(?string $path, protected ?string $fullUrl, ?string $referer = null, ?\DateTime $timestamp = null)
     {
         if (null === $timestamp) {
             $timestamp = new \DateTime('now');
@@ -42,7 +42,7 @@ abstract class NotFound
         return $this->path;
     }
 
-    public function getFullUrl(): string
+    public function getFullUrl(): ?string
     {
         return $this->fullUrl;
     }
