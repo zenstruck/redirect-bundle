@@ -17,7 +17,7 @@ abstract class Redirect
 
     protected ?\DateTime $lastAccessed = null;
 
-    public function __construct(string $source, string $destination, bool $permanent = true)
+    public function __construct(?string $source, ?string $destination, bool $permanent = true)
     {
         $this->setSource($source);
         $this->setDestination($destination);
