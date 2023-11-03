@@ -1,16 +1,25 @@
 <?php
 
+/*
+ * This file is part of the zenstruck/redirect-bundle package.
+ *
+ * (c) Kevin Bond <kevinbond@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Zenstruck\RedirectBundle\Tests\Form;
 
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Zenstruck\RedirectBundle\Form\Type\RedirectType;
-use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
+use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyRedirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class RedirectTypeTest extends TypeTestCase
+final class RedirectTypeTest extends TypeTestCase
 {
     protected function setUp(): void
     {
@@ -18,7 +27,7 @@ class RedirectTypeTest extends TypeTestCase
 
         $this->factory = Forms::createFormFactoryBuilder()
             ->addExtensions($this->getExtensions())
-            ->addType(new RedirectType('Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect'))
+            ->addType(new RedirectType(DummyRedirect::class))
             ->getFormFactory()
         ;
     }
@@ -26,7 +35,7 @@ class RedirectTypeTest extends TypeTestCase
     /**
      * @test
      */
-    public function create_default()
+    public function create_default(): void
     {
         $form = $this->factory->create(RedirectType::class);
 
@@ -38,7 +47,7 @@ class RedirectTypeTest extends TypeTestCase
     /**
      * @test
      */
-    public function create_with_options()
+    public function create_with_options(): void
     {
         $form = $this->factory->create(RedirectType::class, null, ['disable_source' => true]);
         $this->assertTrue($form->get('source')->isDisabled());
@@ -47,7 +56,7 @@ class RedirectTypeTest extends TypeTestCase
     /**
      * @test
      */
-    public function submit_update()
+    public function submit_update(): void
     {
         $redirect = new DummyRedirect('/baz', 'http://example.com');
         $form = $this->factory->create(RedirectType::class, $redirect);
@@ -59,7 +68,7 @@ class RedirectTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
 
         $redirect = $form->getData();
-        $this->assertInstanceOf('Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect', $redirect);
+        $this->assertInstanceOf(DummyRedirect::class, $redirect);
         $this->assertSame('/foo', $redirect->getSource());
         $this->assertSame('/bar', $redirect->getDestination());
     }
@@ -67,7 +76,7 @@ class RedirectTypeTest extends TypeTestCase
     /**
      * @test
      */
-    public function submit_create()
+    public function submit_create(): void
     {
         $form = $this->factory->create(RedirectType::class);
         $formData = [
@@ -78,7 +87,7 @@ class RedirectTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
 
         $redirect = $form->getData();
-        $this->assertInstanceOf('Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect', $redirect);
+        $this->assertInstanceOf(DummyRedirect::class, $redirect);
         $this->assertSame('/foo', $redirect->getSource());
         $this->assertSame('/bar', $redirect->getDestination());
     }

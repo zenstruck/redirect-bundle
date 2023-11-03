@@ -1,20 +1,30 @@
 <?php
 
+/*
+ * This file is part of the zenstruck/redirect-bundle package.
+ *
+ * (c) Kevin Bond <kevinbond@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Zenstruck\RedirectBundle\Tests\Model;
 
 use PHPUnit\Framework\TestCase;
+use Zenstruck\RedirectBundle\Model\NotFound;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class NotFoundTest extends TestCase
+final class NotFoundTest extends TestCase
 {
     /**
      * @dataProvider pathProvider
      *
      * @test
      */
-    public function constructor($path, $expectedPath)
+    public function constructor($path, $expectedPath): void
     {
         $notFound = $this->createNotFound($path, 'http://foobar.com/baz');
 
@@ -44,10 +54,10 @@ class NotFoundTest extends TestCase
         ];
     }
 
-    private function createNotFound(string $path, string $fullUrl, ?string $referer = null, ?\DateTime $timestamp = null): \Zenstruck\RedirectBundle\Model\NotFound
+    private function createNotFound(string $path, string $fullUrl, ?string $referer = null, ?\DateTime $timestamp = null): NotFound
     {
         return $this->getMockForAbstractClass(
-            'Zenstruck\RedirectBundle\Model\NotFound',
+            NotFound::class,
             [$path, $fullUrl, $referer, $timestamp]
         );
     }

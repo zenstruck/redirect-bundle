@@ -1,32 +1,42 @@
 <?php
 
+/*
+ * This file is part of the zenstruck/redirect-bundle package.
+ *
+ * (c) Kevin Bond <kevinbond@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Zenstruck\RedirectBundle\Tests\EventListener;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Zenstruck\RedirectBundle\EventListener\RedirectOnNotFoundListener;
 use Zenstruck\RedirectBundle\Service\RedirectManager;
-use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
+use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyRedirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class RedirectOnNotFoundListenerTest extends NotFoundListenerTest
+final class RedirectOnNotFoundListenerTest extends NotFoundListenerTestCase
 {
     /** @var MockObject&RedirectManager */
     private $redirectManager;
 
     protected function setUp(): void
     {
-        $this->redirectManager = $this->createMock('Zenstruck\RedirectBundle\Service\RedirectManager');
+        $this->redirectManager = $this->createMock(RedirectManager::class);
         $this->listener = new RedirectOnNotFoundListener($this->redirectManager);
     }
 
     /**
      * @test
      */
-    public function handle_redirect()
+    public function handle_redirect(): void
     {
         $this->redirectManager->expects($this->once())
             ->method('findAndUpdate')
@@ -39,7 +49,7 @@ class RedirectOnNotFoundListenerTest extends NotFoundListenerTest
 
         $this->listener->onKernelException($event);
         $response = $event->getResponse();
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $response);
+        $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame(301, $response->getStatusCode());
         $this->assertSame('/baz', $response->getTargetUrl());
     }
@@ -47,7 +57,7 @@ class RedirectOnNotFoundListenerTest extends NotFoundListenerTest
     /**
      * @test
      */
-    public function cannot_handle_redirect()
+    public function cannot_handle_redirect(): void
     {
         $this->redirectManager->expects($this->once())
             ->method('findAndUpdate')

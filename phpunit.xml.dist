@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
-         backupGlobals="false"
-         colors="true"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
+         colors="true"
          failOnRisky="true"
-         failOnWarning="true">
-  <coverage>
-    <include>
-      <directory>./src/</directory>
-    </include>
-  </coverage>
-  <php>
-    <ini name="error_reporting" value="-1"/>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
-  </php>
-  <testsuites>
-    <testsuite name="Project Test Suite">
-      <directory>./tests/</directory>
-    </testsuite>
-  </testsuites>
+         failOnWarning="true"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <server name="KERNEL_CLASS" value="Zenstruck\RedirectBundle\Tests\Fixture\TestKernel" />
+        <server name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/data.db" />
+        <server name="SHELL_VERBOSITY" value="-1" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0&amp;max[direct]=0&amp;quiet[]=indirect&amp;quiet[]=other"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="zenstruck/{name} Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage>
+        <include>
+            <directory>src</directory>
+        </include>
+    </coverage>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+    </listeners>
 </phpunit>
