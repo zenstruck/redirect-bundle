@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the zenstruck/redirect-bundle package.
+ *
+ * (c) Kevin Bond <kevinbond@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Zenstruck\RedirectBundle\EventListener\Doctrine;
 
 use Doctrine\Common\EventSubscriber;
@@ -10,11 +19,11 @@ use Zenstruck\RedirectBundle\Service\NotFoundManager;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
+ *
+ * @internal
  */
-class RemoveNotFoundSubscriber implements EventSubscriber
+final class RemoveNotFoundSubscriber implements EventSubscriber
 {
-    private NotFoundManager|null $notFoundManager = null;
-
     public function __construct(private ContainerInterface $container)
     {
     }
@@ -50,10 +59,6 @@ class RemoveNotFoundSubscriber implements EventSubscriber
 
     private function getNotFoundManager(): NotFoundManager
     {
-        if (null === $this->notFoundManager) {
-            $this->notFoundManager = $this->container->get('zenstruck_redirect.not_found_manager');
-        }
-
-        return $this->notFoundManager;
+        return $this->container->get('zenstruck_redirect.not_found_manager');
     }
 }

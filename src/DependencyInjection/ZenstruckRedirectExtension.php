@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the zenstruck/redirect-bundle package.
+ *
+ * (c) Kevin Bond <kevinbond@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Zenstruck\RedirectBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -10,8 +19,10 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
+ *
+ * @internal
  */
-class ZenstruckRedirectExtension extends ConfigurableExtension
+final class ZenstruckRedirectExtension extends ConfigurableExtension
 {
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
@@ -19,7 +30,7 @@ class ZenstruckRedirectExtension extends ConfigurableExtension
             throw new InvalidConfigurationException('A "redirect_class" or "not_found_class" must be set for "zenstruck_redirect".');
         }
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../../config'));
         $modelManagerName = $mergedConfig['model_manager_name'] ?: 'default';
 
         $container->setAlias('zenstruck_redirect.entity_manager', \sprintf('doctrine.orm.%s_entity_manager', $modelManagerName));

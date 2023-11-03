@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=8.0",
-        "doctrine/doctrine-bundle": "^2.0",
+        "doctrine/doctrine-bundle": "^2.6",
         "doctrine/orm": "^2.6",
         "symfony/framework-bundle": "^5.4|^6.0"
     },
@@ -23,7 +23,10 @@
         "symfony/form": "^5.4|^6.0",
         "symfony/phpunit-bridge": "^6.0",
         "symfony/translation": "^5.4|^6.0",
-        "symfony/validator": "^5.4|^6.0"
+        "symfony/validator": "^5.4|^6.0",
+        "zenstruck/foundry": "^1.36",
+        "phpunit/phpunit": "9.6.13",
+        "zenstruck/browser": "^1.6"
     },
     "autoload": {
         "psr-4": { "Zenstruck\\RedirectBundle\\": "src/" }

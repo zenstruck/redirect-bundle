@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the zenstruck/redirect-bundle package.
+ *
+ * (c) Kevin Bond <kevinbond@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Zenstruck\RedirectBundle\Tests\Service;
 
 use Doctrine\Persistence\ObjectManager;
@@ -7,14 +16,14 @@ use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Zenstruck\RedirectBundle\Service\RedirectManager;
-use Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect;
+use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyRedirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class RedirectManagerTest extends TestCase
+final class RedirectManagerTest extends TestCase
 {
-    public const REDIRECT_DUMMY_CLASS = 'Zenstruck\RedirectBundle\Tests\Fixture\Bundle\Entity\DummyRedirect';
+    public const REDIRECT_DUMMY_CLASS = DummyRedirect::class;
 
     /** @var MockObject&ObjectManager */
     private $om;
@@ -26,8 +35,8 @@ class RedirectManagerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->om = $this->createMock('Doctrine\Persistence\ObjectManager');
-        $this->repository = $this->createMock('Doctrine\Persistence\ObjectRepository');
+        $this->om = $this->createMock(ObjectManager::class);
+        $this->repository = $this->createMock(ObjectRepository::class);
 
         $this->om->expects($this->once())
             ->method('getRepository')
@@ -41,7 +50,7 @@ class RedirectManagerTest extends TestCase
     /**
      * @test
      */
-    public function update_redirect()
+    public function update_redirect(): void
     {
         $redirect = new DummyRedirect('/foo', '/bar');
         $redirect->increaseCount(5);
@@ -66,7 +75,7 @@ class RedirectManagerTest extends TestCase
     /**
      * @test
      */
-    public function no_redirect_found()
+    public function no_redirect_found(): void
     {
         $this->om->expects($this->never())
             ->method('flush')
