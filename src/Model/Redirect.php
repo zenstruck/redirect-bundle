@@ -45,8 +45,7 @@ abstract class Redirect
 
     public function setSource(?string $source): void
     {
-        $source = \trim($source);
-        $source = !empty($source) ? $source : null;
+        $source = \trim((string) $source) ?: null;
 
         if (null !== $source) {
             $source = $this->createAbsoluteUri($source);
@@ -62,8 +61,7 @@ abstract class Redirect
 
     public function setDestination(?string $destination): void
     {
-        $destination = \trim($destination);
-        $destination = !empty($destination) ? $destination : null;
+        $destination = \trim((string) $destination) ?: null;
 
         if (null !== $destination && null === \parse_url($destination, \PHP_URL_SCHEME)) {
             $destination = $this->createAbsoluteUri($destination, true);

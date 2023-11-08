@@ -28,8 +28,7 @@ abstract class NotFound
             $timestamp = new \DateTime('now');
         }
 
-        $path = \trim($path);
-        $path = !empty($path) ? $path : null;
+        $path = \trim((string) $path) ?: null;
 
         if (null !== $path) {
             $parse_url = \parse_url($path, \PHP_URL_PATH);
