@@ -1,6 +1,6 @@
 # ZenstruckRedirectBundle
 
-[![CI](https://github.com/kbond/ZenstruckRedirectBundle/workflows/CI/badge.svg)](https://github.com/kbond/ZenstruckRedirectBundle/actions?query=workflow%3ACI)
+[![CI](https://github.com/zenstruck/redirect-bundle/actions/workflows/ci.yml/badge.svg)](https://github.com/zenstruck/redirect-bundle/actions/workflows/ci.yml)
 [![Latest Version](https://img.shields.io/packagist/v/zenstruck/redirect-bundle.svg)](https://packagist.org/packages/zenstruck/redirect-bundle)
 [![Total Downloads](https://img.shields.io/packagist/dt/zenstruck/redirect-bundle.svg)](https://packagist.org/packages/zenstruck/redirect-bundle)
 
@@ -71,7 +71,7 @@ referer URLs. When a redirect is created or updated, 404 records that match it's
 3. Update your schema (or use a migration):
 
         $ bin/console doctrine:schema:update --force
-   
+
 
 ### NotFound
 
