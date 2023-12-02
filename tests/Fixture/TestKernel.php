@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Zenstruck\Foundry\ZenstruckFoundryBundle;
@@ -30,6 +31,11 @@ use Zenstruck\RedirectBundle\ZenstruckRedirectBundle;
 class TestKernel extends Kernel
 {
     use MicroKernelTrait;
+
+    public function homepage(): Response
+    {
+        return new Response();
+    }
 
     public function registerBundles(): iterable
     {
@@ -85,5 +91,6 @@ class TestKernel extends Kernel
 
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
+        $routes->add('homepage', '/')->controller([self::class, 'homepage']);
     }
 }
