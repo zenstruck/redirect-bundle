@@ -7,7 +7,8 @@
     <services>
         <service id="zenstruck_redirect.remove_not_found_subscriber" class="%zenstruck_redirect.remove_not_found_subscriber.class%" public="false">
             <argument type="service" id="service_container" />
-            <tag name="doctrine.event_subscriber" />
+            <tag name="doctrine.event_listener" event="postPersist" />
+            <tag name="doctrine.event_listener" event="postUpdate" />
         </service>
     </services>
 </container>

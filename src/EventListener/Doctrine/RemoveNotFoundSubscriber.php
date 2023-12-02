@@ -11,7 +11,6 @@
 
 namespace Zenstruck\RedirectBundle\EventListener\Doctrine;
 
-use Doctrine\Common\EventSubscriber;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Zenstruck\RedirectBundle\Model\Redirect;
@@ -22,18 +21,10 @@ use Zenstruck\RedirectBundle\Service\NotFoundManager;
  *
  * @internal
  */
-final class RemoveNotFoundSubscriber implements EventSubscriber
+final class RemoveNotFoundSubscriber
 {
     public function __construct(private ContainerInterface $container)
     {
-    }
-
-    public function getSubscribedEvents(): array
-    {
-        return [
-            'postPersist',
-            'postUpdate',
-        ];
     }
 
     public function postUpdate(LifecycleEventArgs $args): void
