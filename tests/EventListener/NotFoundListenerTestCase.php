@@ -67,7 +67,7 @@ abstract class NotFoundListenerTestCase extends TestCase
             $this->createMock(HttpKernelInterface::class),
             $request ?: new Request(),
             $requestType,
-            $exception
+            $exception,
         );
     }
 }

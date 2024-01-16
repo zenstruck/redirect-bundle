@@ -31,7 +31,7 @@ final class ZenstruckRedirectBundle extends Bundle
                 false,
                 [],
                 true,
-            )
+            ),
         );
     }
 

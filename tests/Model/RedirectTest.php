@@ -119,7 +119,7 @@ final class RedirectTest extends TestCase
     {
         return $this->getMockForAbstractClass(
             Redirect::class,
-            [$source, $destination, $permanent]
+            [$source, $destination, $permanent],
         );
     }
 }

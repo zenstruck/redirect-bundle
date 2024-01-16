@@ -58,7 +58,7 @@ final class NotFoundTest extends TestCase
     {
         return $this->getMockForAbstractClass(
             NotFound::class,
-            [$path, $fullUrl, $referer, $timestamp]
+            [$path, $fullUrl, $referer, $timestamp],
         );
     }
 }

@@ -35,7 +35,7 @@ class NotFoundManager
         $notFound = new $this->class(
             $request->getPathInfo(),
             $request->getUri(),
-            $request->server->get('HTTP_REFERER')
+            $request->server->get('HTTP_REFERER'),
         );
 
         $this->om->persist($notFound);

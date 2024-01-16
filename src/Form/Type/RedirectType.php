@@ -59,7 +59,7 @@ final class RedirectType extends AbstractType
             'empty_data' => function(FormInterface $form) use ($class) {
                 return new $class(
                     $form->get('source')->getData(),
-                    $form->get('destination')->getData()
+                    $form->get('destination')->getData(),
                 );
             },
         ]);

@@ -38,7 +38,7 @@ final class RedirectOnNotFoundListener extends NotFoundListener
 
         $event->setResponse(new RedirectResponse(
             $redirect->getDestination(),
-            $redirect->isPermanent() ? 301 : 302
+            $redirect->isPermanent() ? 301 : 302,
         ));
     }
 }
