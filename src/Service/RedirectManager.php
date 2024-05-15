@@ -16,8 +16,6 @@ use Zenstruck\RedirectBundle\Model\Redirect;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
- *
- * @final
  */
 class RedirectManager
 {
