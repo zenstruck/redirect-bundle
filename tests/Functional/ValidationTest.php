@@ -19,7 +19,6 @@ use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyRedirect;
 
 use function Zenstruck\Foundry\Persistence\persist;
 
-
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */

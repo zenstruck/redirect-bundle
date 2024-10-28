@@ -16,6 +16,7 @@ use Zenstruck\Browser\Test\HasBrowser;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyNotFound;
+
 use function Zenstruck\Foundry\Persistence\repository;
 
 /**

@@ -17,10 +17,10 @@ use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyNotFound;
 use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyRedirect;
+
 use function Zenstruck\Foundry\Persistence\persist;
 use function Zenstruck\Foundry\Persistence\persist_proxy;
 use function Zenstruck\Foundry\Persistence\repository;
-
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
