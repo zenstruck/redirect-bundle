@@ -24,7 +24,7 @@
         "symfony/phpunit-bridge": "^6.0|^7.0",
         "symfony/translation": "^5.4|^6.0|^7.0",
         "symfony/validator": "^5.4|^6.0|^7.0",
-        "zenstruck/foundry": "^1.36",
+        "zenstruck/foundry": "^1.38.3",
         "phpunit/phpunit": "9.6.13",
         "zenstruck/browser": "^1.6"
     },
