@@ -16,8 +16,7 @@ use Zenstruck\Browser\Test\HasBrowser;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyRedirect;
-
-use function Zenstruck\Foundry\create;
+use function Zenstruck\Foundry\Persistence\persist_proxy;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -31,7 +30,7 @@ final class RedirectTest extends KernelTestCase
      */
     public function permanent_redirect(): void
     {
-        $redirect = create(DummyRedirect::class, ['source' => '/301-redirect', 'destination' => '/']);
+        $redirect = persist_proxy(DummyRedirect::class, ['source' => '/301-redirect', 'destination' => '/']);
         $browser = $this->browser()->interceptRedirects();
 
         $this->assertSame(0, $redirect->getCount());
@@ -56,7 +55,7 @@ final class RedirectTest extends KernelTestCase
      */
     public function temporary_redirect(): void
     {
-        $redirect = create(DummyRedirect::class, [
+        $redirect = persist_proxy(DummyRedirect::class, [
             'source' => '/302-redirect',
             'destination' => '/',
             'permanent' => false,

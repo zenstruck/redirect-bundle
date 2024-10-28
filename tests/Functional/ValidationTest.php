@@ -17,7 +17,8 @@ use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyRedirect;
 
-use function Zenstruck\Foundry\create;
+use function Zenstruck\Foundry\Persistence\persist;
+
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -31,7 +32,7 @@ final class ValidationTest extends KernelTestCase
      */
     public function validation(): void
     {
-        create(DummyRedirect::class, ['source' => '/301-redirect', 'destination' => '/bar']);
+        persist(DummyRedirect::class, ['source' => '/301-redirect', 'destination' => '/bar']);
 
         /** @var RecursiveValidator $validator */
         $validator = self::getContainer()->get('validator');
