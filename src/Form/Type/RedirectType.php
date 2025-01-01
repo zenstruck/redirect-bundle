@@ -56,12 +56,10 @@ final class RedirectType extends AbstractType
         $resolver->setDefaults([
             'data_class' => $this->class,
             'disable_source' => false,
-            'empty_data' => function(FormInterface $form) use ($class) {
-                return new $class(
-                    $form->get('source')->getData(),
-                    $form->get('destination')->getData(),
-                );
-            },
+            'empty_data' => fn(FormInterface $form) => new $class(
+                $form->get('source')->getData(),
+                $form->get('destination')->getData(),
+            ),
         ]);
     }
 }
