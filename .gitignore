@@ -2,5 +2,6 @@
 /phpunit.xml
 /vendor/
 /var/
+/config/reference.php
 /.phpunit.result.cache
 /.php-cs-fixer.cache

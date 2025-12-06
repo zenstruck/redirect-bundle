@@ -15,9 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Zenstruck\Browser\Test\HasBrowser;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
+use Zenstruck\RedirectBundle\Model\Redirect;
 use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyRedirect;
 
-use function Zenstruck\Foundry\Persistence\persist_proxy;
+use function Zenstruck\Foundry\Persistence\persist;
+use function Zenstruck\Foundry\Persistence\proxy_factory;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -31,7 +33,7 @@ final class RedirectTest extends KernelTestCase
      */
     public function permanent_redirect(): void
     {
-        $redirect = persist_proxy(DummyRedirect::class, ['source' => '/301-redirect', 'destination' => '/']);
+        $redirect = $this->persist(DummyRedirect::class, ['source' => '/301-redirect', 'destination' => '/']);
         $browser = $this->browser()->interceptRedirects();
 
         $this->assertSame(0, $redirect->getCount());
@@ -56,7 +58,7 @@ final class RedirectTest extends KernelTestCase
      */
     public function temporary_redirect(): void
     {
-        $redirect = persist_proxy(DummyRedirect::class, [
+        $redirect = $this->persist(DummyRedirect::class, [
             'source' => '/302-redirect',
             'destination' => '/',
             'permanent' => false,
@@ -69,5 +71,14 @@ final class RedirectTest extends KernelTestCase
             ->assertRedirectedTo('/')
         ;
         $this->assertSame(1, $redirect->getCount());
+    }
+
+    private function persist(string $class, array $parameters): Redirect
+    {
+        if (\PHP_VERSION_ID >= 80400) {
+            return persist($class, $parameters);
+        }
+
+        return proxy_factory($class)->create($parameters);
     }
 }
