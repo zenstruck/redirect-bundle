@@ -30,7 +30,7 @@ final class ZenstruckRedirectExtension extends ConfigurableExtension
             throw new InvalidConfigurationException('A "redirect_class" or "not_found_class" must be set for "zenstruck_redirect".');
         }
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../../config'));
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__.'/../../config'));
         $modelManagerName = $mergedConfig['model_manager_name'] ?: 'default';
 
         $container->setAlias('zenstruck_redirect.entity_manager', \sprintf('doctrine.orm.%s_entity_manager', $modelManagerName));
@@ -38,18 +38,18 @@ final class ZenstruckRedirectExtension extends ConfigurableExtension
         if (null !== $mergedConfig['redirect_class']) {
             $container->setParameter('zenstruck_redirect.redirect_class', $mergedConfig['redirect_class']);
 
-            $loader->load('redirect.xml');
-            $loader->load('form.xml');
+            $loader->load('redirect.php');
+            $loader->load('form.php');
         }
 
         if (null !== $mergedConfig['not_found_class']) {
             $container->setParameter('zenstruck_redirect.not_found_class', $mergedConfig['not_found_class']);
 
-            $loader->load('not_found.xml');
+            $loader->load('not_found.php');
         }
 
         if ($mergedConfig['remove_not_founds'] && null !== $mergedConfig['not_found_class'] && null !== $mergedConfig['redirect_class']) {
-            $loader->load('remove_not_found_subscriber.xml');
+            $loader->load('remove_not_found_subscriber.php');
         }
     }
 }

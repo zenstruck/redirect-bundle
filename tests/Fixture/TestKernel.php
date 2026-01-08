@@ -60,9 +60,11 @@ class TestKernel extends Kernel
             'test' => true,
         ]);
 
-        $c->loadFromExtension('zenstruck_foundry', [
-            'auto_refresh_proxies' => true,
-        ]);
+        if (\PHP_VERSION_ID >= 80400) {
+            $c->loadFromExtension('zenstruck_foundry', [
+                'enable_auto_refresh_with_lazy_objects' => true,
+            ]);
+        }
 
         $c->loadFromExtension('zenstruck_redirect', [
             'redirect_class' => DummyRedirect::class,
@@ -72,8 +74,6 @@ class TestKernel extends Kernel
         $c->loadFromExtension('doctrine', [
             'dbal' => ['url' => '%env(resolve:DATABASE_URL)%'],
             'orm' => [
-                'auto_generate_proxy_classes' => true,
-                'auto_mapping' => true,
                 'mappings' => [
                     'Entity' => [
                         'is_bundle' => false,

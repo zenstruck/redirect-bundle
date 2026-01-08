@@ -19,8 +19,8 @@ use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyNotFound;
 use Zenstruck\RedirectBundle\Tests\Fixture\Entity\DummyRedirect;
 
 use function Zenstruck\Foundry\Persistence\persist;
-use function Zenstruck\Foundry\Persistence\persist_proxy;
 use function Zenstruck\Foundry\Persistence\repository;
+use function Zenstruck\Foundry\Persistence\save;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -56,12 +56,13 @@ final class RemoveNotFoundSubscriberTest extends KernelTestCase
 
         persist(DummyNotFound::class, ['path' => '/foo', 'fullUrl' => '/foo']);
 
-        $redirect = persist_proxy(DummyRedirect::class, ['source' => '/baz', 'destination' => '/bar']);
+        $redirect = persist(DummyRedirect::class, ['source' => '/baz', 'destination' => '/bar']);
 
         $notFoundRepo->assert()->count(1);
 
         $redirect->setSource('/foo');
-        $redirect->_save();
+
+        save($redirect);
 
         $notFoundRepo->assert()->empty();
     }
